@@ -56,3 +56,11 @@ Stakeholders of this project will deem this project a success upon completion of
 - Ability to track rent payments
 - Ability to rate or review rental services
 - Ability for tenants to contact security
+## Contributors
+### CodePros
+- Hang Li
+- Janelle Baetiong
+- Logan Junhwi Kim
+- Kei Mizubuchi
+- Sadia Rashid
+- Wen Yi Xu
