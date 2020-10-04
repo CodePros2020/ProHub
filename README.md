@@ -19,3 +19,40 @@ ProHub is a communication web app which is used to facilitate communication amon
 Landlord that implements this solution to their business processes will have the benefit of having an all-in-one effective, efficient, free of cost, environment friendly, and secure method of communication.
 
 Stakeholders of this project will deem this project a success upon completion of the project that is within deadline and within budget. The completion of the project results in an Android app that have all the functionalities listed in the requirements from the scope. Clients/users of this application will deem this project to be a success when the implementation of using the app to manage their business processes result in an increase in workflow and reduction in costs. Also, the implementation of using the app replace most existing methods of communication.
+## Project Description
+### Scope
+**Includes**
+- Two Factor Authentication for accounts
+  - Required upon registration of a new account
+  - Required when user attempts to log in with a new device
+- Ability for users to specify the type of account upon registration (landlord, staff, tenant)
+- Ability for users to toggle password visibility
+- List of all properties for a landlord account
+  - Ability for lessors to add and update properties
+- Property Dashboard with buttons to News Feed, Chat Portal, Forms, and Settings
+- Real-time chat between users
+  - Predictive text when searching for tenants in chat function o Search by tenant name or property unit
+  - Ability to send and receive text messages
+  - Ability to send images and attach documents in chat
+  - Ability for tenants to file a complaint
+  - Ability for landlords and tenants to export chat history
+- News Feed
+  - Ability for landlords to post alerts and notices
+  - Ability for landlords to specify if the posts are visible to staff only or both staff and tenants
+  - Ability for staff to post alerts and notices
+  - Ability for tenants to view posts
+  - Ability for users to search news posts
+  - Ability for landlords and staff to archiving posts
+- Forms
+  - Ability for landlords and staff to upload forms o Ability for tenants to download forms
+- Settings
+  - Ability to add and update user profile details
+  - Ability for landlords to set up staff account and specify the property that the staff works at
+
+**Excludes**
+- Ability for users to look for potential property lease/rental
+- Ability for landlords to advertise their lease
+- Ability to receive and send payments
+- Ability to track rent payments
+- Ability to rate or review rental services
+- Ability for tenants to contact security
