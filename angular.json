@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ProHub-Web-Frontend"
+    }
+  },
+  "defaultProject": "ProHub-Web-Frontend",
+  "cli": {
+    "analytics": "2c317b33-c678-4d97-9970-e84e96f19d9d"
+  }
 }
