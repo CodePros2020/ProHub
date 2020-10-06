@@ -7,4 +7,6 @@ export class RegistrationModel {
   password: string;
   propertyId: string;
   propertyKey: string;
+  propertyName: string;
+  location: string;
 }
