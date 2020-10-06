@@ -9,12 +9,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { EmailVerificationDialogComponent } from './pages/registration/email-verification-dialog/email-verification-dialog.component';
+import { LoginComponent } from './pages/login/login.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
-    EmailVerificationDialogComponent
+    EmailVerificationDialogComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
