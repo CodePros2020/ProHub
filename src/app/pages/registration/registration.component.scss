@@ -1,0 +1,25 @@
+.registration-container {
+  background-color: white;
+  margin: 3rem auto 0;
+  padding: 2rem 0;
+  width: 70%;
+
+  .logo {
+    width: 6rem;
+    height: 5rem;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 3rem;
+    color: #2f4550;
+    vertical-align: sub;
+  }
+
+  .blue-underline {
+    margin-top: 1rem;
+    border-bottom: 0.75rem solid #b8dbd9;
+    width: 7rem;
+  }
+
+}
