@@ -1,19 +1,46 @@
 <div class="container">
-  <div class="row justify-contents-center" style="height: 100%">
-    <div class="col-8 div-container">
-      <div class="col-4 img-div">
-        <img src="assets/bgmain.png"  alt="background-main" class="img-opacity">
+  <div class="row justify-contents-center" style="height: 100%; width: 100%;">
+    <div class="col-12 div-container">
+      <div class="col-6 img-div">
+        <img src="assets/bgmain.png"  alt="background-main" class="img-height">
       </div>
-      <div class="col-4 " style="display: flex; flex-direction: column;padding: 2%;width: 50%">
-          <div style="display: flex; flex-direction: row; width: 100%; height:100%">
+      <div class="col-6 right-div">
+          <div class="logo-div" style="justify-content: center" >
             <img class="logo" src="assets/logo-medium.png" />
             <span class="title">ProHub</span>
           </div>
-          <div class="col-md-auto blue-underline"></div>
-          <div></div>
-      </div>
+        <div class="col-md-auto blue-underline"></div>
+        <div class="col-12"><h3 class="subTitle">Manage Property Like a Pro</h3></div>
+
+          <div class="col-12" style="display: flex; flex-direction: column; justify-content: center">
+            <form [formGroup]="loginForm">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input formControlName="userName" matInput placeholder="Username">
+                <mat-error *ngIf="formControls.userName.invalid">Please enter username.</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput maxlength="64" [type]="hide ? 'password' : 'text'" placeholder="Password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="formControls.password.invalid">Please enter a password.</mat-error>
+              </mat-form-field>
+            </div>
+            </form>
+          </div>
+          <div>Forgot Password?</div>
+          <div><button mat-raised-button (click)="login()">Login</button></div>
+          <div>Don't have an account?  <button mat-button color="primary" (click)="login()">Sign up</button></div>
     </div>
 
+
+
+  </div>
   </div>
 
 </div>
