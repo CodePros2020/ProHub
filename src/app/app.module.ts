@@ -7,9 +7,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { AppComponent } from './app.component';
+import { AngularFireModule } from '@angular/fire';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { EmailVerificationDialogComponent } from './pages/registration/email-verification-dialog/email-verification-dialog.component';
 import { LoginComponent } from './pages/login/login.component';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -21,6 +23,7 @@ import { LoginComponent } from './pages/login/login.component';
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'my-app-name'),
     AppRoutingModule,
     BrowserAnimationsModule,
     AppMaterialModule,
