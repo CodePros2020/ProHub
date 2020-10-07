@@ -5,14 +5,16 @@
   .container {
     margin-top: 2rem;
     background-color: white;
-    padding-top: 1.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    height: 100%;
     width: 70%;
   }
 
   .logo {
-    width: 6rem;
-    height: 5rem;
+    margin-top: 8px;
+    width: 4.5rem;
+    height: 3.5rem;
   }
 
   .title {
@@ -21,6 +23,12 @@
     color: #2f4550;
     vertical-align: sub;
     margin-left: 0.75rem;
+  }
+
+  .logo-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   .blue-underline {
@@ -53,37 +61,37 @@
 
 ::ng-deep {
   .mat-form-field-appearance-outline .mat-form-field-outline {
-    color: #2f4550!important;
+    color: #2f4550 !important;
   }
 
   .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-    color: #2f4550!important;
+    color: #2f4550 !important;
   }
 
   .mat-form-field.mat-focused .mat-form-field-label {
-    color: #2f4550!important;
+    color: #2f4550 !important;
   }
 
   .mat-form-field.mat-form-field-invalid .mat-form-field-label {
     color: red !important;
   }
 
-  .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick{
-    color: red!important;
-    opacity: 0.8!important;
+  .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+    color: red !important;
+    opacity: 0.8 !important;
   }
 
   .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
-    caret-color: red!important;
+    caret-color: red !important;
   }
 }
 
 ::ng-deep {
-  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
     border-color: #2f4550;
   }
 
-  .mat-radio-button.mat-accent .mat-radio-inner-circle{
+  .mat-radio-button.mat-accent .mat-radio-inner-circle {
     color: #2f4550;
     background-color: #2f4550;
   }
