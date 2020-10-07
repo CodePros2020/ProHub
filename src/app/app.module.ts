@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './angular.material';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { NgxMaskModule } from 'ngx-mask';
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { EmailVerificationDialogComponent } from './pages/registration/email-verification-dialog/email-verification-dialog.component';
@@ -26,7 +26,8 @@ import { LoginComponent } from './pages/login/login.component';
     AppMaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,5 +11,151 @@
         <div class="col-md-auto blue-underline"></div>
       </div>
     </div>
+    <div class="content" style="margin-top: 2rem">
+      <form [formGroup]="registrationForm">
+
+        <mat-radio-group formControlName="userType">
+          <div class="row justify-content-md-center" style="margin-bottom: 1rem">
+            <div class="col-md-2 text-center">
+              <mat-radio-button #personal value="personal">Personal</mat-radio-button>
+            </div>
+            <div class="col-md-2 text-center">
+              <mat-radio-button #business value="business">Business</mat-radio-button>
+            </div>
+          </div>
+        </mat-radio-group>
+
+        <div class="row">
+
+          <div class="col-md-6">
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input formControlName="firstName" matInput maxlength="64" placeholder="First Name">
+                  <mat-error *ngIf="formControls.firstName.invalid">Please enter your first name.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input formControlName="lastName" matInput maxlength="64" placeholder="Last Name">
+                  <mat-error *ngIf="formControls.lastName.invalid">Please enter your last name.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input readonly formControlName="email" matInput maxlength="64" placeholder="Email" (click)="openEmailVerificationDialog()">
+                  <mat-error *ngIf="formControls.email.invalid">Please enter a valid email address.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>Phone</mat-label>
+                  <input readonly formControlName="phone" matInput maxlength="64" placeholder="Phone" mask="(000) 000-0000">
+                  <mat-error *ngIf="formControls.phone.invalid">Please enter a valid phone number.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+          <mat-divider vertical></mat-divider>
+          <div class="col">
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>Password</mat-label>
+                  <input formControlName="password" matInput maxlength="64" [type]="hide ? 'password' : 'text'" placeholder="Password">
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error *ngIf="formControls.password.invalid">Please enter a password.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>Confirm Password</mat-label>
+                  <input formControlName="confirmPassword" matInput maxlength="64" [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm Password">
+                  <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hideConfirmPassword">
+                    <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error *ngIf="formControls.confirmPassword.invalid">Please confirm your password.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <ng-container *ngIf="personal.checked">
+              <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Property ID</mat-label>
+                    <input formControlName="propertyId" matInput maxlength="64" placeholder="Property ID">
+                    <mat-error *ngIf="formControls.propertyId.invalid">Please enter property ID.</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Property Key</mat-label>
+                    <input formControlName="propertyKey" matInput maxlength="64" placeholder="Property Key">
+                    <mat-error *ngIf="formControls.propertyKey.invalid">Please enter property key.</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="business.checked">
+              <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Property Name</mat-label>
+                    <input formControlName="propertyName" matInput maxlength="64" placeholder="Property Name">
+                    <mat-error *ngIf="formControls.propertyName.invalid">Please enter property name.</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Location</mat-label>
+                    <input formControlName="location" matInput maxlength="64" placeholder="Location">
+                    <mat-error *ngIf="formControls.location.invalid">Please enter location.</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+        </div>
+
+        <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem">
+          <div class="col-md-3 text-center">
+            <button class="back" mat-raised-button (click)="onClickBackButton()">BACK</button>
+          </div>
+          <div class="col-md-3 text-center">
+            <button class="create" mat-raised-button>CREATE</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
   </div>
 </div>
