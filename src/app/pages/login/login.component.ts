@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Users } from '../../db-services/users';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -7,13 +9,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private router: Router) { }
+  items: Observable<any[]>;
+  constructor(private router: Router, private users: Users) { }
 
   ngOnInit(): void {
   }
 
   openRegistration() {
     this.router.navigate(['/register']);
+    this.users.delete();
   }
 }
