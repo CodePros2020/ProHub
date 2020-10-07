@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ProHub-Web-Frontend';
+  items: string[] = ['java', 'html'];
+  // constructor(private users: Users) {
+  // }
 }
