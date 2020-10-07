@@ -1,3 +1,47 @@
-img-opacity{
-  opacity: .5;
+.img-opacity{
+ height: 100%;
+}
+.img-div{
+  //margin-top: 100px;
+  height: 100%;
+  width: 50%;
+}
+.container {
+  width: 70%;
+  height: 100%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin: auto;
+}
+
+.div-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%
+}
+.blue-underline {
+  margin-top: 1rem;
+  border-bottom: 0.75rem solid #b8dbd9;
+  width: 7rem;
+}
+.logo {
+  margin-top: 8px;
+  width: 4.5rem;
+  height: 3.5rem;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 3rem;
+  color: #2f4550;
+  vertical-align: sub;
+  margin-left: 0.75rem;
+}
+
+.logo-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

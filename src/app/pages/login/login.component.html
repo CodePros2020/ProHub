@@ -1,11 +1,20 @@
-<div class="container-fluid">
-  <div class="row justify-contents-center">
-    <div class="col-8">
-      <div class="col-4"><img src="assets/bgmain.jpg"><img src="./assets/codepro-logo-dark.png"></div>
-      <div class="col-4">
-
-        <button mat-raised-button (click)="openRegistration()">REGISTER</button>
+<div class="container">
+  <div class="row justify-contents-center" style="height: 100%">
+    <div class="col-8 div-container">
+      <div class="col-4 img-div">
+        <img src="assets/bgmain.png"  alt="background-main" class="img-opacity">
+      </div>
+      <div class="col-4 " style="display: flex; flex-direction: column;padding: 2%;width: 50%">
+          <div style="display: flex; flex-direction: row; width: 100%; height:100%">
+            <img class="logo" src="assets/logo-medium.png" />
+            <span class="title">ProHub</span>
+          </div>
+          <div class="col-md-auto blue-underline"></div>
+          <div></div>
       </div>
     </div>
+
   </div>
+
 </div>
+<button mat-raised-button (click)="openRegistration()">REGISTER</button>
