@@ -63,7 +63,7 @@
               <div class="col-md-10">
                 <mat-form-field appearance="outline">
                   <mat-label>Phone</mat-label>
-                  <input readonly formControlName="phone" matInput maxlength="64" placeholder="Phone" mask="(000) 000-0000">
+                  <input formControlName="phone" matInput maxlength="64" placeholder="Phone" mask="(000) 000-0000">
                   <mat-error *ngIf="formControls.phone.invalid">Please enter a valid phone number.</mat-error>
                 </mat-form-field>
               </div>
@@ -151,7 +151,7 @@
             <button class="back" mat-raised-button (click)="onClickBackButton()">BACK</button>
           </div>
           <div class="col-md-3 text-center">
-            <button class="create" mat-raised-button>CREATE</button>
+            <button class="create" mat-raised-button (click)="onClickCreateButton()">CREATE</button>
           </div>
         </div>
 
