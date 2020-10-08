@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   public hide = true;
   users;
   units: Observable<any[]>;
+  userByPhone: Observable<any[]>;
 
   ngOnInit(): void {
     this.getloginForm();
@@ -41,7 +42,11 @@ getloginForm(){
 
 }
 login() {
-  this.router.navigate(['/propertyList']);
+    this.firebaseService.getUsersByPhone().subscribe(res => {
+      console.log( 'Users received ', res);
+      // this.router.navigate(['/propertyList']);
+    });
+
 }
 
 

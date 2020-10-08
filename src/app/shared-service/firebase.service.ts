@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 })
 export class FirebaseService {
   units: Observable<any[]>;
+  users: Observable<any[]>;
   constructor(   private firestore: AngularFirestore , private db: AngularFireDatabase  ) { }
 
   getUsers() {
@@ -17,6 +18,11 @@ export class FirebaseService {
     // db: AngularFireDatabase
    this.units = this.db.list('units').snapshotChanges();
    return  this.units;
+  }
+  getUsersByPhone(): Observable<any[]> {
+    // db: AngularFireDatabase
+    this.users = this.db.list('users').snapshotChanges();
+    return  this.users;
   }
 
 }
