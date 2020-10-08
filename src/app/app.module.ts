@@ -11,6 +11,7 @@ import { RegistrationComponent } from './pages/registration/registration.compone
 import { EmailVerificationDialogComponent } from './pages/registration/email-verification-dialog/email-verification-dialog.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FirebaseService } from './shared-service/firebase.service';
+
 // firebase set up
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';

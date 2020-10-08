@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import { AngularFireDatabase} from '@angular/fire/database';
 import {EmailVerificationDialogComponent} from '../registration/email-verification-dialog/email-verification-dialog.component';
 import {ForgotPasswordDialogComponent} from './forgot-password-dialog/forgot-password-dialog.component';
-
+import {UserPasswordService} from '../../shared-service/user-password.service';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +18,11 @@ export class LoginComponent implements OnInit {
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
               private router: Router,
-              private activeRoute: ActivatedRoute, public firebaseService: FirebaseService) { }
-  get formControls() {
+              private activeRoute: ActivatedRoute,
+              public firebaseService: FirebaseService,
+              public userPasswordService: UserPasswordService) { }
+
+              get formControls() {
     return this.loginForm.controls;
   }
 
@@ -33,17 +36,26 @@ export class LoginComponent implements OnInit {
     this.getUsers();
     this.getUnits();
   }
-getloginForm(){
+
+  getloginForm(){
     this.loginForm = this.formBuilder.group({
       userName: ['', Validators.required],
       password: ['', Validators.required],
     });
 
-}
-login() {
-  this.router.navigate(['/propertyList']);
-}
+  }
 
+  login() {
+    this.firebaseService.getUserPassword(this.formControls.userName.value)
+      .then(r => {
+        if (this.userPasswordService.authentication(this.formControls.password.value, r)){
+          this.router.navigate(['/propertyList']);
+        }
+        else{
+          // throw error message
+        }
+      });
+  }
 
   openRegistration() {
     this.router.navigate(['/register']);
@@ -58,10 +70,11 @@ login() {
                           console.log('Data received is', this.users );
         }  )
 
-getUnits() {
-    this.units = this.firebaseService.getUnits();
-    console.log('Data retrieved  ', this.units);
-}
+  getUnits() {
+      this.units = this.firebaseService.getUnits();
+      console.log('Data retrieved  ', this.units);
+  }
+
   forgotPasswordDialog() {
     const dialog = this.dialog.open(ForgotPasswordDialogComponent, {
       height: '450px',
