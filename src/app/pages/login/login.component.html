@@ -1,10 +1,69 @@
-<div class="container-fluid">
-  <div class="row justify-contents-center">
-    <div class="col-8">
-      <div class="col-4"><img src=""></div>
-      <div class="col-4">
-        <button mat-raised-button (click)="openRegistration()">REGISTER</button>
+<div class="container">
+  <div class="row justify-contents-center row-height" >
+    <div class="col-md-12 div-container">
+      <div class="col-md-6 img-div">
+        <img src="assets/bgmain.png"  alt="background-main" class="img-height">
       </div>
+      <div class="col-md-6 right-div">
+          <div class="col-md-auto logo-div"  >
+            <img class="logo" src="assets/logo-medium.png" />
+            <span class="title">ProHub</span>
+          </div>
+        <div class="col-md-auto blue-underline"></div>
+        <div class="col-md-auto"><h3 class="subTitle">Manage Property Like a Pro</h3></div>
+          <div  class="form-div" >
+            <form [formGroup]="loginForm" class="col-md-auto form" >
+            <div class="col-md-12" >
+              <mat-form-field appearance="outline" class="col-md-12">
+                <mat-label>Username</mat-label>
+                <input formControlName="userName" matInput placeholder="Username">
+                <mat-error *ngIf="formControls.userName.invalid">Please enter username.</mat-error>
+              </mat-form-field>
+            </div>
+              <div class="col-md-12 checkbox-div">
+                <mat-checkbox >Remember me</mat-checkbox>
+              </div>
+            <div class="col-md-12" >
+              <mat-form-field appearance="outline" class="col-md-12" style="padding-bottom:0 ">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput maxlength="64" [type]="hide ? 'password' : 'text'" placeholder="Password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="formControls.password.invalid">Please enter a password.</mat-error>
+              </mat-form-field>
+            </div>
+            </form>
+          </div>
+          <div class="div-center"><button  mat-button color="primary"  (click)="forgotPasswordDialog()">Forgot Password?</button></div>
+          <div class="div-center"> <button class="btn-login" mat-raised-button (click)="login()">LOGIN</button></div>
+          <div class="btn-center">Don't have an account?  <button mat-button color="primary" (click)="openRegistration()">SIGN UP</button></div>
     </div>
   </div>
+  </div>
 </div>
+<div style="display: flex;justify-content: center"><h5>ProHub 2020 | All rights reserved</h5></div>
+
+<!--<table>-->
+<!--  <thead>-->
+<!--  <tr>-->
+<!--    <th>User First Name</th>-->
+<!--    <th>User Last Name</th>-->
+<!--    <th>Phone</th>-->
+<!--  </tr>-->
+<!--  </thead>-->
+
+<!--  <tbody>-->
+<!--  <tr *ngFor="let user of users">-->
+<!--    <td>-->
+<!--      {{user.firstname}}-->
+<!--    </td>-->
+<!--    <td>-->
+<!--      {{user.lastname}}-->
+<!--    </td>-->
+<!--    <td>-->
+<!--      {{user.phone}}-->
+<!--    </td>-->
+<!--  </tr>-->
+<!--  </tbody>-->
+<!--</table>-->
