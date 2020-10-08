@@ -11,11 +11,10 @@
 
 }
 .container {
-  width: 70%;
-  height: 100%;
-  padding-top: 1%;
-  padding-bottom: 1%;
-  margin: auto;;
+  width: 60%;
+  height:650px;
+  padding: 3.75rem;
+
 }
 
 .div-container {
@@ -27,8 +26,8 @@
 
 }
 .blue-underline {
-  margin-top: 1rem;
-  border-bottom: 0.75rem solid #b8dbd9;
+  margin-top: 5px;
+  border-bottom: 0.5rem solid #b8dbd9;
   width: 6rem;
   margin-left: 40%;
 }
@@ -50,11 +49,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 .right-div{
   display: flex;
   flex-direction: column;
-  padding-top: 10%;
+  padding-top: 3%;
   width: 100%;
   height: 100%;
 }
@@ -62,7 +62,52 @@
   color: #586F7C;
   font-size: 1.5em;
   margin-top: 1rem;
-  margin-bottom: 4rem;
+  text-align: center;
+}
+.row-height {
+  height: 100%;
+  width: 100%;
+}
+.form {
+  width: 100%;padding: 0
+}
+.form-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top:7%;
+  width: 100%
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  opacity: 0.03 !important;
+  background-color: #2F4550!important;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #2F4550;
+}
+.checkbox-div{
+  display: flex;justify-content: right; padding-right: 10%;
+}
+.div-center{
   display: flex;
   justify-content: center;
+  margin-bottom: 5px;
+  margin-top: 0;
 }
+.btn-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+.btn-login {
+  color: #fff;
+  background-color: #2F4550;
+  width: 120px;
+  height: 45px;
+}
+button.mat-button:hover{
+  background-color: #F4F4F9;
+};
