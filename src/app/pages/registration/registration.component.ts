@@ -3,8 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EmailVerificationDialogComponent} from './email-verification-dialog/email-verification-dialog.component';
-import {FirebaseService} from '../../shared-service/firebase.service';
-import {UserPasswordService} from '../../shared-service/user-password.service';
+import {FirebaseService} from '../../shared-services/firebase.service';
+import {UserPasswordService} from '../../shared-services/user-password.service';
 import {RegistrationModel} from './manager/registration.model';
 
 @Component({

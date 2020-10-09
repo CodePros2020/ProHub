@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { EmailVerificationDialogComponent } from './pages/registration/email-verification-dialog/email-verification-dialog.component';
 import { LoginComponent } from './pages/login/login.component';
-import { FirebaseService } from './shared-service/firebase.service';
+import { FirebaseService } from './shared-services/firebase.service';
 
 // firebase set up
 import { environment } from 'src/environments/environment';
