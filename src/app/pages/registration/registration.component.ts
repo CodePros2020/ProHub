@@ -3,8 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EmailVerificationDialogComponent} from './email-verification-dialog/email-verification-dialog.component';
-import {FirebaseService} from '../../shared-service/firebase.service';
-import {UserPasswordService} from '../../shared-service/user-password.service';
+import {FirebaseService} from '../../shared-services/firebase.service';
+import {UserPasswordService} from '../../shared-services/user-password.service';
 import {RegistrationModel} from './manager/registration.model';
 
 @Component({
@@ -64,7 +64,7 @@ export class RegistrationComponent implements OnInit {
       this.user.email = this.formControls.email.value;
       this.user.phone = this.formControls.phone.value;
       this.user.password = this.userPasswordService.hashPassword(this.formControls.password.value);
-      this.firebaseService.addUser(this.user);
+      this.firebaseService.addUser(this.user).then(this.router.navigate['/login']);
     }
   }
 

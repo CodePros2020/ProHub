@@ -8,18 +8,8 @@ import {RegistrationModel} from '../pages/registration/manager/registration.mode
   providedIn: 'root'
 })
 export class FirebaseService {
-  units: Observable<any[]>;
-  constructor(   private firestore: AngularFirestore , private db: AngularFireDatabase) { }
 
-  getUsers() {
-    return this.firestore.collection('users').snapshotChanges();
-  }
-
-  getUnits(): Observable<any[]> {
-    // db: AngularFireDatabase
-   this.units = this.db.list('units').snapshotChanges();
-   return this.units;
-  }
+  constructor(   private firestore: AngularFirestore , private db: AngularFireDatabase  ) { }
 
   addUser(user: RegistrationModel) {
     return this.db.database.ref('users').child(user.phone).set(user).then();
