@@ -20,7 +20,10 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { PropertyListComponent } from './pages/property-list/property-list.component';
 import { ForgotPasswordDialogComponent } from './pages/login/forgot-password-dialog/forgot-password-dialog.component';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
+import { AuthService } from './shared-services/auth.service';
 
 @NgModule({
   declarations: [
@@ -43,9 +46,11 @@ import { ForgotPasswordDialogComponent } from './pages/login/forgot-password-dia
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // Only required for database features
     AngularFireAuthModule, // Only required for auth features,
-    AngularFireStorageModule // Only required for storage features
+    AngularFireStorageModule, // Only required for storage features
+    AngularFireMessagingModule,
+
   ],
-  providers: [FirebaseService],
+  providers: [FirebaseService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

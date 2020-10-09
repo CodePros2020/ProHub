@@ -36,8 +36,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.getloginForm();
-    this.getUsers();
-    this.getUnits();
+    // this.getUsers();
+    // this.getUnits();
   }
 
   getloginForm() {
@@ -50,11 +50,11 @@ export class LoginComponent implements OnInit {
   login() {
     this.firebaseService
       .getUserPassword(this.formControls.userName.value)
-      .then((r) => {
+      .then((res) => {
         if (
           this.userPasswordService.authentication(
             this.formControls.password.value,
-            r
+            res
           )
         ) {
           this.router.navigate(['/propertyList']);
@@ -68,17 +68,17 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/register']);
   }
 
-  getUsers = () =>
-    this.firebaseService.getUsers().subscribe((res) => {
-      console.log('Data is, ' + res);
-      this.users = res[0].payload.doc.data;
-      console.log('Data received is', this.users);
-    });
-
-  getUnits() {
-    this.units = this.firebaseService.getUnits();
-    console.log('Data retrieved  ', this.units);
-  }
+  // getUsers = () =>
+  //   this.firebaseService.getUsers().subscribe((res) => {
+  //     console.log('Data is, ' + res);
+  //     this.users = res[0].payload.doc.data;
+  //     console.log('Data received is', this.users);
+  //   });
+  //
+  // getUnits() {
+  //   this.units = this.firebaseService.getUnits();
+  //   console.log('Data retrieved  ', this.units);
+  // }
 
   forgotPasswordDialog() {
     const dialog = this.dialog.open(ForgotPasswordDialogComponent, {

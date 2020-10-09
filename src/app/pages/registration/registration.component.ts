@@ -64,7 +64,7 @@ export class RegistrationComponent implements OnInit {
       this.user.email = this.formControls.email.value;
       this.user.phone = this.formControls.phone.value;
       this.user.password = this.userPasswordService.hashPassword(this.formControls.password.value);
-      this.firebaseService.addUser(this.user);
+      this.firebaseService.addUser(this.user).then(this.router.navigate['/login']);
     }
   }
 
