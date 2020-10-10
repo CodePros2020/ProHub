@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { FirebaseService } from '../../shared-services/firebase.service';
-import { AuthService } from '../../shared-services/auth.service';
-import { Observable } from 'rxjs';
-import { AngularFireDatabase } from '@angular/fire/database';
-import { EmailVerificationDialogComponent } from '../registration/email-verification-dialog/email-verification-dialog.component';
-import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-password-dialog.component';
-import { UserPasswordService } from '../../shared-services/user-password.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {FirebaseService} from '../../shared-services/firebase.service';
+import {AuthService} from '../../shared-services/auth.service';
+import {Observable} from 'rxjs';
+import {AngularFireDatabase} from '@angular/fire/database';
+import {EmailVerificationDialogComponent} from '../registration/email-verification-dialog/email-verification-dialog.component';
+import {ForgotPasswordDialogComponent} from './forgot-password-dialog/forgot-password-dialog.component';
+import {UserPasswordService} from '../../shared-services/user-password.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
     public firebaseService: FirebaseService,
     public userPasswordService: UserPasswordService,
     public authService: AuthService
-  ) {}
+  ) {
+  }
 
   get formControls() {
     return this.loginForm.controls;
@@ -35,6 +36,13 @@ export class LoginComponent implements OnInit {
   users;
   units: Observable<any[]>;
   userByPhone: Observable<any[]>;
+  date: Date = new Date();
+  year: number;
+
+  getYear() {
+    this.year = this.date.getFullYear();
+    return this.year;
+  }
 
   ngOnInit(): void {
     this.getloginForm();
