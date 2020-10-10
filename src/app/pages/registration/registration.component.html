@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="row justify-content-md-center">
-        <div class="col-md-auto">
+        <div class="col-md-auto logo-div">
           <img class="logo" src="assets/logo-dark.png" />
           <span class="title">ProHub</span>
         </div>
@@ -11,11 +11,11 @@
         <div class="col-md-auto blue-underline"></div>
       </div>
     </div>
-    <div class="content" style="margin-top: 2rem">
+    <div class="content form-body">
       <form [formGroup]="registrationForm">
 
         <mat-radio-group formControlName="userType">
-          <div class="row justify-content-md-center" style="margin-bottom: 1rem">
+          <div class="row justify-content-md-center form-user-type">
             <div class="col-md-2 text-center">
               <mat-radio-button #personal value="personal">Personal</mat-radio-button>
             </div>
@@ -120,11 +120,11 @@
         </div>
 
         <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem">
-          <div class="col-md-3 text-center">
+          <div class="col-md-2 text-center">
             <button class="back" mat-raised-button (click)="onClickBackButton()">BACK</button>
           </div>
-          <div class="col-md-3 text-center">
-            <button class="create" mat-raised-button (click)="onClickCreateButton()">CREATE</button>
+          <div class="col-md-2 text-center">
+            <button class="create" mat-raised-button (click)="onClickCreateButton()">SAVE</button>
           </div>
         </div>
 

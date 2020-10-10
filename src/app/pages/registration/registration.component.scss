@@ -4,7 +4,7 @@
 
   .container {
     background-color: white;
-    padding-top: 1.5rem;
+    padding-top: 4rem;
     padding-bottom: 0.5rem;
     width: 1024px;
     height: 700px;
@@ -17,8 +17,9 @@
   }
 
   .logo {
-    width: 4rem;
+    width: 4.5rem;
     height: 3.5rem;
+    margin-top: 10px;
   }
 
   .title {
@@ -26,8 +27,14 @@
     font-size: 3rem;
     color: #2f4550;
     vertical-align: sub;
-    margin-top: 50px;
     margin-left: 0.75rem;
+  }
+
+  .logo-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 
   .blue-underline {
@@ -40,8 +47,16 @@
     width: 100%;
   }
 
+  .form-body {
+    margin-top: 3rem;
+
+    .form-user-type {
+      margin-bottom: 3rem;
+    }
+  }
+
   .buttons {
-    margin-top: 1rem;
+    margin-top: 3rem;
 
     .back {
       background-color: #2f4550;
