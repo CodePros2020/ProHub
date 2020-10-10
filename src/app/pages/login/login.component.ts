@@ -52,13 +52,17 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.formControls.userName.value, this.formControls.password.value);
-  }
+    this.authService.login(this.formControls.userName.value, this.formControls.password.value, 'login');
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/propertyList']);
+    }
 
-  openRegistration() {
-    // this.authService.signup(this.formControls.userName.value, this.formControls.password.value);
-    this.router.navigate(['/signup']);
   }
+  //
+  // openRegistration() {
+  //   // this.authService.signup(this.formControls.userName.value, this.formControls.password.value);
+  //   this.router.navigate(['/signup']);
+  // }
 
   signupDialog() {
     const dialog = this.dialog.open(SignupComponent, {

@@ -20,3 +20,27 @@
 .title {
   margin-bottom: 38px;
 }
+.center-div{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.btn-send {
+  background-color: #2F4550;
+  color: #fff;
+  width: 7rem;
+  margin-bottom: 5%;
+  margin-top: 5%;
+}
+
+.btn-verify {
+  width: 7rem;
+  background-color:  #586F7C;
+  color: #fff;
+  margin-top: 5%;
+  margin-bottom: 5%;
+
+}
+

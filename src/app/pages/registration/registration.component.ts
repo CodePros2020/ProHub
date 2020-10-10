@@ -2,7 +2,6 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {EmailVerificationDialogComponent} from './email-verification-dialog/email-verification-dialog.component';
 import {FirebaseService} from '../../shared-services/firebase.service';
 import {UserPasswordService} from '../../shared-services/user-password.service';
 import {RegistrationModel} from './manager/registration.model';
@@ -38,10 +37,7 @@ export class RegistrationComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: [''],
-      // [Validators.required, Validators.email]
       phone: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
       propertyId: [''],
       propertyKey: [''],
       propertyName: [''],
@@ -68,13 +64,5 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  openEmailVerificationDialog() {
-    const dialog = this.dialog.open(EmailVerificationDialogComponent, {
-      height: '550px',
-      width: '700px',
-      disableClose: true,
-      panelClass: 'no-padding-container'
-    });
-  }
 
 }
