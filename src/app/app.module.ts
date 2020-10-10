@@ -24,7 +24,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 import { AuthService } from './shared-services/auth.service';
-import { SignupComponent } from './pages/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,6 @@ import { SignupComponent } from './pages/signup/signup.component';
     LoginComponent,
     PropertyListComponent,
     ForgotPasswordDialogComponent,
-    SignupComponent,
   ],
   imports: [
     BrowserModule,
