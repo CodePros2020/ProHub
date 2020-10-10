@@ -3,16 +3,22 @@
   overflow-y: hidden;
 
   .container {
-    margin-top: 2rem;
     background-color: white;
     padding-top: 1.5rem;
     padding-bottom: 0.5rem;
-    width: 70%;
+    width: 1024px;
+    height: 700px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    margin: auto;
   }
 
   .logo {
-    width: 6rem;
-    height: 5rem;
+    width: 4rem;
+    height: 3.5rem;
   }
 
   .title {
@@ -20,6 +26,7 @@
     font-size: 3rem;
     color: #2f4550;
     vertical-align: sub;
+    margin-top: 50px;
     margin-left: 0.75rem;
   }
 

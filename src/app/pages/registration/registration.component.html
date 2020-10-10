@@ -32,6 +32,15 @@
             <div class="row justify-content-md-center">
               <div class="col-md-10">
                 <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input readonly formControlName="email" matInput maxlength="64" placeholder="Email" disabled>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
                   <mat-label>First Name</mat-label>
                   <input formControlName="firstName" matInput maxlength="64" placeholder="First Name">
                   <mat-error *ngIf="formControls.firstName.invalid">Please enter your first name.</mat-error>
@@ -49,26 +58,6 @@
               </div>
             </div>
 
-            <div class="row justify-content-md-center">
-              <div class="col-md-10">
-                <mat-form-field appearance="outline">
-                  <mat-label>Email</mat-label>
-                  <input readonly formControlName="email" matInput maxlength="64" placeholder="Email" (click)="openEmailVerificationDialog()">
-                  <mat-error *ngIf="formControls.email.invalid">Please enter a valid email address.</mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-
-            <div class="row justify-content-md-center">
-              <div class="col-md-10">
-                <mat-form-field appearance="outline">
-                  <mat-label>Phone</mat-label>
-                  <input formControlName="phone" matInput maxlength="64" placeholder="Phone" mask="(000) 000-0000">
-                  <mat-error *ngIf="formControls.phone.invalid">Please enter a valid phone number.</mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-
           </div>
           <mat-divider vertical></mat-divider>
           <div class="col">
@@ -76,25 +65,9 @@
             <div class="row justify-content-md-center">
               <div class="col-md-10">
                 <mat-form-field appearance="outline">
-                  <mat-label>Password</mat-label>
-                  <input formControlName="password" matInput maxlength="64" [type]="hide ? 'password' : 'text'" placeholder="Password">
-                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                  </button>
-                  <mat-error *ngIf="formControls.password.invalid">Please enter a password.</mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-
-            <div class="row justify-content-md-center">
-              <div class="col-md-10">
-                <mat-form-field appearance="outline">
-                  <mat-label>Confirm Password</mat-label>
-                  <input formControlName="confirmPassword" matInput maxlength="64" [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm Password">
-                  <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hideConfirmPassword">
-                    <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                  </button>
-                  <mat-error *ngIf="formControls.confirmPassword.invalid">Please confirm your password.</mat-error>
+                  <mat-label>Phone</mat-label>
+                  <input formControlName="phone" matInput maxlength="64" placeholder="Phone" mask="(000) 000-0000">
+                  <mat-error *ngIf="formControls.phone.invalid">Please enter a valid phone number.</mat-error>
                 </mat-form-field>
               </div>
             </div>
