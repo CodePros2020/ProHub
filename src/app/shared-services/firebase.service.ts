@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import {AngularFireDatabase, snapshotChanges} from '@angular/fire/database';
-import {Observable} from 'rxjs';
+import {AngularFireDatabase} from '@angular/fire/database';
 import {RegistrationModel} from '../pages/registration/manager/registration.model';
 
 @Injectable({
