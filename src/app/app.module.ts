@@ -24,7 +24,6 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 import { AuthService } from './shared-services/auth.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,
