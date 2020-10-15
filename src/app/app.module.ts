@@ -8,10 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
-import { EmailVerificationDialogComponent } from './pages/registration/email-verification-dialog/email-verification-dialog.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FirebaseService } from './shared-services/firebase.service';
-
+import { SignupComponent} from './pages/signup/signup.component';
 // firebase set up
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
@@ -46,7 +45,6 @@ import { ChatComponent } from './pages/container/chat/chat.component';
   declarations: [
     AppComponent,
     RegistrationComponent,
-    EmailVerificationDialogComponent,
     LoginComponent,
     PropertyListComponent,
     ForgotPasswordDialogComponent,
@@ -67,6 +65,7 @@ import { ChatComponent } from './pages/container/chat/chat.component';
     AddAttachmentDialogComponent,
     AddImageDialogComponent,
     ChatComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

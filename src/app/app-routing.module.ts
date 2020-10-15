@@ -9,12 +9,14 @@ import {DashboardComponent} from './pages/container/dashboard/dashboard.componen
 import {FormsComponent} from './pages/container/forms/forms.component';
 import {NewsroomComponent} from './pages/container/newsroom/newsroom.component';
 import {SettingsComponent} from './pages/container/settings/settings.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
+  {path: 'signup', component: SignupComponent},
   {
     path: 'container/:user',
     component: ContainerComponent,
