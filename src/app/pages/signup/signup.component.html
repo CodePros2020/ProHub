@@ -1,0 +1,61 @@
+<div class="title">
+  <p class="titleText" mat-dialog-title>Sign Up
+    <mat-icon style="float: right; cursor: pointer" (click)="close()" matSuffix id="close-icon">close</mat-icon>
+  </p>
+  <div class="blue-underline"></div>
+</div>
+<div class="row">
+  <form [formGroup]="signUpForm" class="col-12 center-div">
+    <div class="col-12 center-div">
+
+      <div class="row justify-content-md-center">
+        <div class="col-md-10">
+          <mat-form-field appearance="outline" class="col-md-12" >
+            <mat-label>Email</mat-label>
+            <input  formControlName="email" matInput maxlength="64" placeholder="Email" >
+            <mat-error style="margin-left: 5%"*ngIf="this.formControls.email.invalid">Please enter email.</mat-error>
+          </mat-form-field>
+
+        </div>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col-md-10">
+          <mat-form-field appearance="outline" class="col-md-12">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput maxlength="64" [type]="hide ? 'password' : 'text'" placeholder="Password" >
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="this.formControls.password.invalid">Please enter a password.</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row justify-content-md-center">
+        <div class="col-md-10">
+          <mat-form-field appearance="outline" class="col-md-12">
+            <mat-label>Confirm Password</mat-label>
+            <input formControlName="confirmPassword" matInput maxlength="64" [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm Password" >
+            <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hideConfirmPassword">
+              <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="this.formControls.confirmPassword.invalid">Please confirm your password.</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem; display: flex;flex-direction: column; align-items: center">
+        <div class="col-md-12 text-center">
+          <button class="btn-verify" mat-raised-button (click)="sendEmail()"  > {{verified}}</button>
+        </div>
+        <div>
+          <label *ngIf="verificationLink">Verification link has been sent to your email!</label>
+        </div>
+        <div class="col-md-12 text-center">
+          <button class="btn-send" mat-raised-button (click)="verifyCode()" [disabled]='!linkSent' >{{next}}</button>
+
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>

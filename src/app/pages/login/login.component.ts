@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {FirebaseService} from '../../shared-services/firebase.service';
 import {AuthService} from '../../shared-services/auth.service';
 import {Observable} from 'rxjs';
+import {SignupComponent} from '../signup/signup.component';
 import {ForgotPasswordDialogComponent} from './forgot-password-dialog/forgot-password-dialog.component';
 
 @Component({
@@ -16,6 +18,7 @@ export class LoginComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     public firebaseService: FirebaseService,
+    public router: Router,
     public authService: AuthService
   ) {
   }
@@ -49,12 +52,27 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.formControls.userName.value, this.formControls.password.value);
-  }
+    this.authService.login(this.formControls.userName.value, this.formControls.password.value, 'login');
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/propertyList']);
+    }
 
-  openRegistration() {
-    this.authService.signup(this.formControls.userName.value, this.formControls.password.value);
-    // this.router.navigate(['/register']);
+  }
+  //
+  // openRegistration() {
+  //   // this.authService.signup(this.formControls.userName.value, this.formControls.password.value);
+  //   this.router.navigate(['/signup']);
+  // }
+
+  signupDialog() {
+    const dialog = this.dialog.open(SignupComponent, {
+      height: '600px',
+      width: '600px',
+      disableClose: true,
+      autoFocus: false,
+      restoreFocus: false,
+      panelClass: 'no-padding-container',
+    });
   }
 
   forgotPasswordDialog() {
