@@ -1,0 +1,23 @@
+<mat-toolbar>
+  <div class="image-brand">
+    <img class="logo" src="assets/logo-white.png">
+    <span class="brand">ProHub</span>
+  </div>
+
+  <div class="nav-link">
+    <button [routerLink]="['dashboard']" mat-button>Dashboard</button>
+    <button [routerLink]="['newsroom']" mat-button>Newsroom</button>
+    <button [routerLink]="['chat']" mat-button>Chat</button>
+    <button [routerLink]="['forms']" mat-button>Forms</button>
+    <button [routerLink]="['settings']" [matMenuTriggerFor]="settingsDropdown" mat-button>Settings</button>
+    <mat-menu #settingsDropdown="matMenu">
+      <button mat-menu-item>Account Information</button>
+      <button mat-menu-item>Property List</button>
+      <button mat-menu-item>Unit List</button>
+    </mat-menu>
+    <button [routerLink]="['']" mat-button>Logout</button>
+  </div>
+</mat-toolbar>
+<div class="component-container">
+  <router-outlet></router-outlet>
+</div>

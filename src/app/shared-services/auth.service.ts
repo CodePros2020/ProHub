@@ -44,7 +44,10 @@ export class AuthService {
           this.SendVerificationMail();
           window.alert('Please validate your email address. Kindly check your inbox.');
         } else {
-          this.isLoggedIn = true;
+          this.ngZone.run(() => {
+            this.router.navigate(['container', 'lessor']);
+          });
+          // this.isLoggedIn = true;
           // this.ngZone.run(() => {
           // });
         }
