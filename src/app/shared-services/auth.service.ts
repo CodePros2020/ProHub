@@ -45,7 +45,7 @@ export class AuthService {
           window.alert('Please validate your email address. Kindly check your inbox.');
         } else {
           this.ngZone.run(() => {
-            this.router.navigate(['propertyList']);
+            this.router.navigate(['container', 'lessor']);
           });
         }
         // this.SetUserData(result.user);

@@ -1,0 +1,31 @@
+mat-toolbar {
+  background-color: #2f4550;
+  height: 60px;
+  color: #f8f9fa;
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.logo {
+  width: 60px;
+  height: 50px;
+}
+
+.brand {
+  font-weight: bold;
+  font-size: 2rem;
+  color: #ffffff;
+  vertical-align: sub;
+  margin-left: 0.75rem;
+}
+
+.component-container {
+  padding: 0;
+  //height: 81%;
+  position: relative;
+  background-color: #f4f4f9;
+}
