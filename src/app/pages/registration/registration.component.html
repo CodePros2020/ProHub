@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="row justify-content-md-center">
-        <div class="col-md-auto">
+        <div class="col-md-auto logo-div">
           <img class="logo" src="assets/logo-dark.png" />
           <span class="title">ProHub</span>
         </div>
@@ -11,11 +11,11 @@
         <div class="col-md-auto blue-underline"></div>
       </div>
     </div>
-    <div class="content" style="margin-top: 2rem">
+    <div class="content form-body">
       <form [formGroup]="registrationForm">
 
         <mat-radio-group formControlName="userType">
-          <div class="row justify-content-md-center" style="margin-bottom: 1rem">
+          <div class="row justify-content-md-center form-user-type">
             <div class="col-md-2 text-center">
               <mat-radio-button #personal value="personal">Personal</mat-radio-button>
             </div>
@@ -28,6 +28,15 @@
         <div class="row">
 
           <div class="col-md-6">
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input readonly formControlName="email" matInput maxlength="64" placeholder="Email" disabled>
+                </mat-form-field>
+              </div>
+            </div>
 
             <div class="row justify-content-md-center">
               <div class="col-md-10">
@@ -49,14 +58,9 @@
               </div>
             </div>
 
-            <div class="row justify-content-md-center">
-              <div class="col-md-10">
-                <mat-form-field appearance="outline">
-                  <mat-label>Email</mat-label>
-                  <input readonly formControlName="email" matInput maxlength="64" placeholder="Email" >
-                </mat-form-field>
-              </div>
-            </div>
+          </div>
+          <mat-divider vertical></mat-divider>
+          <div class="col">
 
             <div class="row justify-content-md-center">
               <div class="col-md-10">
@@ -67,36 +71,6 @@
                 </mat-form-field>
               </div>
             </div>
-
-          </div>
-          <mat-divider vertical></mat-divider>
-          <div class="col">
-
-<!--            <div class="row justify-content-md-center">-->
-<!--              <div class="col-md-10">-->
-<!--                <mat-form-field appearance="outline">-->
-<!--                  <mat-label>Password</mat-label>-->
-<!--                  <input formControlName="password" matInput maxlength="64" [type]="hide ? 'password' : 'text'" placeholder="Password">-->
-<!--                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">-->
-<!--                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>-->
-<!--                  </button>-->
-<!--                  <mat-error *ngIf="formControls.password.invalid">Please enter a password.</mat-error>-->
-<!--                </mat-form-field>-->
-<!--              </div>-->
-<!--            </div>-->
-
-<!--            <div class="row justify-content-md-center">-->
-<!--              <div class="col-md-10">-->
-<!--                <mat-form-field appearance="outline">-->
-<!--                  <mat-label>Confirm Password</mat-label>-->
-<!--                  <input formControlName="confirmPassword" matInput maxlength="64" [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm Password">-->
-<!--                  <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hideConfirmPassword">-->
-<!--                    <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>-->
-<!--                  </button>-->
-<!--                  <mat-error *ngIf="formControls.confirmPassword.invalid">Please confirm your password.</mat-error>-->
-<!--                </mat-form-field>-->
-<!--              </div>-->
-<!--            </div>-->
 
             <ng-container *ngIf="personal.checked">
               <div class="row justify-content-md-center">
@@ -146,11 +120,11 @@
         </div>
 
         <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem">
-          <div class="col-md-3 text-center">
+          <div class="col-md-2 text-center">
             <button class="back" mat-raised-button (click)="onClickBackButton()">BACK</button>
           </div>
-          <div class="col-md-3 text-center">
-            <button class="create" mat-raised-button (click)="onClickCreateButton()">CREATE</button>
+          <div class="col-md-2 text-center">
+            <button class="create" mat-raised-button (click)="onClickCreateButton()">SAVE</button>
           </div>
         </div>
 
