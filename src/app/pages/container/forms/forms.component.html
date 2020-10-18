@@ -1,1 +1,22 @@
-<p>forms works!</p>
+  <div class="container">
+    <h1 class="row col-md-auto">Forms</h1>
+    <form [formGroup]="" class="row col-md-12">
+      <div class="col-md-8">
+        <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+      </div>
+      <div class="col-md-4">
+        <button class="btn-upload" mat-raised-button>+UPLOAD</button>
+      </div>
+    </form>
+
+    <h1 class="row col-md-auto">All Forms</h1>
+    <mat-list class="row col-md-auto" *ngFor="let formItem of formList" >
+      <div class="form-div">
+        <mat-list-item>{{formItem}}</mat-list-item>
+      </div>
+    </mat-list>
+
+    <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
+      All rights reserved.</h5></div>
+
+</div>

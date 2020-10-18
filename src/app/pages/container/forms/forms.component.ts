@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormsComponent implements OnInit {
 
-  constructor() { }
+  // public formList: Forms[]
+  public formList: string[] = [];
+  public searchQuery: string;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+    this.formList = ["A","B","C", "D", "E"];
   }
 
 }
