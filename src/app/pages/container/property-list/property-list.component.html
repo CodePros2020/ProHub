@@ -1,30 +1,92 @@
 <div class="property-list-container">
-  <div class="container-fluid">
+  <form [formGroup]="propertyListForm">
+    <div class="container-fluid">
 
-    <div class="row">
-      <div class="col title">
-        <span>My Properties</span>
+      <div class="row">
+        <div class="col title">
+          <span>My Properties</span>
+        </div>
       </div>
+
+      <div class="row">
+
+        <div class="col-md d-flex justify-content-between">
+
+          <mat-form-field appearance="outline" style="width: 60%">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="Search" formControlName="propertySearch" type="text" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let prop of dataSource.data">{{ prop.name }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <button class="add-prop-btn" mat-raised-button (click)="openCreateNewPropertyDialog()"><mat-icon>add</mat-icon> ADD</button>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef> Property Name </mat-header-cell>
+              <mat-cell *matCellDef="let prop"> {{prop.name}} </mat-cell>
+            </ng-container>
+
+            <!-- Address Column -->
+            <ng-container matColumnDef="address">
+              <mat-header-cell *matHeaderCellDef> Property Address </mat-header-cell>
+              <mat-cell *matCellDef="let prop"> {{prop.address}} </mat-cell>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef> &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
+              <mat-cell *matCellDef="let prop" class="d-flex justify-content-between">
+                <mat-icon class="edit">edit</mat-icon>
+                <mat-icon class="delete">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+
+
+
     </div>
+  </form>
+</div>
 
-    <form [formGroup]="propertyListForm">
+<div class="table-sec">
+<!--  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
 
-          <div class="row">
-            <div class="col-md d-flex justify-content-between">
-              <mat-form-field appearance="outline" style="width: 60%">
-                <mat-icon matPrefix>search</mat-icon>
-                <input matInput placeholder="Search" formControlName="propertySearch" type="text" [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let prop of propertyListResult">{{ prop.name }}</mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
+<!--    &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="name">-->
+<!--      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>-->
+<!--      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>-->
+<!--    </ng-container>-->
 
-              <button class="add-prop-btn" mat-raised-button><mat-icon>add</mat-icon> ADD</button>
+<!--    &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="address">-->
+<!--      <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>-->
+<!--      <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>-->
+<!--    </ng-container>-->
 
-            </div>
-          </div>
+<!--    &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="action">-->
+<!--      <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>-->
+<!--      <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>-->
+<!--    </ng-container>-->
 
-    </form>
-
-  </div>
+<!--    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>-->
+<!--    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>-->
+<!--  </mat-table>-->
+<!--  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>-->
 </div>

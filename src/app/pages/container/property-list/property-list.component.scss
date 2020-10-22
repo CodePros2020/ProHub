@@ -15,7 +15,33 @@
     background-color: #2f4550;
     color: #fff;
     width: 7rem;
+    height: 3rem;
+    margin-top: 5px;
+  }
+
+  .mat-column-action {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .edit{
+    color:#0cbd65;
+    font-size:24px !important;
+  }
+
+  .delete{
+    color:red;
+    //display:inline;
+    font-size:24px !important;
   }
 }
-
-
