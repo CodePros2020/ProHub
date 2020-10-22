@@ -1,0 +1,21 @@
+.property-list-container {
+  width: 1024px;
+  margin: auto;
+  height: 100%;
+  background-color: #fff;
+  padding: 1rem 1rem;
+
+  .title {
+    font-weight: bolder;
+    font-size: xx-large;
+    margin: 2.5rem 0;
+  }
+
+  .add-prop-btn {
+    background-color: #2f4550;
+    color: #fff;
+    width: 7rem;
+  }
+}
+
+

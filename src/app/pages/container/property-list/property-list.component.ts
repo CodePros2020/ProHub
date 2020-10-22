@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-property-list',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropertyListComponent implements OnInit {
 
-  constructor() { }
+  public propertyListForm: FormGroup;
+  public propertyListResult;
+
+  constructor(public dialog: MatDialog,
+              private formBuilder: FormBuilder) {
+    this.createPropertyListFormGroup();
+  }
 
   ngOnInit(): void {
+  }
+
+  createPropertyListFormGroup() {
+    this.propertyListForm = this.formBuilder.group({
+      propertySearch: ['']
+    });
+  }
+
+  get formControls() {
+    return this.propertyListForm.controls;
   }
 
 }
