@@ -30,7 +30,7 @@ const ELEMENT_DATA: IForm[] = [
   styleUrls: ['./forms.component.scss']
 })
 export class FormsComponent implements AfterViewInit  {
-  displayedColumns: string[] = ['filename', 'creation_date', 'size'];
+  displayedColumns: string[] = ['filename', 'creation_date', 'size', 'actionsColumn'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @ViewChild(MatSort) sort: MatSort;

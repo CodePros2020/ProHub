@@ -1,6 +1,7 @@
 html{
   overflow: hidden;
 }
+
 .container {
   width: 1024px;
   height: 700px;
@@ -9,10 +10,7 @@ html{
   bottom: 0;
   left: 0;
   right: 0;
-  margin-left: auto;
-  margin-right: auto;
-
-  //margin: auto;
+  margin: auto;
 }
 
 .center-div{
@@ -22,6 +20,7 @@ html{
   width: 100%;
 }
 
+/* Search */
 .btn-upload {
   color: #fff;
   background-color: #2F4550;
@@ -29,27 +28,7 @@ html{
   height: 35px;
 }
 
-
-//.container {
-//  width: 1024px;
-//  height: 700px;
-//  position: absolute;
-//  top: 0;
-//  bottom: 0;
-//  left: 0;
-//  right: 0;
-//  margin: auto;
-//}
-
-//.div-container {
-//  display: flex;
-//  flex-direction: row;
-//  align-items: center;
-//  height: 100%;
-//  width: 100%;;
-//}
-
-
+/* table */
 table {
   width: 100%;
 }
