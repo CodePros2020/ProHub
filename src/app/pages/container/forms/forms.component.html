@@ -5,18 +5,27 @@
         <input class="form-control" type="text" placeholder="Search" aria-label="Search">
       </div>
       <div class="col-md-4">
-        <button class="btn-upload" mat-raised-button>+UPLOAD</button>
+        <button class="btn-upload" mat-raised-button (click)="clickUpload()">+UPLOAD</button>
       </div>
     </form>
 
     <h1 class="row col-md-auto">All Forms</h1>
     <mat-list class="row col-md-auto" *ngFor="let formItem of formList" >
       <div class="form-div">
-        <mat-list-item>{{formItem}}</mat-list-item>
+        <mat-list-item>
+          <div>{{formItem.filename}}</div>
+          <div>{{formItem.creation_date}}</div>
+          <div>{{formItem.size}}</div>
+          <div></div>
+        </mat-list-item>
       </div>
     </mat-list>
 
+
     <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
       All rights reserved.</h5></div>
+
+
+
 
 </div>

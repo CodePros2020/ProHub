@@ -7,15 +7,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormsComponent implements OnInit {
 
-  // public formList: Forms[]
-  public formList: string[] = [];
+  // public formList: Forms[] = []
+  public formList: Object[] = [];
   public searchQuery: string;
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.formList = ["A","B","C", "D", "E"];
+    this.formList = [
+            {
+                filename: 'A',
+                creation_date: '2020-01-01',
+                size: 1024
+            },
+            {
+                filename: 'A',
+                creation_date: '2020-01-01',
+                size: 1024
+                }
+    ];
+  }
+
+//
+  public clickUpload() {
+      alert();
+      // showUploadDialog();
+    }
+
+  showUploadDialog(){
   }
 
 }
