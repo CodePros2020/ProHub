@@ -1,0 +1,86 @@
+//These rules grant access to a node matching the authenticated
+//user's ID from the Firebase auth token
+{
+  "rules": {
+    // rules to "/roles"
+    "roles":{
+      ".read": "false",
+      ".write": "root.child('roles').child(auth.uid).child('Role').val() !== null"
+    },
+    // rules to "/users"
+    "users": {
+      "$user_id": {
+        ".read": "$user_id === root.child('roles').child(auth.uid).child('Phone').val()",
+        ".write": "$user_id === root.child('roles').child(auth.uid).child('Phone').val()",
+        ".validate": "newData.hasChildren(['firstname', 'lastname', 'phone'])"
+      }
+    },
+    // rules to "/properties"
+    "properties": {
+      "$prop_id": {
+        // only landlord can read and write properties which belongs to them
+        ".read": "root.child('roles').child(auth.uid).child('Role').val() === 'Landlord' && data.child('phone').val() === root.child('roles').child(auth.uid).child('Phone').val()",
+        ".write": "root.child('roles').child(auth.uid).child('Role').val() === 'Landlord' && data.child('phone').val() === root.child('roles').child(auth.uid).child('Phone').val()"
+      }
+    },
+    // rules to  "/units"
+    "units": {
+      "$unit_id": {
+        // allow tanent to access the units which belongs to them
+        ".read": "data.child('tenantId').val() === root.child('roles').child(auth.uid).child('Phone').val()",
+        ".write": "data.child('tenantId').val() === root.child('roles').child(auth.uid).child('Phone').val()"
+      }
+    },
+    // rules to  "/staff"
+    "staff": {
+      "$staff_id": {
+        // allow landlord to read and write staff who belongs to their owned propertied
+        ".read": "root.child('properties').child(data.child('propId').val()).child('phone').val() === root.child('roles').child(auth.uid).child('Phone').val()",
+        ".write": "root.child('properties').child(data.child('propId').val()).child('phone').val() === root.child('roles').child(auth.uid).child('Phone').val()"
+      }
+    },
+    // rules to "/news"
+    "news": {
+      "$news_id":{
+        // allow landlord and staff to write
+        ".write": "root.child('roles').child(auth.uid).child('Role').val() === 'Landlord' || root.child('roles').child(auth.uid).child('Role').val() === 'Staff'",
+        // read premission based on the hideFlag and targetViewer child of news
+        // hideFlag must be false to show news
+        // targetviewer = management only, then only landlord and staff can see it
+        // targetviewer = all, then all logged in user can see it
+        ".read": "(data.child('hideFlag').val() === 'false') && ((data.child('targetViewer').val() === 'all' && auth.uid !== null) ||(data.child('targetViewer').val() === 'management only' && (root.child('roles').child(auth.uid).child('Role').val() === 'Landlord' || root.child('roles').child(auth.uid).child('Role').val() === 'Staff')))"
+      }
+    },
+    // rules to "/chat"
+    "chat": {
+      "$chat_id":{
+        // allow people to read and write if their phone is included on chatMessageId
+        ".read": "data.child('chatMessageId').val().contains(root.child('roles').child(auth.uid).child('Phone').val())",
+        ".write": "data.child('chatMessageId').val().contains(root.child('roles').child(auth.uid).child('Phone').val())"
+      }
+    },
+    // rules to "/chatMessages"
+    "chatMessages": {
+      // allow people to read and write if their phone is included on chatMessageId
+      ".read": "data.child('chatMessageId').val().contains(root.child('roles').child(auth.uid).child('Phone').val())",
+      // maybe remove the write ability so no one can overwrite message
+      ".write": "data.child('chatMessageId').val().contains(root.child('roles').child(auth.uid).child('Phone').val())"
+    },
+    // rules to "/form"
+    "form": {
+      // allow all logged in user to read it
+      ".read": "auth.uid !== null",
+      // only the landlord or staff can write it based on the properties id
+      ".write": "root.child('properties').child(data.child('propId').val()).child('phone').val() === root.child('roles').child(auth.uid).child('Phone').val()"
+    }
+
+  }
+}
+
+//{
+//  "rules": {
+//      ".read": true,
+//      ".write": true
+//  }
+//}
+
