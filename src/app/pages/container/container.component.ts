@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContainerComponent implements OnInit {
 
+  userType;
+  isPropertySelected;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.userType = 'lessor';
+    this.isPropertySelected = true;
   }
 
 }
