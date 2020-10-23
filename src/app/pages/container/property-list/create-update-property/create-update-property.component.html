@@ -1,1 +1,18 @@
-<p>create-update-property works!</p>
+<div class="create-property-container">
+  <div class="row">
+    <div class="col">
+      <ng-container *ngIf="!isEditMode">
+        <span class="title">Create New Property</span>
+      </ng-container>
+      <ng-container *ngIf="isEditMode">
+        <span class="title">Edit Property</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+
+</div>
