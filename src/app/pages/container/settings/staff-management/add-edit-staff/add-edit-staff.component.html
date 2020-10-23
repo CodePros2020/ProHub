@@ -1,1 +1,88 @@
-<p>add-edit-staff works!</p>
+
+<div class="dialog-wrapper">
+  <div class="dialog-content">
+
+
+    <mat-toolbar>
+      <app-prohub-logo style="margin-left: 30px" size="small"></app-prohub-logo>
+      <span id="title-message">ADD/EDIT STAFF</span>
+<!--      <a id="close-btn" (click)="close()">-->
+<!--        <mat-icon matSuffix>close</mat-icon>-->
+<!--      </a>-->
+    </mat-toolbar>
+    <form [formGroup]="staffForm" class="justify-content-center form-style">
+      <div class="row justify-content-center">
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <input matInput placeholder="Full Name" formControlName="fullName">
+          <mat-error *ngIf="this.formControls.fullName.invalid">Please enter name</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="e.g. example@email.com" formControlName="email">
+          <mat-error *ngIf="this.formControls.email.invalid">Please enter email</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input matInput placeholder="(416)111-1111" formControlName="phone">
+          <mat-error *ngIf="this.formControls.phone.invalid">Please enter phone</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="e.g. 123 Street" formControlName="address">
+          <mat-error *ngIf="this.formControls.address.invalid">Please enter address</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Postal Code</mat-label>
+          <input matInput placeholder="e.g H0H0H0" formControlName="postalCode">
+          <mat-error *ngIf="this.formControls.postalCode.invalid">Please enter postal code</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>City</mat-label>
+          <input matInput placeholder="City" formControlName="city">
+          <mat-error *ngIf="this.formControls.city.invalid">Please enter city</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field appearance="outline" class="col-md-12">
+          <mat-label>Province</mat-label>
+          <mat-select formControlName="province">
+            <mat-option *ngFor="let province of provinces" [value]="province.value" >
+              {{province.viewValue}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formControls.province.invalid">Please choose province</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>City</mat-label>
+          <input matInput placeholder="e.g. Property Manager" formControlName="role">
+          <mat-error *ngIf="this.formControls.role.invalid">Please enter role</mat-error>
+        </mat-form-field>
+      </div>
+        <div class="col-8">
+            <mat-label>Upload Photo</mat-label>
+            <button mat-button><img src="assets/logo-medium.png"></button>
+        </div>
+    </div>
+    </form>
+  <div class="btn-div">
+    <button mat-button class="btn-cancel">CANCEL </button>
+    <button mat-button class="btn-save">SAVE</button>
+  </div>
+
+  </div>
+</div>
+

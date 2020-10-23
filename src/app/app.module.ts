@@ -21,7 +21,6 @@ import { PropertyListComponent } from './pages/container/property-list/property-
 import { ForgotPasswordDialogComponent } from './pages/login/forgot-password-dialog/forgot-password-dialog.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
-
 import { AuthService } from './shared-services/auth.service';
 import { ContainerComponent } from './pages/container/container.component';
 import { CreateUpdatePropertyComponent } from './pages/container/property-list/create-update-property/create-update-property.component';
@@ -42,6 +41,11 @@ import { AddImageDialogComponent } from './pages/container/newsroom/add-edit-new
 import { ChatComponent } from './pages/container/chat/chat.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapsNominatimService } from './shared-services/maps-nominatim.service';
+import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.component';
+import {StoreModule} from '@ngrx/store';
+import {storageMetaReducer} from './shared-services/storage.metareducer';
+import {metaReducer} from './shared-services/metaReducer';
+
 
 @NgModule({
   declarations: [
@@ -67,7 +71,8 @@ import { MapsNominatimService } from './shared-services/maps-nominatim.service';
     AddAttachmentDialogComponent,
     AddImageDialogComponent,
     ChatComponent,
-    SignupComponent
+    SignupComponent,
+    ProhubLogoComponent,
   ],
   imports: [
     BrowserModule,

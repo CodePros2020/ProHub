@@ -1,0 +1,81 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  height: 64px !important;
+  background-color: #fff !important;
+  border-bottom: 1px solid #e4e4e4;
+
+  #branding {
+    margin-left: 41px;
+    color: #374d7e;
+    font-size: 200%;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.42px;
+
+    span {
+      color: #25baf0;
+    }
+  }
+
+  #title-message {
+    text-align: center;
+    font: 16px Roboto;
+    letter-spacing: 7.2px;
+    color: #2B2B2B;
+    font-weight: bold;
+  }
+
+  #close-btn {
+    display: flex;
+    align-items: center;
+    margin-right: 41px;
+    color: #666666;
+    text-decoration: none;
+    cursor: pointer;
+
+    mat-icon {
+      font-size: 45px;
+      margin-top: -1.3rem;
+    }
+
+  }
+}
+// This code is to enable a sticky footer
+.dialog-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .dialog-content {
+    flex: 1;
+    background-color: #fff;
+  }
+}
+
+.container-fluid{
+  margin-bottom: 2.5rem;
+}
+.form-style{
+  margin-top: 50px;
+}
+.btn-div{
+  margin-top: 20px;
+display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.btn-cancel {
+  background-color:  #2F4550;
+  color: #ffffff;
+  margin-right: 40px;
+  width: 140px;
+  height: 45px;
+
+}
+.btn-save {
+background-color: #B8DBD9;
+  color: #4A4646;
+  width: 140px;
+  height: 45px;
+}

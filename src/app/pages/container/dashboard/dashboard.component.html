@@ -1,1 +1,53 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <div class="header">
+    <div class="image-container">
+
+    </div>
+    <div class="name-container">
+      Logan Kim
+    </div>
+    <div class="setting-container">
+      <button mat-button class="setting-btn" (click)="goSettings()" >
+        <mat-icon class="setting-icon">settings</mat-icon>
+        Settings
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row justify-content-md-center section chats">
+        <div class="overlay" (click)="goChats()">
+          Chats
+        </div>
+      </div>
+      <div class="row justify-content-md-center section staff">
+        <div class="overlay" (click)="goStaff()">
+          Staff
+        </div>
+      </div>
+      <div class="row justify-content-md-center section forms">
+        <div class="overlay" (click)="goForms()">
+          Forms
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row justify-content-md-center section news">
+        <div class="overlay" (click)="goNews()">
+          News
+        </div>
+      </div>
+      <div class="row justify-content-md-center section units">
+        <div class="overlay" (click)="goUnits()">
+          Units
+        </div>
+      </div>
+      <div class="row justify-content-md-center section settings">
+        <div class="overlay" (click)="goSettings()">
+          Settings
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
