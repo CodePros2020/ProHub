@@ -36,7 +36,7 @@
           <mat-form-field appearance="outline" class="col-md-12">
             <mat-label>Confirm Password</mat-label>
             <input formControlName="confirmPassword" matInput maxlength="64" [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm Password" >
-            <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hideConfirmPassword">
+            <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hideConfirmPassword" >
               <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <mat-error *ngIf="this.formControls.confirmPassword.invalid">Please confirm your password.</mat-error>
@@ -45,7 +45,7 @@
       </div>
       <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem; display: flex;flex-direction: column; align-items: center">
         <div class="col-md-12 text-center">
-          <button class="btn-verify" mat-raised-button (click)="sendEmail()"  > {{verified}}</button>
+          <button class="btn-verify" mat-raised-button (click)="sendEmail()"  [disabled]='linkSent' > {{verified}}</button>
         </div>
         <div>
           <label *ngIf="verificationLink">Verification link has been sent to your email!</label>
