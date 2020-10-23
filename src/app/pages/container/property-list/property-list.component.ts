@@ -50,7 +50,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
 
   openCreateNewPropertyDialog() {
     const dialogFilter = this.dialog.open(CreateUpdatePropertyComponent,{
-      height: '700px',
+      height: '690px',
       width: '850px',
       disableClose: true
     });
