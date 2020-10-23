@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
   }
 
   goSettings() {
-    this.router.navigate(['container/settings']);
+    this.router.navigate(['container//settings']);
   }
+
 }

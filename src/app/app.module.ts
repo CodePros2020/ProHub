@@ -21,7 +21,6 @@ import { PropertyListComponent } from './pages/container/property-list/property-
 import { ForgotPasswordDialogComponent } from './pages/login/forgot-password-dialog/forgot-password-dialog.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
-
 import { AuthService } from './shared-services/auth.service';
 import { ContainerComponent } from './pages/container/container.component';
 import { CreateUpdatePropertyComponent } from './pages/container/property-list/create-update-property/create-update-property.component';
@@ -41,6 +40,9 @@ import { AddAttachmentDialogComponent } from './pages/container/newsroom/add-edi
 import { AddImageDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-image-dialog/add-image-dialog.component';
 import { ChatComponent } from './pages/container/chat/chat.component';
 import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.component';
+import {StoreModule} from '@ngrx/store';
+import {storageMetaReducer} from './shared-services/storage.metareducer';
+import {metaReducer} from './shared-services/metaReducer';
 
 
 @NgModule({
@@ -83,8 +85,7 @@ import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.compon
     AngularFirestoreModule, // Only required for database features
     AngularFireAuthModule, // Only required for auth features,
     AngularFireStorageModule, // Only required for storage features
-    AngularFireMessagingModule,
-
+    AngularFireMessagingModule
   ],
   providers: [FirebaseService, AuthService],
   bootstrap: [AppComponent]

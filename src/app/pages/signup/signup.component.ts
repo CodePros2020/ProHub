@@ -11,7 +11,7 @@ import {MatButton} from '@angular/material/button';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-@ViewChild(MatButton) nextBtn: MatButton;
+
 
   public hide = true;
   public hideConfirmPassword = true;
@@ -52,20 +52,22 @@ export class SignupComponent implements OnInit {
     if (!this.linkSent) {
       this.authService.signup(this.formControls.email.value, this.formControls.password.value);
       this.verificationLink = true;
-      this.verified = 'SEND AGAIN';
+      this.formControls.email.disable();
+      this.formControls.password.disable();
+      this.formControls.confirmPassword.disable();
+      // this.verified = 'SEND AGAIN';
       this.linkSent = true;
-
     } else {
       this.authService.SendVerificationMail();
     }
   }
 
-  verifyCode() {
-    this.authService.login(this.formControls.email.value, this.formControls.password.value, 'signup');
+  async verifyCode() {
+    await this.authService.login(this.formControls.email.value, this.formControls.password.value, 'signup');
     console.log('The return val ', this.authService.isLoggedIn);
     if (this.authService.isLoggedIn) {
       this.dialogRef.close();
-      this.router.navigate(['/register']);
+      await this.router.navigate(['/register']);
     }
   }
 }
