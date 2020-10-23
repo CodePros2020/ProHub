@@ -6,38 +6,139 @@
   font-size: 1.2em;
 
   .header {
-    display: table-cell;
+    display: flex;
     height: 150px;
     background-color: white;
-    vertical-align: middle;
+    align-items: center;
     width: 1024px;
+    border-radius: 10px;
   }
 
   .image-container {
     display: inline-block;
     width: 100px;
     height: 100px;
-    border: 3px solid #2f4550;
     border-radius: 50px;
     margin-left: 100px;
     margin-right: 50px;
+    background-image: url("/assets/logan.png");
+    background-color: #ccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    box-shadow: 0 0 10px #000000;
   }
 
   .name-container {
     display: inline-block;
     font-size: 2em;
-    border: 3px solid #2f4550;
   }
 
-  .section-container {
-    margin-top: 20px;
+  .setting-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 50px;
+    margin-left: auto;
+  }
+
+  .setting-btn {
+    padding: 3px 10px;
+    background-color: #2f4550;
+    color: white;
+    font-size: 1em;
+    transition: 0.3s ease;
+  }
+
+  .setting-btn:hover {
+    background-color: #586F7C;
+    transition: 0.3s ease;
+  }
+
+  .setting-icon {
+    color: white;
+    margin-right: 4px;
   }
 
   .section {
-    display: inline-block;
-    border: 2px solid black;
-    width: 500px;
-    height: 220px;
-    margin: 6px;
+    height: 200px;
+    margin: 30px;
+    border-radius: 10px;
+    transition: 0.5s ease;
+  }
+
+  .section:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  .chats {
+    background-image: url("/assets/dashboard/chats.jpg");
+    background-color: #ccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .staff {
+    background-image: url("/assets/dashboard/staff.jpg");
+    background-color: #ccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .forms {
+    background-image: url("/assets/dashboard/forms.jpg");
+    background-color: #ccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .news {
+    background-image: url("/assets/dashboard/news.jpg");
+    background-color: #ccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .units {
+    background-image: url("/assets/dashboard/units.jpg");
+    background-color: #ccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .settings {
+    background-image: url("/assets/dashboard/settings.jpg");
+    background-color: #ccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    border-radius: 10px;
   }
 }
