@@ -40,6 +40,8 @@ import { AddEditNewsDialogComponent } from './pages/container/newsroom/add-edit-
 import { AddAttachmentDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-attachment-dialog/add-attachment-dialog.component';
 import { AddImageDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-image-dialog/add-image-dialog.component';
 import { ChatComponent } from './pages/container/chat/chat.component';
+import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.component';
+
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { ChatComponent } from './pages/container/chat/chat.component';
     AddAttachmentDialogComponent,
     AddImageDialogComponent,
     ChatComponent,
-    SignupComponent
+    SignupComponent,
+    ProhubLogoComponent,
   ],
   imports: [
     BrowserModule,
