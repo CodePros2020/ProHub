@@ -17,9 +17,10 @@ export class SettingsComponent implements OnInit {
     const dialogRef = this.dialog.open(StaffManagementComponent, {
       maxWidth: 'auto',
       maxHeight: 'auto',
-      height: '100%',
-      width: '100%',
+      height: '80%',
+      width: '70%',
       panelClass: 'no-padding-container',
+      disableClose: true,
       data: {}
     });
     // dialogRef.componentInstance.onAdd.subscribe(result => {

@@ -1,16 +1,81 @@
-
-<div class="dialog-wrapper">
-  <div class="dialog-content">
-
-
-<!--      <mat-toolbar>-->
-        <app-container></app-container>
-<!--        <app-prohub-logo style="margin-left: 30px" size="small"></app-prohub-logo>-->
-<!--        <span id="title-message">ADD NEW/EDIT STAFF</span>-->
-<!--        <a id="close-btn" (click)="close()">-->
-<!--          <mat-icon matSuffix>close</mat-icon>-->
-<!--        </a>-->
-<!--      </mat-toolbar>-->
-
+<div class="staff-list-container">
+  <div style="float:right">
+    <a id="close-btn" (click)="close()" >
+      <mat-icon matSuffix>close</mat-icon>
+    </a>
   </div>
+
+  <form [formGroup]="staffListForm">
+    <div class="container-fluid">
+    <div class="titles justify-content-center" >
+
+  <div class="row" >
+    <div class="col title justify-content-center">
+      <span style="justify-content: center">Staff Management</span>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col sub-title justify-content-center sub-title-div">
+      <span style="justify-content: center">8 Progress Street</span>
+    </div>
+  </div>
+    </div>
+
+      <div class="row">
+
+        <div class="col-md d-flex justify-content-between">
+
+          <mat-form-field appearance="outline" style="width: 60%">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="Search" formControlName="staffSearch" type="text" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let staff of dataSource.data">{{ staff.name }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <button class="add-staff-btn" mat-raised-button (click)="openAddEditStaffDialog()"><mat-icon>add</mat-icon> ADD</button>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Staff Name </mat-header-cell>
+              <mat-cell *matCellDef="let staff"> {{staff.name}} </mat-cell>
+            </ng-container>
+
+            <!-- Role Column -->
+            <ng-container matColumnDef="role">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Staff Role </mat-header-cell>
+              <mat-cell *matCellDef="let staff"> {{staff.role}} </mat-cell>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
+              <mat-cell *matCellDef="let staff" class="d-flex justify-content-between">
+                <mat-icon class="edit" (click)="openAddEditStaffDialog()">edit</mat-icon>
+                <mat-icon class="delete">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="tbl-header"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+
+
+
+    </div>
+  </form>
+</div>
+
+<div class="table-sec">
 </div>

@@ -1,57 +1,87 @@
-mat-toolbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 0;
-  height: 64px !important;
-  background-color: #fff !important;
-  border-bottom: 1px solid #e4e4e4;
+.staff-list-container {
+  width: 1024px;
+  margin: auto;
+  height: 100%;
+  background-color: #fff;
+  padding: 1rem 1rem;
 
-  #branding {
-    margin-left: 41px;
-    color: #374d7e;
-    font-size: 200%;
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: 0.42px;
-
-    span {
-      color: #25baf0;
-    }
-  }
-
-  #title-message {
+  .title {
+    font-weight: bolder;
+    font-size: xx-large;
+    padding: 20px;
     text-align: center;
-    font: 16px Roboto;
-    letter-spacing: 7.2px;
-    color: #2B2B2B;
-    font-weight: bold;
+  }
+  .sub-title {
+    font-weight: 400;
+    font-size: medium;
+    padding: 20px;
+    text-align: center;
+  }
+  .add-staff-btn {
+    background-color: #2f4550;
+    color: #fff;
+    width: 7rem;
+    height: 3rem;
+    margin-top: 5px;
   }
 
-  #close-btn {
-    display: flex;
-    align-items: center;
-    margin-right: 41px;
-    color: #666666;
-    text-decoration: none;
+  .mat-column-action {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .edit{
+    color:#0cbd65;
+    font-size:24px !important;
     cursor: pointer;
+  }
 
-    mat-icon {
-      font-size: 45px;
-      margin-top: -1.3rem;
-    }
-
+  .delete{
+    color:red;
+    //display:inline;
+    font-size:24px !important;
+    cursor: pointer;
   }
 }
-// This code is to enable a sticky footer
-.dialog-wrapper {
+
+.tbl-header{
+  background-color: #2f4550;
+  color: #ffffff;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.cell-txt{
+  color: #ffffff;
+  font-size: 16px;
+}
+.titles{
+  padding: 20px;
+
+  justify-content: center;
+}
+#close-btn {
   display: flex;
-  flex-direction: column;
+  justify-self: flex-end;
+  align-items: center;
+  margin-right: 41px;
+  color: #666666;
+  text-decoration: none;
+  cursor: pointer;
 
-  .dialog-content {
-    flex: 1;
-    background-color: #fff;
+  mat-icon {
+    font-size: 45px;
+    margin-top: -1.3rem;
   }
+
 }
 
-.container-fluid{
-  margin-bottom: 2.5rem;
-}
