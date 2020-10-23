@@ -5,7 +5,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Observable} from 'rxjs';
-import {startWith} from 'rxjs/operators';
+import {map, startWith} from 'rxjs/operators';
 import {CreateUpdatePropertyComponent} from './create-update-property/create-update-property.component';
 
 @Component({
@@ -30,6 +30,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+    this.filteredOptions();
   }
 
   ngAfterViewInit() {
@@ -49,10 +50,23 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
 
   openCreateNewPropertyDialog() {
     const dialogFilter = this.dialog.open(CreateUpdatePropertyComponent,{
-      height: '550px',
-      width: '1024px',
+      height: '690px',
+      width: '850px',
       disableClose: true
     });
+  }
+
+  filteredOptions() {
+    this.propertyListResult = this.formControls.propertySearch.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+  }
+
+  private _filter(value): PropertyListInterface[] {
+    const filterValue = value.toLowerCase();
+
+    return this.dataSource.data.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
 }
 

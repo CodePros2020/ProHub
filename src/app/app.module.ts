@@ -39,6 +39,8 @@ import { AddEditNewsDialogComponent } from './pages/container/newsroom/add-edit-
 import { AddAttachmentDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-attachment-dialog/add-attachment-dialog.component';
 import { AddImageDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-image-dialog/add-image-dialog.component';
 import { ChatComponent } from './pages/container/chat/chat.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapsNominatimService } from './shared-services/maps-nominatim.service';
 import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.component';
 import {StoreModule} from '@ngrx/store';
 import {storageMetaReducer} from './shared-services/storage.metareducer';
@@ -85,9 +87,11 @@ import {metaReducer} from './shared-services/metaReducer';
     AngularFirestoreModule, // Only required for database features
     AngularFireAuthModule, // Only required for auth features,
     AngularFireStorageModule, // Only required for storage features
-    AngularFireMessagingModule
+    AngularFireMessagingModule,
+    LeafletModule
+
   ],
-  providers: [FirebaseService, AuthService],
+  providers: [FirebaseService, AuthService, MapsNominatimService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

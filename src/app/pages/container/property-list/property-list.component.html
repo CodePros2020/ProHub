@@ -16,7 +16,7 @@
             <mat-icon matPrefix>search</mat-icon>
             <input matInput placeholder="Search" formControlName="propertySearch" type="text" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let prop of dataSource.data">{{ prop.name }}</mat-option>
+              <mat-option *ngFor="let prop of dataSource.data" [value]="prop.name">{{ prop.name }}</mat-option>
             </mat-autocomplete>
           </mat-form-field>
 
