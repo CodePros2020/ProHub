@@ -52,11 +52,16 @@
   .edit{
     color:#0cbd65;
     font-size:24px !important;
+    cursor: pointer;
   }
 
   .delete{
     color:red;
-    //display:inline;
     font-size:24px !important;
+    cursor: pointer;
+  }
+
+  .mat-cell {
+    cursor: pointer;
   }
 }

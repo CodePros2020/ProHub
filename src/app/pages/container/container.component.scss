@@ -1,3 +1,17 @@
+@media (max-width: 1024px) {
+  .nav-toolbar {
+    background-color: #2f4550;
+    height: 60px;
+    color: #f8f9fa;
+    position: sticky;
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
 mat-toolbar {
   background-color: #2f4550;
   height: 60px;
@@ -7,7 +21,7 @@ mat-toolbar {
   top: 0; /* Sets the sticky toolbar to be on top */
   z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .logo {
@@ -54,4 +68,9 @@ mat-toolbar {
   .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
     caret-color: red!important;
   }
+}
+
+.mat-sidenav-container{
+  background-color: #f4f4f9;
+  //min-height: 90vh !important;
 }
