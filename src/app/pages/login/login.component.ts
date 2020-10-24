@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(this.formControls.userName.value, this.formControls.password.value, 'login');
     if (this.authService.isLoggedIn) {
-      this.router.navigate(['/propertyList']);
+      this.router.navigate(['container/property-list']);
     }
 
   }

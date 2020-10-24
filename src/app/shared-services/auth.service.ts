@@ -4,25 +4,43 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+// import {Store} from '@ngrx/store';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   user: Observable<firebase.User>;
-  public isLoggedIn = false;
+  public isLoggedIn = true;
+  public email = '';
 
   constructor(
     private firebaseAuth: AngularFireAuth,
     private router: Router,
-    private ngZone: NgZone
+    private http: HttpClient,
+    // private store: Store
   ) {
     this.user = firebaseAuth.authState;
+    // this.authState.subscribe(user => {
+    //   if (user) {
+    //     this.userState = user;
+    //     localStorage.setItem('user', JSON.stringify(this.userState));
+    //     JSON.parse(localStorage.getItem('user'));
+    //   } else {
+    //     localStorage.setItem('user', null);
+    //     JSON.parse(localStorage.getItem('user'));
+    //   }
+    // })
   }
 
-  SendVerificationMail() {
-    return this.firebaseAuth.currentUser.then(u => u.sendEmailVerification());
 
+  SendVerificationMail() {
+    this.isLoggedIn = false;
+    return this.firebaseAuth.currentUser.then(u =>  u.sendEmailVerification()
+
+  );
   }
 
  signup(email: string, password: string) {
@@ -30,6 +48,7 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
         console.log('Val returned is ' , value);
+        this.email = value.user.email;
         this.SendVerificationMail();
       })
       .catch(err => {
@@ -37,16 +56,19 @@ export class AuthService {
       });
   }
 
-  login(email: string, password: string, prevPage: string) {
+ login(email: string, password: string, prevPage: string) {
+    this.isLoggedIn = true;
     return this.firebaseAuth.signInWithEmailAndPassword(email, password)
       .then((result) => {
         if (result.user.emailVerified !== true) {
           this.SendVerificationMail();
           window.alert('Please validate your email address. Kindly check your inbox.');
         } else {
-          this.ngZone.run(() => {
-            this.router.navigate(['container', 'lessor', 'property-list']);
-          });
+          this.email = result.user.email;
+          // this.ngZone.run(() => {
+          //
+          //   // this.router.navigate(['container/property-list']);
+          // });
           // this.isLoggedIn = true;
           // this.ngZone.run(() => {
           // });
@@ -63,9 +85,9 @@ export class AuthService {
       });
   }
 
-
-
   logout() {
     this.firebaseAuth.signOut();
   }
+
+
 }

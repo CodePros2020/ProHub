@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'signup', component: SignupComponent},
   {
-    path: 'container/:user',
+    path: 'container',
     component: ContainerComponent,
     children: [
       {path: 'chat', component: ChatComponent},
@@ -26,7 +26,7 @@ const routes: Routes = [
       {path: 'forms', component: FormsComponent},
       {path: 'newsroom', component: NewsroomComponent},
       {path: 'property-list', component: PropertyListComponent},
-      {path: 'settings', component: SettingsComponent}
+      {path: 'settings', component: SettingsComponent},
     ]
   }
 ];
