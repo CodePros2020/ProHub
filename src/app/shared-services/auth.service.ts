@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Store} from '@ngrx/store';
+// import {Store} from '@ngrx/store';
 
 
 @Injectable({
@@ -20,7 +20,7 @@ export class AuthService {
     private firebaseAuth: AngularFireAuth,
     private router: Router,
     private http: HttpClient,
-    private store: Store
+    // private store: Store
   ) {
     this.user = firebaseAuth.authState;
     // this.authState.subscribe(user => {
