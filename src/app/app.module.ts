@@ -42,9 +42,8 @@ import { ChatComponent } from './pages/container/chat/chat.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapsNominatimService } from './shared-services/maps-nominatim.service';
 import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.component';
-import {StoreModule} from '@ngrx/store';
-import {storageMetaReducer} from './shared-services/storage.metareducer';
-import {metaReducer} from './shared-services/metaReducer';
+import { VerifyEmailAddressComponent } from './pages/signup/verify-email-address/verify-email-address.component';
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 
 
 @NgModule({
@@ -73,6 +72,8 @@ import {metaReducer} from './shared-services/metaReducer';
     ChatComponent,
     SignupComponent,
     ProhubLogoComponent,
+    VerifyEmailAddressComponent,
+    ErrorDialogComponent,
   ],
   imports: [
     BrowserModule,

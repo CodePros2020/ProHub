@@ -33,7 +33,7 @@
               <div class="col-md-10">
                 <mat-form-field appearance="outline">
                   <mat-label>Email</mat-label>
-                  <input readonly formControlName="email" matInput maxlength="64" placeholder="Email" disabled>
+                  <input  formControlName="email" matInput maxlength="100" placeholder="e.g example@email.com">
                 </mat-form-field>
               </div>
             </div>
@@ -57,64 +57,88 @@
                 </mat-form-field>
               </div>
             </div>
-
-          </div>
-          <mat-divider vertical></mat-divider>
-          <div class="col">
-
             <div class="row justify-content-md-center">
               <div class="col-md-10">
                 <mat-form-field appearance="outline">
                   <mat-label>Phone</mat-label>
-                  <input formControlName="phone" matInput maxlength="64" placeholder="Phone" mask="(000) 000-0000">
+                  <input formControlName="phone" matInput maxlength="15" placeholder="Phone" mask="(000) 000-0000">
                   <mat-error *ngIf="formControls.phone.invalid">Please enter a valid phone number.</mat-error>
                 </mat-form-field>
               </div>
             </div>
 
-            <ng-container *ngIf="personal.checked">
+          </div>
+          <mat-divider vertical></mat-divider>
+          <div class="col">
+
+
+
+<!--            <ng-container *ngIf="personal.value === 'personal'">-->
+<!--              <div class="row justify-content-md-center">-->
+<!--                <div class="col-md-10">-->
+<!--                  <mat-form-field appearance="outline">-->
+<!--                    <mat-label>Property ID</mat-label>-->
+<!--                    <input formControlName="propertyId" matInput maxlength="64" placeholder="Property ID">-->
+<!--                    <mat-error *ngIf="formControls.propertyId.invalid">Please enter property ID.</mat-error>-->
+<!--                  </mat-form-field>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="row justify-content-md-center">-->
+<!--                <div class="col-md-10">-->
+<!--                  <mat-form-field appearance="outline">-->
+<!--                    <mat-label>Property Key</mat-label>-->
+<!--                    <input formControlName="propertyKey" matInput maxlength="64" placeholder="Property Key">-->
+<!--                    <mat-error *ngIf="formControls.propertyKey.invalid">Please enter property key.</mat-error>-->
+<!--                  </mat-form-field>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </ng-container>-->
+
+<!--            <ng-container *ngIf="this.authService.userType === 'business'">-->
               <div class="row justify-content-md-center">
                 <div class="col-md-10">
                   <mat-form-field appearance="outline">
-                    <mat-label>Property ID</mat-label>
-                    <input formControlName="propertyId" matInput maxlength="64" placeholder="Property ID">
-                    <mat-error *ngIf="formControls.propertyId.invalid">Please enter property ID.</mat-error>
+                    <mat-label>Address</mat-label>
+                    <input formControlName="address" matInput maxlength="64" placeholder="Address">
+                    <mat-error *ngIf="formControls.address.invalid">Please enter address.</mat-error>
                   </mat-form-field>
                 </div>
               </div>
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>Province</mat-label>
+                  <mat-select formControlName="province">
+                    <mat-option *ngFor="let province of provinces" [value]="province.value">
+                      {{province.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="this.formControls.province.invalid">Please choose province</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row justify-content-md-center">
+              <div class="col-md-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>Postal Code</mat-label>
+                  <input formControlName="postalCode" matInput maxlength="64" placeholder="e.g H0H0H0" >
+                  <mat-error *ngIf="formControls.postalCode.invalid">Please enter postalCode.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
 
               <div class="row justify-content-md-center">
                 <div class="col-md-10">
                   <mat-form-field appearance="outline">
-                    <mat-label>Property Key</mat-label>
-                    <input formControlName="propertyKey" matInput maxlength="64" placeholder="Property Key">
-                    <mat-error *ngIf="formControls.propertyKey.invalid">Please enter property key.</mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-            </ng-container>
-
-            <ng-container *ngIf="business.checked">
-              <div class="row justify-content-md-center">
-                <div class="col-md-10">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Property Name</mat-label>
-                    <input formControlName="propertyName" matInput maxlength="64" placeholder="Property Name">
-                    <mat-error *ngIf="formControls.propertyName.invalid">Please enter property name.</mat-error>
+                    <mat-label>City</mat-label>
+                    <input formControlName="city" matInput maxlength="64" placeholder="City">
+                    <mat-error *ngIf="formControls.city.invalid">Please enter city.</mat-error>
                   </mat-form-field>
                 </div>
               </div>
 
-              <div class="row justify-content-md-center">
-                <div class="col-md-10">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Location</mat-label>
-                    <input formControlName="location" matInput maxlength="64" placeholder="Location">
-                    <mat-error *ngIf="formControls.location.invalid">Please enter location.</mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-            </ng-container>
+<!--            </ng-container>-->
 
           </div>
         </div>

@@ -4,9 +4,8 @@ export class RegistrationModel {
   lastName: string;
   email: string;
   phone: string;
-  password: string;
-  propertyId: string;
-  propertyKey: string;
-  propertyName: string;
-  location: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  province: string;
 }
