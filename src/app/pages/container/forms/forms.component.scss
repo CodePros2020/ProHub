@@ -1,86 +1,72 @@
-html{
-  overflow: hidden;
-}
-
-.title {
-  font-weight: bolder;
-  font-size: xx-large;
-  margin: 2.5rem 0;
-}
-
-
 .container {
   width: 1024px;
-  height: 700px;
-  //position: absolute;
+  margin: auto;
+  height: 100%;
+  //background-color: #fff;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  margin: auto;
-}
 
-.center-div{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-}
+  .title {
+    font-weight: bolder;
+    font-size: xx-large;
+    margin: 2.5rem 0;
+  }
 
-/* Search */
-.btn-upload {
-  color: #fff;
-  background-color: #2F4550;
-  width: 120px;
-  height: 35px;
-}
+  /* Search */
+  .btn-upload {
+    background-color: #2F4550;
+    color: #fff;
+    width: 7rem;
+    height: 2.3rem;
+  }
 
+  /* mat table */
+  .mat-column-name {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 30% !important;
+    width: 30% !important;
+    overflow-wrap: break-word;
 
-.edit{
-  color:#0cbd65;
-  font-size:24px !important;
-  cursor: pointer;
-}
+    word-break: break-word;
 
-.delete{
-  color:red;
-  font-size:24px !important;
-  cursor: pointer;
-}
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
 
-table{
-  width:100%;
-}
+  .mat-column-action {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
 
-.mat-cell {
-  cursor: pointer;
-}
+    word-break: break-word;
 
-.mat-column-name {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 30% !important;
-  width: 30% !important;
-  overflow-wrap: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
 
-  word-break: break-word;
+  .mat-cell {
+    cursor: pointer;
+  }
 
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-.mat-column-action {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 10% !important;
-  width: 10% !important;
-  overflow-wrap: break-word;
+  /* mat-icon styles */
+  .edit{
+    color:#0cbd65;
+    font-size:24px !important;
+    cursor: pointer;
+  }
 
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
+  .delete{
+    color:red;
+    font-size:24px !important;
+    cursor: pointer;
+  }
 }

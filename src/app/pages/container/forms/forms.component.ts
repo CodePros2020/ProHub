@@ -4,7 +4,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from "@angular/material/paginator";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {CreateUpdatePropertyComponent} from "../property-list/create-update-property/create-update-property.component";
 
 @Component({
   selector: 'app-forms',
@@ -22,8 +21,10 @@ export class FormsComponent implements AfterViewInit  {
   dataSource = new MatTableDataSource(FORM_LIST_DATA);
 
   // constructor
-  constructor() {
-
+  constructor(public dialog: MatDialog
+              // private formBuilder: FormBuider,
+              // private formService: FormService
+              ) {
   }
 
   // life cycle hooks
@@ -35,16 +36,21 @@ export class FormsComponent implements AfterViewInit  {
     this.dataSource.paginator = this.paginator;
   }
 
+  retrieveForms() {
+    // form service here
+  }
+
+  //
+
+
   // controls
   public clickUpload() {
     alert();
-
-    
     // showUploadDialog();
   }
 
-
 }
+
 
 // static code for testing purpose
 export interface IForm {
@@ -55,22 +61,22 @@ export interface IForm {
 
 const FORM_LIST_DATA: IForm[] = [
   {
-    filename: 'A',
+    filename: 'Application Form.pdf',
     creation_date: '2020-01-01',
     size: 1024
   },
   {
-    filename: 'B',
+    filename: 'Tenant Agreement.pdf',
     creation_date: '2020-02-02',
     size: 1024
   },
   {
-    filename: 'C',
+    filename: 'IMG_20201024_2305418.jpg',
     creation_date: '2020-03-03',
     size: 1024
   },
   {
-    filename: 'D',
+    filename: 'L4 Form V2.0.pdf',
     creation_date: '2020-04-04',
     size: 1024
   }
