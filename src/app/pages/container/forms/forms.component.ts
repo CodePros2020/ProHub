@@ -50,14 +50,6 @@ export class FormsComponent implements AfterViewInit  {
     })
   }
 
-  openCreateNewPropertyDialog() {
-    const dialogFilter = this.dialog.open(CreateUpdatePropertyComponent, {
-      height: '690px',
-      width: '850px',
-      disableClose: true
-    });
-  }
-
 }
 
 

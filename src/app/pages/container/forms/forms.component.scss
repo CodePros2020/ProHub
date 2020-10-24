@@ -16,17 +16,20 @@
 
   /* Search */
   .mat-form-field {
+  }
 
-    //input {
-    //  padding:0;
-    //}
+  /* Angular Material override */
+  ::ng-deep .mat-form-field {
+    font-size: 0.8rem;
   }
 
   .btn-upload {
     background-color: #2F4550;
     color: #fff;
     width: 7rem;
-    height: 2.3rem;
+    height: 2.9rem;
+
+    margin-top: 3px;
   }
 
   /* mat table */

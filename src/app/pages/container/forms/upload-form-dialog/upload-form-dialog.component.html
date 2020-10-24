@@ -1,1 +1,52 @@
-<p>upload-form-dialog works!</p>
+<div class="upload-form-container">
+  <form [formGroup]="uploadFormForm">
+    <!-- Title -->
+    <div class="row">
+      <div class="col">
+        <ng-container>
+          <span class="title">{{isEditMode  ? "Edit Form" : "Upload New Form" }}</span>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+
+    <!-- Content -->
+
+    <div class="row">
+<!--      <div class="col-md-8">-->
+<!--        <input class="form-control" type="file" placeholder="Search" aria-label="Search">-->
+<!--      </div>-->
+<!--      <div class="col-md-4">-->
+<!--        <button class="btn-upload" mat-raised-button>BROWSE</button>-->
+<!--      </div>-->
+      <div class="col-md-12">
+        <input class="form-control" type="file" aria-label="filedialog">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col title">
+        <span>File name</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="row justify-content-md-center buttons">
+      <div class="col-md-2 text-center">
+        <button class="save" mat-raised-button>SAVE</button>
+      </div>
+      <div class="col-md-2 text-center">
+        <button class="cancel" mat-raised-button (click)="close()">CANCEL</button>
+      </div>
+    </div>
+  </form>
+</div>
