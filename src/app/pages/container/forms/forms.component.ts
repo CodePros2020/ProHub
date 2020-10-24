@@ -4,6 +4,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from "@angular/material/paginator";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
+import {CreateUpdatePropertyComponent} from "../property-list/create-update-property/create-update-property.component";
+import {UploadFormDialogComponent} from "./upload-form-dialog/upload-form-dialog.component";
 
 @Component({
   selector: 'app-forms',
@@ -40,13 +42,20 @@ export class FormsComponent implements AfterViewInit  {
     // form service here
   }
 
-  //
+  public openUploadFormDialog() {
+    const dialogFilter = this.dialog.open(UploadFormDialogComponent, {
+      height: '690px',
+      width: '850px',
+      disableClose: true
+    })
+  }
 
-
-  // controls
-  public clickUpload() {
-    alert();
-    // showUploadDialog();
+  openCreateNewPropertyDialog() {
+    const dialogFilter = this.dialog.open(CreateUpdatePropertyComponent, {
+      height: '690px',
+      width: '850px',
+      disableClose: true
+    });
   }
 
 }
