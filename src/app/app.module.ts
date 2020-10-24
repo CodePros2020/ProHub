@@ -14,6 +14,7 @@ import { SignupComponent} from './pages/signup/signup.component';
 // firebase set up
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -44,6 +45,8 @@ import { MapsNominatimService } from './shared-services/maps-nominatim.service';
 import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.component';
 import { VerifyEmailAddressComponent } from './pages/signup/verify-email-address/verify-email-address.component';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 
 @NgModule({
@@ -85,11 +88,13 @@ import { ErrorDialogComponent } from './components/error-dialog/error-dialog.com
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
     AngularFirestoreModule, // Only required for database features
     AngularFireAuthModule, // Only required for auth features,
     AngularFireStorageModule, // Only required for storage features
     AngularFireMessagingModule,
-    LeafletModule
+    LeafletModule,
+    FlexLayoutModule
 
   ],
   providers: [FirebaseService, AuthService, MapsNominatimService],

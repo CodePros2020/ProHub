@@ -4,21 +4,19 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase';
-import {User} from '../shared/services/user';
-import {AngularFireDatabase, AngularFireObject} from '@angular/fire/database';
-import {VerifyEmailAddressComponent} from '../pages/signup/verify-email-address/verify-email-address.component';
-import {MatDialog} from '@angular/material/dialog';
-import {ErrorDialogComponent} from '../components/error-dialog/error-dialog.component';
-import {RegistrationModel} from '../pages/registration/manager/registration.model';
-import {FirebaseService} from './firebase.service';
-
-
+import { User } from '../shared/services/user';
+import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
+import { VerifyEmailAddressComponent } from '../pages/signup/verify-email-address/verify-email-address.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.component';
+import { RegistrationModel } from '../pages/registration/manager/registration.model';
+import { FirebaseService } from './firebase.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   userData: any; // Save logged in user data
   user: RegistrationModel;
 
@@ -28,13 +26,14 @@ export class AuthService {
     private firebaseService: FirebaseService,
     public router: Router,
     public ngZone: NgZone,
-    public dialog: MatDialog // NgZone service to remove outside scope warning
+    public dialog: MatDialog, // NgZone service to remove outside scope warning
+    private http: HttpClient
   ) {
     this.user = new RegistrationModel();
 
     /* Saving user data in localstorage when
     logged in and setting up null when logged out */
-    this.firebaseAuth.authState.subscribe(user => {
+    this.firebaseAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
@@ -46,18 +45,17 @@ export class AuthService {
     });
   }
 
-
-
   // Sign in with email/password
   SignIn(email, password) {
-    return this.firebaseAuth.signInWithEmailAndPassword(email, password)
+    return this.firebaseAuth
+      .signInWithEmailAndPassword(email, password)
       .then((result) => {
         console.log('User Received =>', result.user);
         // this.user = this.firebaseService.getUser();
         this.ngZone.run(() => {
-          if (this.userData.emailVerified){
+          if (this.userData.emailVerified) {
             this.router.navigate(['register']);
-            }
+          }
           // else if (this.userData.emailVerified ){
           //
           // }
@@ -68,32 +66,40 @@ export class AuthService {
               autoFocus: false,
               restoreFocus: false,
               panelClass: 'no-padding-container',
-              data: {msg: 'An email verification link has been sent at ' + this.userData.email + '. Please verify email to login.'}
+              data: {
+                msg:
+                  'An email verification link has been sent at ' +
+                  this.userData.email +
+                  '. Please verify email to login.',
+              },
             });
           }
         });
         this.SetUserData(result.user);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         window.alert(error.message);
       });
   }
   // Sign up with email/password
   SignUp(email, password) {
-    return this.firebaseAuth.createUserWithEmailAndPassword(email, password)
+    return this.firebaseAuth
+      .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
         console.log('User received ', result.user);
         this.SendVerificationMail();
         this.SetUserData(result.user);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         window.alert(error.message);
       });
   }
   // Send email verification when new user sign up
   SendVerificationMail() {
-    return this.firebaseAuth.currentUser.then(u => u.sendEmailVerification()
-      .then(() => {
+    return this.firebaseAuth.currentUser.then((u) =>
+      u.sendEmailVerification().then(() => {
         const dialog = this.dialog.open(VerifyEmailAddressComponent, {
           height: '350px',
           width: '450px',
@@ -106,22 +112,25 @@ export class AuthService {
   }
   // Reset Forggot password
   ForgotPassword(passwordResetEmail) {
-    return this.firebaseAuth.sendPasswordResetEmail(passwordResetEmail)
-     .catch((error) => {
+    return this.firebaseAuth
+      .sendPasswordResetEmail(passwordResetEmail)
+      .catch((error) => {
         window.alert(error);
       });
   }
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null && user.emailVerified !== false) ? true : false;
+    return user !== null && user.emailVerified !== false ? true : false;
   }
   /* Setting up user data when sign in with username/password,
     sign up with username/password and sign in with social auth
     provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   SetUserData(user) {
-   // const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    const userRef: AngularFireObject<unknown> = this.afs.object(`users/${user.uid}`);
+    // const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFireObject<unknown> = this.afs.object(
+      `users/${user.uid}`
+    );
     const userData: User = {
       uid: user.uid,
       email: user.email,
@@ -143,9 +152,10 @@ export class AuthService {
   }
   // deleting a user from Authentication
   deleteUser(email: string, password: string) {
-    this.firebaseAuth.signInWithEmailAndPassword(email, password)
+    this.firebaseAuth
+      .signInWithEmailAndPassword(email, password)
       .then((info) => {
-       this.firebaseAuth.currentUser.then(u => u.delete());
+        this.firebaseAuth.currentUser.then((u) => u.delete());
       });
   }
 }

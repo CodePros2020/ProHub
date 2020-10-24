@@ -1,10 +1,17 @@
-<mat-toolbar>
+<mat-toolbar class="nav-toolbar">
+
+  <div fxShow="true" fxHide.gt-sm="true">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
   <div class="image-brand">
     <img class="logo" src="assets/logo-white.png">
     <span class="brand">ProHub</span>
   </div>
 
-  <div class="nav-link">
+  <div class="nav-link" fxShow="true" fxHide.lt-md="true">
     <ng-container *ngIf="isPropertySelected">
       <button [routerLink]="['dashboard']" mat-button>Dashboard</button>
       <button [routerLink]="['newsroom']" mat-button>Newsroom</button>
@@ -24,6 +31,22 @@
     <button  mat-button (click)="SignOut()" >Logout</button>
   </div>
 </mat-toolbar>
-<div class="component-container">
-  <router-outlet></router-outlet>
-</div>
+
+<mat-sidenav-container fxFlexFill class="example-container">
+  <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
+    <div fxLayout="column">
+      <ng-container *ngIf="isPropertySelected">
+        <button [routerLink]="['dashboard']" mat-button>Dashboard</button>
+        <button [routerLink]="['newsroom']" mat-button>Newsroom</button>
+        <button [routerLink]="['chat']" mat-button>Chat</button>
+        <button [routerLink]="['forms']" mat-button>Forms</button>
+      </ng-container>
+      <button [routerLink]="['']" mat-button>Logout</button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content fxFlexFill>
+    <div class="component-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
