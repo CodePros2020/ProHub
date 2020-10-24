@@ -35,11 +35,52 @@ html{
   height: 35px;
 }
 
-/* table */
-table {
-  width: 100%;
+
+.edit{
+  color:#0cbd65;
+  font-size:24px !important;
+  cursor: pointer;
 }
 
-th.mat-sort-header-sorted {
-  color: black;
+.delete{
+  color:red;
+  font-size:24px !important;
+  cursor: pointer;
+}
+
+table{
+  width:100%;
+}
+
+.mat-cell {
+  cursor: pointer;
+}
+
+.mat-column-name {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 30% !important;
+  width: 30% !important;
+  overflow-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+.mat-column-action {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+  overflow-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
