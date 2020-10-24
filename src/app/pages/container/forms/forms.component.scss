@@ -23,11 +23,11 @@
   }
 
   /* mat table */
-  .mat-column-name {
+  .mat-column-filename {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 30% !important;
-    width: 30% !important;
+    flex: 0 0 50% !important;
+    width: 50% !important;
     overflow-wrap: break-word;
 
     word-break: break-word;
@@ -36,6 +36,10 @@
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+
+    .mat-icon {
+      margin-right: 5px;
+    }
   }
 
   .mat-column-action {
@@ -51,6 +55,10 @@
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+
+    .mat-icon {
+      margin-right: auto;
+    }
   }
 
   .mat-cell {

@@ -17,7 +17,7 @@ export class FormsComponent implements AfterViewInit  {
 
   public searchForm: FormGroup;
 
-  displayedColumns: string[] = ['filename', 'creation_date', 'size', 'action'];
+  displayedColumns: string[] = ['filename', 'upload_date', 'size', 'action'];
   dataSource = new MatTableDataSource(FORM_LIST_DATA);
 
   // constructor
@@ -55,29 +55,29 @@ export class FormsComponent implements AfterViewInit  {
 // static code for testing purpose
 export interface IForm {
   filename: string;
-  creation_date: string;
+  upload_date: string;
   size: number;
 }
 
 const FORM_LIST_DATA: IForm[] = [
   {
     filename: 'Application Form.pdf',
-    creation_date: '2020-01-01',
+    upload_date: '2020-01-01',
     size: 1024
   },
   {
     filename: 'Tenant Agreement.pdf',
-    creation_date: '2020-02-02',
+    upload_date: '2020-02-02',
     size: 1024
   },
   {
     filename: 'IMG_20201024_2305418.jpg',
-    creation_date: '2020-03-03',
+    upload_date: '2020-03-03',
     size: 1024
   },
   {
     filename: 'L4 Form V2.0.pdf',
-    creation_date: '2020-04-04',
+    upload_date: '2020-04-04',
     size: 1024
   }
 
