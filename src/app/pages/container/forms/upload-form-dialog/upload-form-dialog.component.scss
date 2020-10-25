@@ -1,5 +1,24 @@
 .upload-form-container {
 
+
+  .close-tip {
+    font-size: 1em;
+    text-align: center;
+    vertical-align: center
+  }
+  .close-tip:hover {
+//    outline: dotted;
+    cursor: pointer;
+    border-radius: 1px;
+    box-shadow: 0 0 0 1px gray;
+
+    user-select:none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+  }
+
+
   .content {
     margin: 2rem;
   }

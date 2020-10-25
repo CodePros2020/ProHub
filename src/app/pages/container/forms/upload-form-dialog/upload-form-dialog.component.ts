@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MapsNominatimService} from "../../../../shared-services/maps-nominatim.service";
 import {PropertyModel} from "../../property-list/manager/property.model";
@@ -11,7 +11,7 @@ import {MatDialogRef} from "@angular/material/dialog";
   styleUrls: ['./upload-form-dialog.component.scss']
 })
 export class UploadFormDialogComponent implements OnInit {
-
+  @ViewChild('fileInput') fileInput: ElementRef;
   public uploadFormForm: FormGroup;
 //  public formModel: FormModel
 
@@ -25,6 +25,7 @@ export class UploadFormDialogComponent implements OnInit {
   };
 
   isEditMode: boolean;
+  isFileUploaded: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<UploadFormDialogComponent>,
@@ -49,10 +50,13 @@ export class UploadFormDialogComponent implements OnInit {
   OnFileChange(event:any) :void{
     this.files = event.target.files;
     this.form.filename = this.files[0].name;
-//    alert(this.files[0].name);
-//    console.log(event);
+    this.isFileUploaded = true;
   }
 
+  removeFile(){
+    this.fileInput.nativeElement.value = null;
+    this.isFileUploaded = false;
+  }
 
   public uploadForm() : void {
    alert(this.form.filename);
