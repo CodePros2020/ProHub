@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {MapsNominatimService} from "../../../../shared-services/maps-nominatim.service";
 import {PropertyModel} from "../../property-list/manager/property.model";
 import {now} from "lodash-es";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-upload-form-dialog',
@@ -26,6 +27,7 @@ export class UploadFormDialogComponent implements OnInit {
   isEditMode: boolean;
 
   constructor(
+    public dialogRef: MatDialogRef<UploadFormDialogComponent>,
     private formBuilder: FormBuilder,
               /* form service here*/) {
     this.isEditMode = false;
@@ -38,27 +40,26 @@ export class UploadFormDialogComponent implements OnInit {
     }
   }
 
+
   ngOnInit(): void {
   }
 
+  files: any[];
 
-
-  public OnFileInput(event:any): void {
-
+  OnFileChange(event:any) :void{
+    this.files = event.target.files;
+    this.form.filename = this.files[0].name;
+//    alert(this.files[0].name);
+//    console.log(event);
   }
+
 
   public uploadForm() : void {
-    this.form.upload_date = "????";
-
-    console.group( "Form View-Model" );
-    console.log( "Name:", this.form.filename );
-    console.log( "Uploaded_date:", this.form.upload_date );
-    console.log( "Size:", this.form.size );
-//    console.log( "FileData:", this.form.filedata );
-    console.groupEnd();
+   alert(this.form.filename);
   }
 
-  close(){
-    this.close();
+  closeDialog() {
+    this.dialogRef.close();
   }
+
 }
