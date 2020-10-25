@@ -44,7 +44,7 @@ export class FormsComponent implements AfterViewInit  {
 
   public openUploadFormDialog() {
     const dialogFilter = this.dialog.open(UploadFormDialogComponent, {
-      height: '690px',
+      height: '500px',
       width: '850px',
       disableClose: true
     })

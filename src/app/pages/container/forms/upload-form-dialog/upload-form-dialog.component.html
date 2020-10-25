@@ -1,5 +1,4 @@
 <div class="upload-form-container">
-  <form [formGroup]="uploadFormForm">
     <!-- Title -->
     <div class="row">
       <div class="col">
@@ -8,45 +7,51 @@
         </ng-container>
       </div>
     </div>
-
     <div class="row">
       <div class="col">
         <mat-divider></mat-divider>
       </div>
     </div>
 
+    <div class="row">
+      <div class="col">
+      </div>
+    </div>
+
     <!-- Content -->
 
-    <div class="row">
-<!--      <div class="col-md-8">-->
-<!--        <input class="form-control" type="file" placeholder="Search" aria-label="Search">-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <button class="btn-upload" mat-raised-button>BROWSE</button>-->
-<!--      </div>-->
-      <div class="col-md-12">
-        <input class="form-control" type="file" aria-label="filedialog">
+    <div class="content">
+      <div class="row">
+        <div class="col-md-12 label">
+          File Name
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col title">
-        <span>File name</span>
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-between">
+          <input class="form-control" [(ngModel)]="form.filename" type="text" aria-label="filedialog">
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+      <div class="row">
+        <div class="col">
+          <button mat-raised-button class="col-md-2" (click)="fileInput.click()">
+            <span>Choose a file</span>
+            <input #fileInput type="file" (change)="OnFileInput($event)" [(ngModel)]="form.filedata" observeFiles style="display:none;" />
+          </button>
+        </div>
+        <div class="col-md-10">
+          <span innerHTML=[form.filename]></span>
+        </div>
       </div>
-    </div>
 
-    <!-- Buttons -->
-    <div class="row justify-content-md-center buttons">
-      <div class="col-md-2 text-center">
-        <button class="save" mat-raised-button>SAVE</button>
+      <!-- Buttons -->
+      <div class="row justify-content-md-center buttons">
+        <div class="col-md-2 text-center">
+          <button class="save" mat-raised-button (click)="uploadForm()">SAVE</button>
+        </div>
+        <div class="col-md-2 text-center">
+          <button class="cancel" mat-raised-button (click)="close()">CANCEL</button>
+        </div>
       </div>
-      <div class="col-md-2 text-center">
-        <button class="cancel" mat-raised-button (click)="close()">CANCEL</button>
-      </div>
+
     </div>
-  </form>
 </div>
