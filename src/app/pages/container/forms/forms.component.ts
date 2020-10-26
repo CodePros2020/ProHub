@@ -4,7 +4,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from "@angular/material/paginator";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {CreateUpdatePropertyComponent} from "../property-list/create-update-property/create-update-property.component";
 import {UploadFormDialogComponent} from "./upload-form-dialog/upload-form-dialog.component";
 
 @Component({
@@ -16,6 +15,8 @@ export class FormsComponent implements AfterViewInit  {
   // property decorators
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+//  public formListForm: FormGroup;
 
   public searchForm: FormGroup;
 
@@ -49,9 +50,7 @@ export class FormsComponent implements AfterViewInit  {
       disableClose: true
     })
   }
-
 }
-
 
 // static code for testing purpose
 export interface IForm {
@@ -81,6 +80,5 @@ const FORM_LIST_DATA: IForm[] = [
     upload_date: '2020-04-04',
     size: 1024
   }
-
 
 ];

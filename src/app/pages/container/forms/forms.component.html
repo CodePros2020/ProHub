@@ -1,38 +1,27 @@
 <div class="container">
-
   <!-- Page Title -->
   <div class="row">
     <div class="col title">
       <span>Forms</span>
     </div>
   </div>
-
-  <!-- Search From -->
+  <!-- Search -->
   <div class="row">
     <div class="col-xl-9">
-<!--      <input class="form-control" type="text" placeholder="Search" aria-label="Search">-->
       <mat-form-field appearance="outline" style="width:100%;">
         <mat-icon matPrefix>search</mat-icon>
         <input matInput placeholder="Search" type="text">
       </mat-form-field>
-
-
     </div>
     <!-- Button -->
     <div class="col-xl-3">
-      <button class="btn-upload" mat-raised-button (click)="openUploadFormDialog()"><mat-icon inline="true">arrow_upward</mat-icon>UPLOAD</button>
+      <button class="btn-upload" mat-raised-button (click)="openUploadFormDialog()">
+        <mat-icon inline="true">arrow_upward</mat-icon>UPLOAD
+      </button>
     </div>
   </div>
-
-  <!-- Forms -->
-  <div class="row">
-    <div class="col title">
-<!--      <span>All Forms</span>-->
-    </div>
-  </div>
-
   <!-- Table -->
-  <div class="row">
+  <div class="row mt-5">
     <div class="col">
       <div class="mat-elevation-z8">
         <form [formGroup]="">
@@ -67,19 +56,18 @@
                 <mat-icon class="delete">delete</mat-icon>
               </mat-cell>
             </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
         </form>
         <!-- Pagenator -->
         <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
       </div>
-
     </div>
 
   </div>
-  <!-- Copyright -->
+
   <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
     All rights reserved.</h5></div>
 

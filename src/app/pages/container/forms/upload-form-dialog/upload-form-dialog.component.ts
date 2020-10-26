@@ -11,12 +11,12 @@ import {MatDialogRef} from "@angular/material/dialog";
   styleUrls: ['./upload-form-dialog.component.scss']
 })
 export class UploadFormDialogComponent implements OnInit {
+  // property decorators
   @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('fileNameInput') fileNameInput: ElementRef;
+
+  // public fields
   public uploadFormForm: FormGroup;
-//  public formModel: FormModel
-
-  public filepath: string = "";
-
   public form: {
     filename: string;
     upload_date: string;
@@ -24,15 +24,17 @@ export class UploadFormDialogComponent implements OnInit {
     filedata: File | null;
   };
 
+  // private fields
+  files: any[];
   isEditMode: boolean;
-  isFileUploaded: boolean = false;
+  isFileUploaded: boolean;
+  selectedFileName: string;
 
-  constructor(
-    public dialogRef: MatDialogRef<UploadFormDialogComponent>,
-    private formBuilder: FormBuilder,
-              /* form service here*/) {
+  // constructors
+  constructor(public dialogRef: MatDialogRef<UploadFormDialogComponent>) {
     this.isEditMode = false;
-
+    this.isFileUploaded = false;
+    //
     this.form = {
       filename: "",
       upload_date: "",
@@ -41,29 +43,38 @@ export class UploadFormDialogComponent implements OnInit {
     }
   }
 
-
+  // life cycle hooks
   ngOnInit(): void {
   }
 
-  files: any[];
-
-  OnFileChange(event:any) :void{
+  // event handlers
+  onFileChange(event:any) :void{
     this.files = event.target.files;
     this.form.filename = this.files[0].name;
+    this.selectedFileName = this.files[0].name;
     this.isFileUploaded = true;
+  }
+
+  // private methods
+  readyToUpload(){
+    return this.isFileUploaded && this.fileNameInput.nativeElement.value;
   }
 
   removeFile(){
     this.fileInput.nativeElement.value = null;
+    this.fileNameInput.nativeElement.value = "";
     this.isFileUploaded = false;
   }
 
-  public uploadForm() : void {
-   alert(this.form.filename);
+  save() : void {
+    this.form.upload_date = Date.now().toString();
+
+
+    console.log(this.form);
+    alert(this.form.filename);
   }
 
-  closeDialog() {
+  cancel() {
     this.dialogRef.close();
   }
-
 }

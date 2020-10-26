@@ -1,4 +1,5 @@
 <div class="upload-form-container">
+  <!-- Header -->
   <div class="row">
     <div class="col">
       <ng-container>
@@ -10,7 +11,6 @@
     <div class="col"><mat-divider></mat-divider></div>
   </div>
   <!-- Content -->
-
   <div class="content">
     <div class="row mt-4">
       <div class="col-md-4 h5 text-center align-middle">
@@ -21,20 +21,18 @@
         <div class="col-md-8 d-flex justify-content-between">
           <span style="font-size: 1.3em;">
             <mat-icon fontSet="material-icons-outlined">description</mat-icon>
-            {{form.filename}}
+            <span>{{selectedFileName}}</span>
             <mat-icon class="close-tip" (click)="(removeFile())">close</mat-icon>
           </span>
-
         </div>
-
       </ng-container>
-      <!-- default -->
-        <div class="col-md-5" [hidden]="isFileUploaded">
-          <button mat-raised-button (click)="fileInput.click()" style="width: 100% !important;">
-            <span>Choose a file</span>
-            <input #fileInput id="fileInput" name="fileInput" type="file" (change)="OnFileChange($event)" [(ngModel)]="form.filedata" observeFiles style="display:none;" />
-          </button>
-        </div>
+      <!-- Default Choose a File Button -->
+      <div class="col-md-5" [hidden]="isFileUploaded">
+        <button mat-raised-button (click)="fileInput.click()" style="width: 100% !important;">
+          <span>Choose a file</span>
+          <input #fileInput id="fileInput" name="fileInput" type="file" (change)="onFileChange($event)" [(ngModel)]="form.filedata" observeFiles style="display:none;" />
+        </button>
+      </div>
     </div>
 
     <ng-container  *ngIf="isFileUploaded">
@@ -43,28 +41,18 @@
           File Name:
         </div>
         <div class="col-md-8 d-flex justify-content-between">
-          <input class="form-control" [(ngModel)]="form.filename" type="text">
+          <input #fileNameInput  id="fileNameInput" name="fileNameInput" class="form-control" [(ngModel)]="form.filename" type="text">
         </div>
       </div>
     </ng-container>
-
-
-    <!--    <div class="row mt-5">-->
-<!--      <div class="col-md-8  align-middle"><span>Selected:&nbsp;{{form.filename}}</span></div>-->
-<!--    </div>-->
-<!--    <div class="row mt-4">-->
-<!--      <div class="col-md-4 label"><span class="h5">Selected File</span></div>-->
-<!--    </div>-->
-
     <!-- Buttons -->
     <div class="row mt-5 justify-content-md-center buttons">
       <div class="col-md-2 text-center">
-        <button class="save" mat-raised-button (click)="uploadForm()">SAVE</button>
+        <button class="save" mat-raised-button (click)="save()">SAVE</button>
       </div>
       <div class="col-md-2 text-center">
-        <button class="cancel" mat-raised-button (click)="closeDialog()">CANCEL</button>
+        <button class="cancel" mat-raised-button (click)="cancel()">CANCEL</button>
       </div>
     </div>
-
   </div>
 </div>
