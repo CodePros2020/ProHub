@@ -67,11 +67,10 @@ export class UploadFormDialogComponent implements OnInit {
   }
 
   save() : void {
-    this.form.upload_date = Date.now().toString();
-
-
-    console.log(this.form);
-    alert(this.form.filename);
+    // UNDER DEVELOPMENT
+    // this.form.upload_date = Date.now().toString();
+    // console.log(this.form);
+    // alert(this.form.filename);
   }
 
   cancel() {

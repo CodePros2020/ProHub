@@ -5,6 +5,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {UploadFormDialogComponent} from "./upload-form-dialog/upload-form-dialog.component";
+import {FormService} from "../../../shared-services/form.service";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-forms',
@@ -16,22 +18,21 @@ export class FormsComponent implements AfterViewInit  {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-//  public formListForm: FormGroup;
-
-  public searchForm: FormGroup;
-
+  //
+  forms: any[];
   displayedColumns: string[] = ['filename', 'upload_date', 'size', 'action'];
   dataSource = new MatTableDataSource(FORM_LIST_DATA);
 
   // constructor
-  constructor(public dialog: MatDialog
-              // private formBuilder: FormBuider,
-              // private formService: FormService
+  constructor(public dialog: MatDialog,
+              private formService: FormService
               ) {
   }
 
   // life cycle hooks
   ngOnInit(): void {
+    // UNDER DEVELOPMENT
+//    this.retrieveForms();
   }
 
   ngAfterViewInit() {
@@ -40,7 +41,16 @@ export class FormsComponent implements AfterViewInit  {
   }
 
   retrieveForms() {
-    // form service here
+    this.formService.getAll().snapshotChanges().pipe(
+      map(changes => changes.map(c=>({
+        key: c.payload.key, ...c.payload.val()
+      })))
+    ).subscribe(data =>{
+      this.forms = data;
+      console.log(this.forms);
+      // this.dataSource = new MatTableDataSource<IForm>(this.forms)
+      this.dataSource = new MatTableDataSource(this.forms)
+    })
   }
 
   public openUploadFormDialog() {
