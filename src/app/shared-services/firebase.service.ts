@@ -11,12 +11,12 @@ export class FirebaseService {
 
   constructor(   private firestore: AngularFirestore , private db: AngularFireDatabase , public router: Router ) { }
 
-  getUser(phone){
-    return this.db.object('/users/' + phone).valueChanges();
+  getUser(uid){
+    return this.db.object('/users/' + uid).valueChanges();
   }
 
-  addUser(user: RegistrationModel) {
-    return this.db.database.ref('users').child(user.phone).set(user).then( () => {
+  addUser(user: RegistrationModel, uid) {
+    return this.db.database.ref('users').child(uid).set(user).then( () => {
       if (user.userType.toUpperCase() === 'BUSINESS'){
           this.router.navigate(['container/property-list']);
         } else {
