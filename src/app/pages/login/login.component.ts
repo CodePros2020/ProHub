@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MatDialog} from '@angular/material/dialog';
-import {FirebaseService} from '../../shared-services/firebase.service';
-import {AuthService} from '../../shared-services/auth.service';
-import {Observable} from 'rxjs';
-import {SignupComponent} from '../signup/signup.component';
-import {ForgotPasswordDialogComponent} from './forgot-password-dialog/forgot-password-dialog.component';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { FirebaseService } from '../../shared-services/firebase.service';
+import { AuthService } from '../../shared-services/auth.service';
+import { Observable } from 'rxjs';
+import { SignupComponent } from '../signup/signup.component';
+import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-password-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +20,7 @@ export class LoginComponent implements OnInit {
     public firebaseService: FirebaseService,
     public router: Router,
     public authService: AuthService
-  ) {
-  }
+  ) {}
 
   get formControls() {
     return this.loginForm.controls;
@@ -52,21 +51,15 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.formControls.userName.value, this.formControls.password.value, 'login');
-    if (this.authService.isLoggedIn) {
-      this.router.navigate(['/propertyList']);
-    }
-
+    this.authService.SignIn(
+      this.formControls.userName.value,
+      this.formControls.password.value
+    );
   }
-  //
-  // openRegistration() {
-  //   // this.authService.signup(this.formControls.userName.value, this.formControls.password.value);
-  //   this.router.navigate(['/signup']);
-  // }
 
   signupDialog() {
     const dialog = this.dialog.open(SignupComponent, {
-      height: '600px',
+      height: '500px',
       width: '600px',
       disableClose: true,
       autoFocus: false,
@@ -77,8 +70,8 @@ export class LoginComponent implements OnInit {
 
   forgotPasswordDialog() {
     const dialog = this.dialog.open(ForgotPasswordDialogComponent, {
-      height: '450px',
-      width: '600px',
+      height: '400px',
+      width: '500px',
       disableClose: true,
       autoFocus: false,
       restoreFocus: false,

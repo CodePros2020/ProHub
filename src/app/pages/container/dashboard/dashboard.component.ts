@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   }
 
   goStaff() {
-    this.router.navigate(['container/propertyList']);
+    this.router.navigate(['container/property-list']);
   }
 
   goForms() {

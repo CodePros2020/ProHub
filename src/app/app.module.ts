@@ -14,6 +14,7 @@ import { SignupComponent} from './pages/signup/signup.component';
 // firebase set up
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -39,10 +40,13 @@ import { AddEditNewsDialogComponent } from './pages/container/newsroom/add-edit-
 import { AddAttachmentDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-attachment-dialog/add-attachment-dialog.component';
 import { AddImageDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-image-dialog/add-image-dialog.component';
 import { ChatComponent } from './pages/container/chat/chat.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapsNominatimService } from './shared-services/maps-nominatim.service';
 import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.component';
-import {StoreModule} from '@ngrx/store';
-import {storageMetaReducer} from './shared-services/storage.metareducer';
-import {metaReducer} from './shared-services/metaReducer';
+import { VerifyEmailAddressComponent } from './pages/signup/verify-email-address/verify-email-address.component';
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 
 @NgModule({
@@ -71,6 +75,8 @@ import {metaReducer} from './shared-services/metaReducer';
     ChatComponent,
     SignupComponent,
     ProhubLogoComponent,
+    VerifyEmailAddressComponent,
+    ErrorDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,12 +88,16 @@ import {metaReducer} from './shared-services/metaReducer';
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
     AngularFirestoreModule, // Only required for database features
     AngularFireAuthModule, // Only required for auth features,
     AngularFireStorageModule, // Only required for storage features
-    AngularFireMessagingModule
+    AngularFireMessagingModule,
+    LeafletModule,
+    FlexLayoutModule
+
   ],
-  providers: [FirebaseService, AuthService],
+  providers: [FirebaseService, AuthService, MapsNominatimService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

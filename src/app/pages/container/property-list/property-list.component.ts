@@ -5,8 +5,9 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Observable} from 'rxjs';
-import {startWith} from 'rxjs/operators';
+import {map, startWith} from 'rxjs/operators';
 import {CreateUpdatePropertyComponent} from './create-update-property/create-update-property.component';
+import {PropertyService} from '../../../shared-services/property.service';
 
 @Component({
   selector: 'app-property-list',
@@ -15,6 +16,8 @@ import {CreateUpdatePropertyComponent} from './create-update-property/create-upd
 })
 export class PropertyListComponent implements OnInit, AfterViewInit{
 
+  properties: any;
+
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -22,19 +25,36 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
   public propertyListResult: Observable<PropertyListInterface[]>;
 
   displayedColumns: string[] = ['name', 'address', 'action'];
-  dataSource = new MatTableDataSource(PROPERTY_LIST_DATA);
+  dataSource;
+  // dataSource = new MatTableDataSource(PROPERTY_LIST_DATA);
 
   constructor(public dialog: MatDialog,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private propertyService: PropertyService) {
     this.createPropertyListFormGroup();
   }
 
   ngOnInit(): void {
+    this.filteredOptions();
+    this.retrieveProperties();
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  retrieveProperties() {
+    this.propertyService.getAll().snapshotChanges().pipe(
+      map(changes =>
+      changes.map(c =>
+        ({key: c.payload.key, ...c.payload.val()})
+      ))
+    ).subscribe(data => {
+      this.properties = data;
+      console.log('what are properties: ', this.properties);
+      this.dataSource = new MatTableDataSource(this.properties);
+    });
   }
 
   createPropertyListFormGroup() {
@@ -48,11 +68,24 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
   }
 
   openCreateNewPropertyDialog() {
-    const dialogFilter = this.dialog.open(CreateUpdatePropertyComponent,{
-      height: '550px',
-      width: '1024px',
+    const dialogFilter = this.dialog.open(CreateUpdatePropertyComponent, {
+      height: '690px',
+      width: '850px',
       disableClose: true
     });
+  }
+
+  filteredOptions() {
+    this.propertyListResult = this.formControls.propertySearch.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+  }
+
+  private _filter(value): PropertyListInterface[] {
+    const filterValue = value.toLowerCase();
+
+    return this.dataSource.data.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
 }
 
