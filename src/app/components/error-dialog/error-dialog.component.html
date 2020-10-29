@@ -1,0 +1,13 @@
+<div class="title">
+  <p class="titleText" mat-dialog-title>ERROR
+    <mat-icon style="float: right; cursor: pointer" (click)="close()" matSuffix id="close-icon">close</mat-icon>
+  </p>
+  <div class="blue-underline"></div>
+  <div class="col-12 text-center p-mrg">
+    <p>{{msg}}</p>
+  </div>
+  <div class="col-12 text-center p-mrg">
+    <button class="btn-div btn-ok" mat-button (click)="close()">OK</button>
+  </div>
+</div>
+

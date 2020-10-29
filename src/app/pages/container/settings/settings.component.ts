@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {StaffManagementComponent} from './staff-management/staff-management.component';
 import {MatDialog} from '@angular/material/dialog';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-settings',
@@ -9,10 +10,40 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+
+  public changePasswordForm: FormGroup;
+  public hideCurrent = true;
+  public hideNew = true;
+  public hideConfirm = true;
+  public showFirst = true;
+
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder,) {
+    this.createChangePasswordFormGroup();  }
 
   ngOnInit(): void {
   }
+
+
+  createChangePasswordFormGroup() {
+    this.changePasswordForm = this.formBuilder.group({
+
+      password: ['', Validators.required],
+      currentPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+    });
+  }
+
+  onClickSaveButton() {
+    if (this.changePasswordForm.valid){
+    }
+  }
+
+
+  get formControls() {
+    return this.changePasswordForm.controls;
+  }
+
   openStaffManagementDialog() {
     const dialogRef = this.dialog.open(StaffManagementComponent, {
       maxWidth: 'auto',

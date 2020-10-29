@@ -3,7 +3,6 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../shared-services/auth.service';
-import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-signup',
@@ -16,11 +15,7 @@ export class SignupComponent implements OnInit {
   public hide = true;
   public hideConfirmPassword = true;
   public signUpForm: FormGroup;
-  verified: any = 'VERIFY';
   next: any = 'NEXT';
-  linkSent = false;
-  verificationLink: boolean;
-  notVerifiedError: any = 'It is not verified yet! Please check your inbox.';
   constructor(
     public dialogRef: MatDialogRef<SignupComponent>,
     public dialog: MatDialog,
@@ -49,26 +44,9 @@ export class SignupComponent implements OnInit {
   }
 
   sendEmail() {
-    if (!this.linkSent) {
-      this.authService.signup(this.formControls.email.value, this.formControls.password.value);
-      this.verificationLink = true;
-      this.formControls.email.disable();
-      this.formControls.password.disable();
-      this.formControls.confirmPassword.disable();
-      // this.verified = 'SEND AGAIN';
-      this.linkSent = true;
-    } else {
-      this.authService.SendVerificationMail();
-    }
-  }
-
-  async verifyCode() {
-    await this.authService.login(this.formControls.email.value, this.formControls.password.value, 'signup');
-    console.log('The return val ', this.authService.isLoggedIn);
-    if (this.authService.isLoggedIn) {
+      this.authService.SignUp(this.formControls.email.value, this.formControls.password.value).then();
       this.dialogRef.close();
-      await this.router.navigate(['/register']);
-    }
   }
 }
+
 

@@ -7,6 +7,20 @@
 <div class="row">
   <form [formGroup]="signUpForm" class="col-12 center-div">
     <div class="col-12 center-div">
+<!--      <div class="row justify-content-md-center">-->
+<!--        <div class="col-md-10">-->
+<!--          <mat-radio-group formControlName="userType">-->
+<!--              <div class="row justify-content-md-center form-user-type">-->
+<!--              <div class="col-md-4 text-center">-->
+<!--                <mat-radio-button  value="personal">Personal</mat-radio-button>-->
+<!--              </div>-->
+<!--               <div class="col-md-4 text-center">-->
+<!--                <mat-radio-button  value="business">Business</mat-radio-button>-->
+<!--             </div>-->
+<!--        </div>-->
+<!--      </mat-radio-group>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <div class="row justify-content-md-center">
         <div class="col-md-10">
@@ -45,14 +59,7 @@
       </div>
       <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem; display: flex;flex-direction: column; align-items: center">
         <div class="col-md-12 text-center">
-          <button class="btn-verify" mat-raised-button (click)="sendEmail()"  [disabled]='linkSent' > {{verified}}</button>
-        </div>
-        <div>
-          <label *ngIf="verificationLink">Verification link has been sent to your email!</label>
-        </div>
-        <div class="col-md-12 text-center">
-          <button class="btn-send" mat-raised-button (click)="verifyCode()" [disabled]='!linkSent' >{{next}}</button>
-
+          <button class="btn-verify" mat-raised-button (click)="sendEmail()" > Send Email</button>
         </div>
       </div>
     </div>
