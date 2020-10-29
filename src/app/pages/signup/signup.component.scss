@@ -44,3 +44,17 @@
 
 }
 
+::ng-deep {
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: #2f4550;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-inner-circle{
+    color: #2f4550;
+    background-color: #2f4550;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: #2f4550;
+  }
+}

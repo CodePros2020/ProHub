@@ -10,6 +10,7 @@ import {FormsComponent} from './pages/container/forms/forms.component';
 import {NewsroomComponent} from './pages/container/newsroom/newsroom.component';
 import {SettingsComponent} from './pages/container/settings/settings.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import {VerifyEmailAddressComponent} from './pages/signup/verify-email-address/verify-email-address.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'verify-email-address', component: VerifyEmailAddressComponent},
   {
     path: 'container',
     component: ContainerComponent,

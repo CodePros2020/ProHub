@@ -1,3 +1,7 @@
+.btn-div{
+  display: flex;
+  justify-content: center;
+}
 .close-icon {
   transform: scale(2);
 }
@@ -8,7 +12,7 @@
   margin-top: 5px;
   border-bottom: 0.5rem solid #b8dbd9;
   width: 6rem;
-  margin-left: 40%;
+  margin-left: 35%;
 }
 .titleText {
   text-align: center;
@@ -20,18 +24,15 @@
 .title {
   margin-bottom: 38px;
 }
-.div-mrg{
-  margin-top: 30px;
-  margin-bottom: 20px;
+.p-mrg{
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
 }
-.btn-send{
+
+.btn-ok{
   width: 7rem;
   background-color:  #586F7C;
   color: #fff;
   border-radius: 5px;
-  height: 45px;
-
-}
-.p-mrg{
-  margin-top: 15px;
 }
