@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {icon, latLng, LeafletMouseEvent, Map, MapOptions, marker, tileLayer} from 'leaflet';
 import {MapPoint} from '../../../../shared-models/map-point.model';
 import {NominatimResponse} from '../../../../shared-models/nominatim-response.model';
@@ -7,6 +7,9 @@ import {PropertyModel} from '../manager/property.model';
 import {debounceTime, filter, map, startWith, switchMap} from 'rxjs/operators';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {MapsNominatimService} from '../../../../shared-services/maps-nominatim.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {ProvinceEnum} from '../../../../shared-models/enum/province.enum';
+import {PropertyService} from '../../../../shared-services/property.service';
 
 @Component({
   selector: 'app-create-update-property',
@@ -21,14 +24,17 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
   public propertyModel: PropertyModel;
   public searchAddressResult: Observable<NominatimResponse[]>;
   public addressResult;
+  public provinces;
 
   // test
   optionsAddy = new BehaviorSubject<NominatimResponse[]>([]);
   searchAddyResult = [];
   isAddressSearchApiRunning = false;
 
-  DEFAULT_LATITUDE = 43.662762;
-  DEFAULT_LONGITUDE = -79.397308;
+  // DEFAULT_LATITUDE = 43.662762;
+  // DEFAULT_LONGITUDE = -79.397308;
+  lat: any;
+  long: any;
 
   map: Map;
   mapPoint: MapPoint;
@@ -39,20 +45,52 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
   address = '';
 
   constructor(private formBuilder: FormBuilder,
-              private nominatimService: MapsNominatimService) {
-    this.isEditMode = false;
+              private propertyService: PropertyService,
+              private nominatimService: MapsNominatimService,
+              private dialogRef: MatDialogRef<CreateUpdatePropertyComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+
     this.propertyModel = new PropertyModel();
+
+    if (this.data.update === false) {
+      this.isEditMode = false;
+      this.lat = 43.662762;
+      this.long = -79.397308;
+    } else {
+      this.isEditMode = true;
+      this.propertyModel = this.data.property;
+      console.log('property model lat', this.propertyModel.lat);
+      if (this.propertyModel.lat === undefined || this.propertyModel.lat === null) {
+        this.lat = 43.662762;
+      } else {
+        this.lat = this.propertyModel.lat;
+      }
+
+      console.log('property model long', this.propertyModel.long);
+      if (this.propertyModel.long === undefined || this.propertyModel.long === null) {
+        this.long = -79.397308;
+      } else {
+        this.long = this.propertyModel.long;
+      }
+    }
+
     this.createPropertyFormGroup();
   }
 
   ngOnInit(): void {
     this.initializeDefaultMapPoint();
     this.initializeMapOptions();
-    this.onAddyValueChange();
-    this.filteredOptions();
+    // this.onAddyValueChange();
+    // this.filteredOptions();
+    this.provinces = ProvinceEnum;
   }
 
   ngAfterViewInit() {
+  }
+
+  // this will ensure that the enum are not sorted alphabetically
+  returnZero() {
+    return 0;
   }
 
   // for autocomplete and api search test
@@ -89,9 +127,12 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
 
   createPropertyFormGroup() {
     this.createPropertyForm = this.formBuilder.group({
-      propertyName: [this.propertyModel.propertyName, Validators.required],
-      numUnits: [this.propertyModel.numUnits, Validators.required],
-      propertyAddress: [this.propertyModel.propertyAddress, Validators.required]
+      propertyName: [this.propertyModel.name, Validators.required],
+      streetLine1: [this.propertyModel.streetLine1, Validators.required],
+      streetLine2: [this.propertyModel.streetLine2],
+      city: [this.propertyModel.city, Validators.required],
+      province: [this.propertyModel.province, Validators.required],
+      postalCode: [this.propertyModel.postalCode, Validators.required],
     });
   }
 
@@ -126,14 +167,41 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
     return this.addressResult.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  structuredAddressLookUp() {
+    const street = this.formControls.streetLine1.value || '';
+    const city = this.formControls.city.value || '';
+    const province = this.formControls.province.value || '';
+
+    console.log('Street: ' + street + ' City: ' + city + ' Province: ' + province);
+
+    if (street === '' && city === '' && province === '') {
+      console.log('Dont do anything!');
+    } else {
+      this.nominatimService.addressLookup(street, city, province).subscribe(results => {
+        console.log('checking api results: ', results);
+        this.searchResults = results;
+        console.log('search results: ', this.searchResults);
+        console.log('what is results length', results.length);
+
+        if (this.searchResults.length > 0) {
+          console.log('length is more than 1');
+          this.getAddress(this.searchResults[0]);
+        }
+      });
+    }
+  }
+
   initializeMap(mapOSM: Map) {
     this.map = mapOSM;
     this.createMarker();
   }
 
   getAddress(result: NominatimResponse) {
+    console.log('coming to get Address');
     this.updateMapPoint(result.latitude, result.longitude, result.displayName, result.osm);
     this.createMarker();
+    this.lat = result.latitude;
+    this.long = result.longitude;
   }
 
   refreshSearchList(results: NominatimResponse[]) {
@@ -152,10 +220,14 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
   initializeDefaultMapPoint() {
     this.mapPoint = {
       name: 'Hello',
-      latitude: this.DEFAULT_LATITUDE,
-      longitude: this.DEFAULT_LONGITUDE,
+      latitude: this.lat,
+      longitude: this.long,
       osm: 1
     };
+
+    console.log('map point edit mode', this.isEditMode);
+    console.log('lat', this.lat);
+    console.log('long', this.long);
   }
 
   onMapClick(e: LeafletMouseEvent) {
@@ -193,5 +265,33 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
 
   clearMap() {
     if (this.map.hasLayer(this.lastLayer)) { this.map.removeLayer(this.lastLayer); }
+  }
+
+  onCancelClick() {
+    this.dialogRef.close(false);
+  }
+
+  saveProperty() {
+    if (this.createPropertyForm.valid) {
+
+      this.propertyModel.name = this.formControls.propertyName.value;
+      this.propertyModel.streetLine1 = this.formControls.streetLine1.value;
+      this.propertyModel.streetLine2 = this.formControls.streetLine2.value || '';
+      this.propertyModel.city = this.formControls.city.value;
+      this.propertyModel.province = this.formControls.province.value;
+      this.propertyModel.postalCode = this.formControls.postalCode.value;
+      this.propertyModel.long = this.long;
+      this.propertyModel.lat = this.lat;
+
+      if (this.isEditMode) {
+        this.propertyService.update(this.propertyModel.key, this.propertyModel)
+          .then(() => this.dialogRef.close('updated'));
+      } else {
+        this.propertyModel.phone = '6475545687';
+        this.propertyModel.propId = '';
+        this.propertyService.create(this.propertyModel);
+        this.dialogRef.close('added');
+      }
+    }
   }
 }

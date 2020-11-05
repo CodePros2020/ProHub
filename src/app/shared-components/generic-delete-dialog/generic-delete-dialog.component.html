@@ -1,0 +1,17 @@
+<div class="title">
+  <p class="titleText" mat-dialog-title>DELETE RECORD
+    <mat-icon style="float: right; cursor: pointer" (click)="close()" matSuffix id="close-icon">close</mat-icon>
+  </p>
+  <div class="blue-underline"></div>
+</div>
+
+<div class="container-fluid">
+  <div class="row lbl-align ">
+    <label >Are you sure you would like to delete {{currentDialog}}?</label>
+  </div>
+
+  <div id="btn-container">
+    <button (click)="deleteConfirmed()" class="btn-delete" mat-raised-button>DELETE</button>
+    <button (click)="cancel()" class="btn-cancel" mat-raised-button>CANCEL</button>
+  </div>
+</div>

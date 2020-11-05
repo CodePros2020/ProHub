@@ -16,7 +16,7 @@
             <mat-icon matPrefix>search</mat-icon>
             <input matInput placeholder="Search" formControlName="propertySearch" type="text" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let prop of dataSource.data" [value]="prop.name">{{ prop.name }}</mat-option>
+              <mat-option *ngFor="let prop of properties" [value]="prop.name">{{ prop.name }}</mat-option>
             </mat-autocomplete>
           </mat-form-field>
 
@@ -39,15 +39,18 @@
             <!-- Address Column -->
             <ng-container matColumnDef="address">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Property Address </mat-header-cell>
-              <mat-cell *matCellDef="let prop"> {{prop.address}} </mat-cell>
+              <mat-cell *matCellDef="let prop">
+                {{prop.streetLine1 + ', ' + prop.streetLine2 + ', ' + prop.city +
+              ', ' + prop.province + ', ' + prop.postalCode}}
+              </mat-cell>
             </ng-container>
 
             <!-- Action Column -->
             <ng-container matColumnDef="action">
               <mat-header-cell *matHeaderCellDef> &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
               <mat-cell *matCellDef="let prop" class="d-flex justify-content-between">
-                <mat-icon class="edit">edit</mat-icon>
-                <mat-icon class="delete">delete</mat-icon>
+                <mat-icon class="edit" (click)="updateProperty(prop)">edit</mat-icon>
+                <mat-icon class="delete" (click)="deleteProperty(prop)">delete</mat-icon>
               </mat-cell>
             </ng-container>
 

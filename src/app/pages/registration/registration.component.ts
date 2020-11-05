@@ -6,6 +6,7 @@ import {FirebaseService} from '../../shared-services/firebase.service';
 import {UserPasswordService} from '../../shared-services/user-password.service';
 import {RegistrationModel} from './manager/registration.model';
 import {AuthService} from '../../shared-services/auth.service';
+import {ProvinceEnum} from '../../shared-models/enum/province.enum';
 
 @Component({
   selector: 'app-registration',
@@ -19,7 +20,7 @@ export class RegistrationComponent implements OnInit {
   public hide = true;
   public hideConfirmPassword = true;
   public user: RegistrationModel;
-  public provinces = PROVINCE_LIST;
+  public provinces;
 
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
@@ -32,7 +33,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.provinces = ProvinceEnum;
+  }
 
+  // this will ensure that the enum are not sorted alphabetically
+  returnZero() {
+    return 0;
   }
 
   createRegistrationFormGroup() {
@@ -72,26 +78,5 @@ export class RegistrationComponent implements OnInit {
       this.firebaseService.addUser(this.user, this.authService.userData.uid);
     }
   }
-
-
 }
 
-export interface Select {
-  value: string;
-  viewValue: string;
-}
-const PROVINCE_LIST: Select[] = [
-  {value: 'NL', viewValue: 'Newfoundland and Labrador'},
-  {value: 'PE', viewValue: 'Prince Edward Island'},
-  {value: 'NS', viewValue: 'Nova Scotia'},
-  {value: 'NB', viewValue: 'New Brunswick'},
-  {value: 'QC', viewValue: 'Quebec'},
-  {value: 'ON', viewValue: 'Ontario'},
-  {value: 'MB', viewValue: 'Manitoba'},
-  {value: 'SK', viewValue: 'Saskatchewan'},
-  {value: 'AB', viewValue: 'Alberta'},
-  {value: 'BC', viewValue: 'British Columbia'},
-  {value: 'YT', viewValue: 'Yukon'},
-  {value: 'NT', viewValue: 'Northwest Territories'},
-  {value: 'NU', viewValue: 'Nunavut'},
-];

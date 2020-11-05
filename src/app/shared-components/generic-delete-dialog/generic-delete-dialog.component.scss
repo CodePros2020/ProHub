@@ -1,0 +1,65 @@
+.blue-underline {
+  margin: 0 auto;
+  border-bottom: 3px solid #25BAF0;
+  width: 60px;
+}
+
+.titleText {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: 7.2px;
+  opacity: 1;
+  font-size: 12px;
+  color: #000000;
+}
+
+.title {
+  margin-bottom: 38px;
+}
+
+.container-fluid{
+  //margin-bottom: 2.5rem;
+}
+
+label{
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.close-icon {
+  transform: scale(2);
+}
+#close-icon {
+  cursor: pointer;
+}
+
+#btn-container {
+  height: 95px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  margin-top: 15px;
+
+  .btn-delete {
+    width: 150px;
+    height: 46px;
+    background-color: red;
+    color: #fff;
+    margin-right: 25px;
+  }
+
+  .btn-cancel {
+    color: #0cbd65;
+    background-color: #fff;
+    border: 1px solid #0cbd65;
+    width: 150px;
+    height: 46px;
+    font-weight: bold;
+  }
+}
+.lbl-align {
+  display: flex;
+  justify-content: center;
+}

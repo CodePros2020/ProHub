@@ -46,6 +46,7 @@ import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.compon
 import { VerifyEmailAddressComponent } from './pages/signup/verify-email-address/verify-email-address.component';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { GenericDeleteDialogComponent } from './shared-components/generic-delete-dialog/generic-delete-dialog.component';
 
 
 
@@ -77,6 +78,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ProhubLogoComponent,
     VerifyEmailAddressComponent,
     ErrorDialogComponent,
+    GenericDeleteDialogComponent,
   ],
   imports: [
     BrowserModule,

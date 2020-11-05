@@ -8,4 +8,6 @@ export class FirebasePropertiesModel {
   province: string;
   streetLine1: string;
   streetLine2: string;
+  long: string;
+  lat: string;
 }
