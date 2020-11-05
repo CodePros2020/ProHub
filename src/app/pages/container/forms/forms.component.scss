@@ -1,0 +1,90 @@
+.container {
+  width: 1024px;
+  margin: auto;
+  height: 100%;
+  //background-color: #fff;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .title {
+    font-weight: bolder;
+    font-size: xx-large;
+    margin: 2.5rem 0;
+  }
+
+  /* Search */
+  .mat-form-field {
+  }
+
+  /* Angular Material override */
+  ::ng-deep .mat-form-field {
+    font-size: 0.8rem;
+  }
+
+  .btn-upload {
+    background-color: #2F4550;
+    color: #fff;
+    width: 7rem;
+    height: 2.9rem;
+
+    margin-top: 3px;
+  }
+
+  /* mat table */
+  .mat-column-filename {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    overflow-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+
+    .mat-icon {
+      margin-right: 5px;
+    }
+  }
+
+  .mat-column-action {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+
+    .mat-icon {
+      margin-right: auto;
+    }
+  }
+
+  .mat-cell {
+    cursor: pointer;
+  }
+
+  /* mat-icon styles */
+  .edit{
+    color:#0cbd65;
+    font-size:24px !important;
+    cursor: pointer;
+  }
+
+  .delete{
+    color:red;
+    font-size:24px !important;
+    cursor: pointer;
+  }
+}

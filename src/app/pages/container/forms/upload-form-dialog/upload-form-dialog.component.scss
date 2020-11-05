@@ -1,0 +1,68 @@
+.upload-form-container {
+
+
+  .close-tip {
+    font-size: 1em;
+    text-align: center;
+    vertical-align: center
+  }
+  .close-tip:hover {
+//    outline: dotted;
+    cursor: pointer;
+    border-radius: 1px;
+    box-shadow: 0 0 0 1px gray;
+
+    user-select:none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+  }
+
+
+  .content {
+    margin: 2rem;
+  }
+
+  .header{
+    background-color: #2F4550;
+
+  }
+  .title {
+    font-size: xx-large;
+  }
+
+  .label {
+    font-size: x-large;
+    margin: 5px;
+  }
+
+
+  .mat-divider {
+    margin-top: 1rem;
+    border-top-width: 3px;
+  }
+
+  #map {
+    height: 300px;
+  }
+
+  .leaflet-bottom, .leaflet-left {
+    pointer-events: auto;
+  }
+
+  .buttons {
+    margin-top: 2rem;
+
+    .save {
+      background-color: #2f4550;
+      color: #fff;
+      width: 7rem;
+    }
+
+    .cancel {
+      width: 7rem;
+      background-color: #b8dbd9;
+      color: #2f4550;
+    }
+  }
+}
