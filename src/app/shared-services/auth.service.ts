@@ -56,9 +56,6 @@ export class AuthService {
           if (this.userData.emailVerified) {
             this.router.navigate(['register']);
           }
-          // else if (this.userData.emailVerified ){
-          //
-          // }
           else {
             const dialog = this.dialog.open(ErrorDialogComponent, {
               height: '250px',
