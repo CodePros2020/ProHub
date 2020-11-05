@@ -75,6 +75,8 @@ export class RegistrationComponent implements OnInit {
       this.user.postalCode = this.formControls.postalCode.value;
       this.user.userType = this.formControls.userType.value;
       this.user.province = this.formControls.province.value;
+      this.user.uid = this.authService.userData.uid;
+      this.user.emailVerified = this.authService.userData.emailVerified;
       this.firebaseService.addUser(this.user, this.authService.userData.uid);
     }
   }

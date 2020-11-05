@@ -57,6 +57,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
     ).subscribe(data => {
       data.forEach(res => {
         this.property = new PropertyModel();
+        this.property.key = res.key;
         this.property.name = res.name;
         this.property.streetLine1 = res.streetLine1;
         this.property.streetLine2 = res.streetLine2;

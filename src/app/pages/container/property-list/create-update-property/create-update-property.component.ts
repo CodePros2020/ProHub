@@ -10,6 +10,7 @@ import {MapsNominatimService} from '../../../../shared-services/maps-nominatim.s
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ProvinceEnum} from '../../../../shared-models/enum/province.enum';
 import {PropertyService} from '../../../../shared-services/property.service';
+import {AuthService} from '../../../../shared-services/auth.service';
 
 @Component({
   selector: 'app-create-update-property',
@@ -46,6 +47,7 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
 
   constructor(private formBuilder: FormBuilder,
               private propertyService: PropertyService,
+              private authService: AuthService,
               private nominatimService: MapsNominatimService,
               private dialogRef: MatDialogRef<CreateUpdatePropertyComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -284,10 +286,11 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
       this.propertyModel.lat = this.lat;
 
       if (this.isEditMode) {
+        console.log('in update save');
         this.propertyService.update(this.propertyModel.key, this.propertyModel)
           .then(() => this.dialogRef.close('updated'));
       } else {
-        this.propertyModel.phone = '6475545687';
+        this.propertyModel.phone = this.authService.GetUserInSession().phoneNumber;
         this.propertyModel.propId = '';
         this.propertyService.create(this.propertyModel);
         this.dialogRef.close('added');
