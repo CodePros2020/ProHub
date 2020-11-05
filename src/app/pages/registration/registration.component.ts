@@ -63,13 +63,13 @@ export class RegistrationComponent implements OnInit {
       this.user.firstName = this.formControls.firstName.value;
       this.user.lastName = this.formControls.lastName.value;
       this.user.email = this.authService.userData.email;
-      this.user.phone = this.formControls.phone.value;
+      this.user.phoneNumber = this.formControls.phone.value;
       this.user.address = this.formControls.address.value;
       this.user.city = this.formControls.city.value;
       this.user.postalCode = this.formControls.postalCode.value;
       this.user.userType = this.formControls.userType.value;
       this.user.province = this.formControls.province.value;
-      this.firebaseService.addUser(this.user);
+      this.firebaseService.addUser(this.user, this.authService.userData.uid);
     }
   }
 

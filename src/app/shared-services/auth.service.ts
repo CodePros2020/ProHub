@@ -2,8 +2,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import * as firebase from 'firebase';
 import { User } from '../shared/services/user';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import { VerifyEmailAddressComponent } from '../pages/signup/verify-email-address/verify-email-address.component';
@@ -12,13 +10,14 @@ import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.co
 import { RegistrationModel } from '../pages/registration/manager/registration.model';
 import { FirebaseService } from './firebase.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   userData: any; // Save logged in user data
-  user: RegistrationModel;
+  user: Observable<unknown>;
 
   constructor(
     public afs: AngularFireDatabase,
@@ -29,13 +28,13 @@ export class AuthService {
     public dialog: MatDialog, // NgZone service to remove outside scope warning
     private http: HttpClient
   ) {
-    this.user = new RegistrationModel();
 
     /* Saving user data in localstorage when
     logged in and setting up null when logged out */
     this.firebaseAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
+        this.user = this.firebaseService.getUser(this.userData.uid);
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user'));
       } else {
@@ -51,9 +50,9 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         console.log('User Received =>', result.user);
-        // this.user = this.firebaseService.getUser();
         this.ngZone.run(() => {
-          if (this.userData.emailVerified) {
+          this.SetUserData(result.user);
+          if (this.userData.emailVerified && this.userData.phoneNumber === null) {
             this.router.navigate(['register']);
           }
           else {
@@ -72,7 +71,7 @@ export class AuthService {
             });
           }
         });
-        this.SetUserData(result.user);
+
       })
       .catch((error) => {
         window.alert(error.message);
@@ -134,6 +133,7 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
+      phoneNumber: user.phoneNumber,
     };
     return userRef.set(userData);
     // return userRef.set(userData, {
