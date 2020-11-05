@@ -8,6 +8,9 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {CreateUpdatePropertyComponent} from './create-update-property/create-update-property.component';
 import {PropertyService} from '../../../shared-services/property.service';
+import {FirebasePropertiesModel} from './manager/firebase-properties.model';
+import {PropertyModel} from './manager/property.model';
+import {GenericDeleteDialogComponent} from '../../../shared-components/generic-delete-dialog/generic-delete-dialog.component';
 
 @Component({
   selector: 'app-property-list',
@@ -16,13 +19,14 @@ import {PropertyService} from '../../../shared-services/property.service';
 })
 export class PropertyListComponent implements OnInit, AfterViewInit{
 
-  properties: any;
+  properties = [];
+  property: PropertyModel;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public propertyListForm: FormGroup;
-  public propertyListResult: Observable<PropertyListInterface[]>;
+  public propertyListResult: Observable<FirebasePropertiesModel[]>;
 
   displayedColumns: string[] = ['name', 'address', 'action'];
   dataSource;
@@ -40,20 +44,37 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+
   }
 
   retrieveProperties() {
+    this.properties = [];
     this.propertyService.getAll().snapshotChanges().pipe(
       map(changes =>
       changes.map(c =>
         ({key: c.payload.key, ...c.payload.val()})
       ))
     ).subscribe(data => {
-      this.properties = data;
+      data.forEach(res => {
+        this.property = new PropertyModel();
+        this.property.key = res.key;
+        this.property.name = res.name;
+        this.property.streetLine1 = res.streetLine1;
+        this.property.streetLine2 = res.streetLine2;
+        this.property.city = res.city;
+        this.property.province = res.province;
+        this.property.postalCode = res.postalCode;
+        this.property.propId = res.key;
+        this.property.phone = res.phone;
+        this.property.long = res.long;
+        this.property.lat = res.lat;
+        this.properties.push(this.property);
+      });
+      // this.properties = data;
       console.log('what are properties: ', this.properties);
       this.dataSource = new MatTableDataSource(this.properties);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -71,7 +92,14 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
     const dialogFilter = this.dialog.open(CreateUpdatePropertyComponent, {
       height: '690px',
       width: '850px',
-      disableClose: true
+      disableClose: true,
+      data: { update: false }
+    });
+
+    dialogFilter.afterClosed().subscribe(res => {
+      if (res === 'added') {
+        this.retrieveProperties();
+      }
     });
   }
 
@@ -82,10 +110,42 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
     );
   }
 
-  private _filter(value): PropertyListInterface[] {
+  private _filter(value): FirebasePropertiesModel[] {
     const filterValue = value.toLowerCase();
 
     return this.dataSource.data.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  deleteProperty(element: PropertyModel) {
+    console.log(JSON.stringify(element));
+    const dialogRef = this.dialog.open(GenericDeleteDialogComponent, {
+      width: '500px',
+      data: { currentDialog: element.name }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.propertyService.delete(element.key).then(() => {
+          this.retrieveProperties();
+        });
+      }
+    });
+  }
+
+  updateProperty(element: PropertyModel) {
+    const dialogRef = this.dialog.open(CreateUpdatePropertyComponent, {
+      height: '690px',
+      width: '850px',
+      disableClose: true,
+      data: { update: true, property: element }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res === 'updated') {
+        console.log('Property updated successfully');
+        this.retrieveProperties();
+      }
+    });
   }
 }
 

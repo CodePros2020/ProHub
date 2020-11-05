@@ -9,13 +9,17 @@ import {Router} from '@angular/router';
 })
 export class FirebaseService {
 
-  constructor(   private firestore: AngularFirestore , private db: AngularFireDatabase , public router: Router ) { }
+  constructor(
+    private firestore: AngularFirestore,
+    private db: AngularFireDatabase,
+    public router: Router ) { }
 
   getUser(uid){
     return this.db.object('/users/' + uid).valueChanges();
   }
 
   addUser(user: RegistrationModel, uid) {
+    localStorage.setItem('user', JSON.stringify(user));
     return this.db.database.ref('users').child(uid).set(user).then( () => {
       if (user.userType.toUpperCase() === 'BUSINESS'){
           this.router.navigate(['container/property-list']);

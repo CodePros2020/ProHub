@@ -8,6 +8,11 @@
     font-size: xx-large;
   }
 
+  .close {
+    float: right;
+    cursor: pointer;
+  }
+
   .mat-divider {
     margin-top: 1rem;
     border-top-width: 3px;

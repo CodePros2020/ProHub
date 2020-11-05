@@ -18,6 +18,7 @@ import {Observable} from 'rxjs';
 export class AuthService {
   userData: any; // Save logged in user data
   user: Observable<unknown>;
+  loggedInUser: any;
 
   constructor(
     public afs: AngularFireDatabase,
@@ -29,20 +30,54 @@ export class AuthService {
     private http: HttpClient
   ) {
 
-    /* Saving user data in localstorage when
-    logged in and setting up null when logged out */
-    this.firebaseAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userData = user;
-        this.user = this.firebaseService.getUser(this.userData.uid);
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user'));
-      } else {
-        localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
-      }
-    });
+    // /* Saving user data in localstorage when
+    // logged in and setting up null when logged out */
+    // this.firebaseAuth.authState.subscribe((user) => {
+    //   if (user) {
+    //     this.userData = user;
+    //     this.user = this.firebaseService.getUser(this.userData.uid);
+    //     localStorage.setItem('user', JSON.stringify(this.userData));
+    //     JSON.parse(localStorage.getItem('user'));
+    //   } else {
+    //     localStorage.setItem('user', null);
+    //     JSON.parse(localStorage.getItem('user'));
+    //   }
+    // });
   }
+
+  // // Sign in with email/password
+  // SignIn(email, password) {
+  //   return this.firebaseAuth
+  //     .signInWithEmailAndPassword(email, password)
+  //     .then((result) => {
+  //       console.log('User Received =>', result.user);
+  //       this.ngZone.run(() => {
+  //         this.SetUserData(result.user);
+  //         if (this.userData.emailVerified && this.userData.phoneNumber === null) {
+  //           this.router.navigate(['register']);
+  //         }
+  //         else {
+  //           const dialog = this.dialog.open(ErrorDialogComponent, {
+  //             height: '250px',
+  //             width: '450px',
+  //             autoFocus: false,
+  //             restoreFocus: false,
+  //             panelClass: 'no-padding-container',
+  //             data: {
+  //               msg:
+  //                 'An email verification link has been sent at ' +
+  //                 this.userData.email +
+  //                 '. Please verify email to login.',
+  //             },
+  //           });
+  //         }
+  //       });
+  //
+  //     })
+  //     .catch((error) => {
+  //       window.alert(error.message);
+  //     });
+  // }
 
   // Sign in with email/password
   SignIn(email, password) {
@@ -50,12 +85,15 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         console.log('User Received =>', result.user);
-        this.ngZone.run(() => {
-          this.SetUserData(result.user);
-          if (this.userData.emailVerified && this.userData.phoneNumber === null) {
+        this.firebaseService.getUser(result.user.uid).subscribe(res => {
+          this.loggedInUser = res;
+          console.log('checking logged in user', this.loggedInUser);
+          console.log('checking logged in user phone', this.loggedInUser.phoneNumber);
+
+          if (result.user.emailVerified === true && this.loggedInUser.phoneNumber === undefined) {
+            this.SetUserData(result.user);
             this.router.navigate(['register']);
-          }
-          else {
+          } else if (result.user.emailVerified === false) {
             const dialog = this.dialog.open(ErrorDialogComponent, {
               height: '250px',
               width: '450px',
@@ -69,14 +107,25 @@ export class AuthService {
                   '. Please verify email to login.',
               },
             });
+          } else if (result.user.emailVerified === true && this.loggedInUser.phoneNumber !== undefined) {
+            localStorage.setItem('user', JSON.stringify(this.loggedInUser));
+            if ((this.loggedInUser.userType.toUpperCase() === 'BUSINESS')) {
+              this.router.navigate(['container/property-list']);
+            } else {
+              this.router.navigate(['container/dashboard']);
+            }
           }
         });
-
       })
       .catch((error) => {
         window.alert(error.message);
       });
   }
+
+  GetUserInSession() {
+    return JSON.parse(localStorage.getItem('user'));
+  }
+
   // Sign up with email/password
   SignUp(email, password) {
     return this.firebaseAuth
@@ -133,7 +182,7 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      phoneNumber: user.phoneNumber,
+      phoneNumber: user.phoneNumber || null,
     };
     return userRef.set(userData);
     // return userRef.set(userData, {

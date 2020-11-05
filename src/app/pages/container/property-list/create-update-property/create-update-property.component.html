@@ -2,13 +2,14 @@
   <form [formGroup]="createPropertyForm">
 
     <div class="row">
-      <div class="col">
+      <div class="col justify-content-between">
         <ng-container *ngIf="!isEditMode">
           <span class="title">Create New Property</span>
         </ng-container>
         <ng-container *ngIf="isEditMode">
           <span class="title">Edit Property</span>
         </ng-container>
+        <mat-icon class="close" (click)="onCancelClick()">close</mat-icon>
       </div>
     </div>
 
@@ -19,32 +20,69 @@
     </div>
 
     <div class="content">
+
       <div class="row">
-        <div class="col d-flex justify-content-between">
-          <mat-form-field appearance="outline" style="width: 65%">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" style="width: 100%">
             <mat-label>Property Name</mat-label>
             <input formControlName="propertyName" matInput maxlength="64" placeholder="Property Name">
           </mat-form-field>
+        </div>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Number of Units</mat-label>
-            <input formControlName="numUnits" matInput placeholder="Number of Units" mask="0000">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Street Line 1</mat-label>
+            <input formControlName="streetLine1" matInput maxlength="64" placeholder="Street Line 1" (blur)="structuredAddressLookUp()">
           </mat-form-field>
         </div>
       </div>
 
       <div class="row">
-        <div class="col">
+        <div class="col-md-6">
           <mat-form-field appearance="outline" style="width: 100%">
-            <mat-label>Address</mat-label>
-            <input formControlName="propertyAddress" matInput maxlength="150" placeholder="Property Address" [matAutocomplete]="auto">
-            <mat-spinner matSuffix *ngIf="isAddressSearchApiRunning" mode="indeterminate" diameter="17"></mat-spinner>
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let prop of searchResults" [value]="prop.displayName" (onSelectionChange)="getAddress(prop)">{{ prop.displayName }}</mat-option>
-            </mat-autocomplete>
+            <mat-label>Street Line 2</mat-label>
+            <input formControlName="streetLine2" matInput maxlength="64" placeholder="Street Line 2">
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>City</mat-label>
+            <input formControlName="city" matInput maxlength="64" placeholder="City" (blur)="structuredAddressLookUp()">
           </mat-form-field>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Province</mat-label>
+            <mat-select formControlName="province" (selectionChange)="structuredAddressLookUp()">
+              <mat-option *ngFor="let province of provinces | keyvalue: returnZero" value="{{province.value}}">
+                {{province.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Postal Code</mat-label>
+            <input formControlName="postalCode" matInput maxlength="6" placeholder="Postal Code e.g. A1A1A1" mask="S0S0S0">
+          </mat-form-field>
+        </div>
+      </div>
+
+<!--      <div class="row">-->
+<!--        <div class="col">-->
+<!--          <mat-form-field appearance="outline" style="width: 100%">-->
+<!--            <mat-label>Full Address</mat-label>-->
+<!--            <input formControlName="propertyAddress" matInput maxlength="150" placeholder="Property Address" [matAutocomplete]="auto">-->
+<!--            <mat-spinner matSuffix *ngIf="isAddressSearchApiRunning" mode="indeterminate" diameter="17"></mat-spinner>-->
+<!--            <mat-autocomplete #auto="matAutocomplete">-->
+<!--              <mat-option *ngFor="let prop of searchResults" [value]="prop.displayName" (onSelectionChange)="getAddress(prop)">{{ prop.displayName }}</mat-option>-->
+<!--            </mat-autocomplete>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <div class="row">
         <div class="col">
@@ -53,19 +91,16 @@
                (leafletMapReady)="initializeMap($event)"
                [leafletOptions]="options"
                (leafletClick)="onMapClick($event)">
-            <div class="leaflet-bottom leaflet-left">
-              <!--          <app-geocoding (onSearch)="refreshSearchList($event)"></app-geocoding>-->
-            </div>
           </div>
         </div>
       </div>
 
       <div class="row justify-content-md-center buttons">
         <div class="col-md-2 text-center">
-          <button class="save" mat-raised-button>SAVE</button>
+          <button class="save" mat-raised-button (click)="saveProperty()">SAVE</button>
         </div>
         <div class="col-md-2 text-center">
-          <button class="cancel" mat-raised-button>CANCEL</button>
+          <button class="cancel" mat-raised-button (click)="onCancelClick()">CANCEL</button>
         </div>
       </div>
 

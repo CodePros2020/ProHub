@@ -110,8 +110,8 @@
                 <mat-form-field appearance="outline">
                   <mat-label>Province</mat-label>
                   <mat-select formControlName="province">
-                    <mat-option *ngFor="let province of provinces" [value]="province.value">
-                      {{province.viewValue}}
+                    <mat-option *ngFor="let province of provinces | keyvalue: returnZero" value="{{province.key}}">
+                      {{province.value}}
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="this.formControls.province.invalid">Please choose province</mat-error>
