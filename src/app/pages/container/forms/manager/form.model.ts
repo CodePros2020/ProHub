@@ -5,5 +5,5 @@ export class FormModel {
   filename: string; // formTitle
   contentUrl: string;
   upload_date: string; // dateCreated
-  size: number; //
+  // size: number; //
 }

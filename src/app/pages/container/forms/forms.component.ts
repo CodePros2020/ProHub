@@ -7,6 +7,8 @@ import {UploadFormDialogComponent} from "./upload-form-dialog/upload-form-dialog
 import {FormService} from "../../../shared-services/form.service";
 import {map} from "rxjs/operators";
 import {FormModel} from "./manager/form.model";
+import {PropertyModel} from "../property-list/manager/property.model";
+import {GenericDeleteDialogComponent} from "../../../shared-components/generic-delete-dialog/generic-delete-dialog.component";
 
 @Component({
   selector: 'app-forms',
@@ -21,7 +23,8 @@ export class FormsComponent implements AfterViewInit  {
   forms = [];
   form: FormModel;
 
-  displayedColumns: string[] = ['filename', 'upload_date', 'size', 'action'];
+//  displayedColumns: string[] = ['filename', 'upload_date', 'size', 'action'];
+  displayedColumns: string[] = ['filename', 'upload_date', 'action'];
   dataSource;
 
   // constructor
@@ -54,7 +57,7 @@ export class FormsComponent implements AfterViewInit  {
         this.form.upload_date = res.dateCreated;
         this.form.contentUrl = res.contentUrl;
         this.form.propId = res.propId;
-        this.form.size = 1024;
+        // this.form.size = 1024;
         this.forms.push(this.form);
       });
       // this.properties = data;
@@ -72,4 +75,21 @@ export class FormsComponent implements AfterViewInit  {
       disableClose: true
     })
   }
+
+  deleteForm(element: FormModel) {
+    console.log(JSON.stringify(element));
+    const dialogRef = this.dialog.open(GenericDeleteDialogComponent, {
+      width: '500px',
+      data: { currentDialog: element.filename }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.formService.delete(element.key).then(() => {
+          this.retrieveForms();
+        });
+      }
+    });
+  }
+
 }

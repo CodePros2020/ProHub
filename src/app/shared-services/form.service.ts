@@ -27,5 +27,10 @@ export class FormService {
   getAll(): AngularFireList<FirebaseFormsModel> {
     return this.formsRef;
   }
+
+  delete(key: string): Promise<void> {
+    return this.formsRef.remove(key);
+  }
+
 }
 
