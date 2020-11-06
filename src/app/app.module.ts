@@ -30,7 +30,6 @@ import { SettingsComponent } from './pages/container/settings/settings.component
 import { AccountInfoComponent } from './pages/container/settings/account-info/account-info.component';
 import { StaffManagementComponent } from './pages/container/settings/staff-management/staff-management.component';
 import { AddEditStaffComponent } from './pages/container/settings/staff-management/add-edit-staff/add-edit-staff.component';
-import { UploadFileDialogComponent } from './pages/container/settings/staff-management/add-edit-staff/upload-file-dialog/upload-file-dialog.component';
 import { FormsComponent } from './pages/container/forms/forms.component';
 import { UploadFormDialogComponent } from './pages/container/forms/upload-form-dialog/upload-form-dialog.component';
 import { UnitsManagementComponent } from './pages/container/settings/units-management/units-management.component';
@@ -64,7 +63,6 @@ import { GenericDeleteDialogComponent } from './shared-components/generic-delete
     AccountInfoComponent,
     StaffManagementComponent,
     AddEditStaffComponent,
-    UploadFileDialogComponent,
     FormsComponent,
     UploadFormDialogComponent,
     UnitsManagementComponent,

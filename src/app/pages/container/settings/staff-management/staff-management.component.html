@@ -1,9 +1,5 @@
 <div class="staff-list-container">
-  <div style="float:right">
-    <a id="close-btn" (click)="close()" >
-      <mat-icon matSuffix>close</mat-icon>
-    </a>
-  </div>
+
 
   <form [formGroup]="staffListForm">
     <div class="container-fluid">
@@ -29,11 +25,11 @@
             <mat-icon matPrefix>search</mat-icon>
             <input matInput placeholder="Search" formControlName="staffSearch" type="text" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let staff of dataSource.data" [value]="staff.name">{{ staff.name }}</mat-option>
+              <mat-option *ngFor="let staff of dataSource.data" [value]="staff.fullName">{{ staff.fullName }}</mat-option>
             </mat-autocomplete>
           </mat-form-field>
 
-          <button class="add-staff-btn" mat-raised-button (click)="openAddEditStaffDialog()"><mat-icon>add</mat-icon> ADD</button>
+          <button class="add-staff-btn" mat-raised-button (click)="openAddStaffDialog()"><mat-icon>add</mat-icon> ADD</button>
 
         </div>
 
@@ -44,9 +40,9 @@
           <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
             <!-- Name Column -->
-            <ng-container matColumnDef="name">
+            <ng-container matColumnDef="fullName">
               <mat-header-cell *matHeaderCellDef class="cell-txt"> Staff Name </mat-header-cell>
-              <mat-cell *matCellDef="let staff"> {{staff.name}} </mat-cell>
+              <mat-cell *matCellDef="let staff"> {{staff.fullName}} </mat-cell>
             </ng-container>
 
             <!-- Role Column -->
@@ -59,7 +55,7 @@
             <ng-container matColumnDef="action">
               <mat-header-cell *matHeaderCellDef class="cell-txt"> &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
               <mat-cell *matCellDef="let staff" class="d-flex justify-content-between">
-                <mat-icon class="edit" (click)="openAddEditStaffDialog()">edit</mat-icon>
+                <mat-icon class="edit" (click)="openEditStaffDialog(staff)">edit</mat-icon>
                 <mat-icon class="delete">delete</mat-icon>
               </mat-cell>
             </ng-container>

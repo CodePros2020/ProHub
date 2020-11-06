@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {StaffManagementComponent} from './staff-management/staff-management.component';
 import {MatDialog} from '@angular/material/dialog';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -17,7 +18,8 @@ export class SettingsComponent implements OnInit {
   public hideConfirm = true;
   public showFirst = true;
 
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder,) {
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder,
+              public router: Router) {
     this.createChangePasswordFormGroup();  }
 
   ngOnInit(): void {
@@ -43,7 +45,12 @@ export class SettingsComponent implements OnInit {
   get formControls() {
     return this.changePasswordForm.controls;
   }
-
+  goStaff() {
+    this.router.navigate(['container/staff']);
+  }
+  goUnits() {
+    this.router.navigate(['container/units']);
+  }
   openStaffManagementDialog() {
     const dialogRef = this.dialog.open(StaffManagementComponent, {
       maxWidth: 'auto',

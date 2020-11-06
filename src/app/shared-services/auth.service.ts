@@ -7,7 +7,6 @@ import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import { VerifyEmailAddressComponent } from '../pages/signup/verify-email-address/verify-email-address.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.component';
-import { RegistrationModel } from '../pages/registration/manager/registration.model';
 import { FirebaseService } from './firebase.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -30,19 +29,19 @@ export class AuthService {
     private http: HttpClient
   ) {
 
-    // /* Saving user data in localstorage when
-    // logged in and setting up null when logged out */
-    // this.firebaseAuth.authState.subscribe((user) => {
-    //   if (user) {
-    //     this.userData = user;
-    //     this.user = this.firebaseService.getUser(this.userData.uid);
-    //     localStorage.setItem('user', JSON.stringify(this.userData));
-    //     JSON.parse(localStorage.getItem('user'));
-    //   } else {
-    //     localStorage.setItem('user', null);
-    //     JSON.parse(localStorage.getItem('user'));
-    //   }
-    // });
+    /* Saving user data in localstorage when
+    logged in and setting up null when logged out */
+    this.firebaseAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userData = user;
+        this.user = this.firebaseService.getUser(this.userData.uid);
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user'));
+      } else {
+        localStorage.setItem('user', null);
+        JSON.parse(localStorage.getItem('user'));
+      }
+    });
   }
 
   // // Sign in with email/password
@@ -144,7 +143,9 @@ export class AuthService {
   // Send email verification when new user sign up
   SendVerificationMail() {
     return this.firebaseAuth.currentUser.then((u) =>
+
       u.sendEmailVerification().then(() => {
+        this.SetUserData(u);
         const dialog = this.dialog.open(VerifyEmailAddressComponent, {
           height: '350px',
           width: '450px',

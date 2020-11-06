@@ -72,7 +72,7 @@ export class FormsComponent implements AfterViewInit  {
       height: '400px',
       width: '850px',
       disableClose: true
-    })
+    });
   }
 
   deleteForm(element: FormModel) {
