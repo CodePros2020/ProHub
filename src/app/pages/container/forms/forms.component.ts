@@ -7,7 +7,6 @@ import {UploadFormDialogComponent} from "./upload-form-dialog/upload-form-dialog
 import {FormService} from "../../../shared-services/form.service";
 import {map} from "rxjs/operators";
 import {FormModel} from "./manager/form.model";
-import {PropertyModel} from "../property-list/manager/property.model";
 import {GenericDeleteDialogComponent} from "../../../shared-components/generic-delete-dialog/generic-delete-dialog.component";
 
 @Component({
