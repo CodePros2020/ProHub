@@ -1,5 +1,9 @@
 export class FormModel {
-  filename: string;
-  upload_date: string;
-  size: number;
+  key: string;
+//  formId: string;
+  propId: string;
+  filename: string; // formTitle
+  contentUrl: string;
+  upload_date: string; // dateCreated
+  // size: number; //
 }
