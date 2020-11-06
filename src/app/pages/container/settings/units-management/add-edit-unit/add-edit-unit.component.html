@@ -28,7 +28,14 @@
           <mat-form-field class="col-md-12" appearance="outline">
             <mat-label>Tenant ID <span class="star">*</span></mat-label>
             <input matInput placeholder="e.g. 2020" formControlName="tenantId">
-            <mat-error *ngIf="this.formControls.tenantId.invalid">Please enter tenantId</mat-error>
+            <mat-error *ngIf="this.formControls.tenantId.invalid">Please enter tenant Id</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-8">
+          <mat-form-field class="col-md-12" appearance="outline">
+            <mat-label>Tenant Name<span class="star">*</span></mat-label>
+            <input matInput placeholder="e.g. 2020" formControlName="tenantName">
+            <mat-error *ngIf="this.formControls.tenantName.invalid">Please enter tenant name</mat-error>
           </mat-form-field>
         </div>
       </div>

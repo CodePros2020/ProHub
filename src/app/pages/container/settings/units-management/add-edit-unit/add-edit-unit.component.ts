@@ -2,8 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UnitModel} from '../manager/Unit.model';
-import validate = WebAssembly.validate;
-import {ProvinceEnum} from "../../../../../shared-models/enum/province.enum";
+
 
 @Component({
   selector: 'app-add-edit-unit',
@@ -43,14 +42,16 @@ export class AddEditUnitComponent implements OnInit {
     this.unitForm = this.formBuilder.group({
      unitId: ['', Validators.required],
       unitName: ['', Validators.required],
-      tenantId: ['', Validators.required]
+      tenantId: ['', Validators.required],
+      tenantName: ['', Validators.required]
     });
   }
   updateUnitForm() {
     this.unitForm = this.formBuilder.group({
       unitId: [this.unit.unitId, Validators.required],
       unitName: [this.unit.unitName, Validators.required],
-      tenantId: [this.unit.tenantId, Validators.required]
+      tenantId: [this.unit.tenantId, Validators.required],
+      tenantName: [this.unit.tenantName, Validators.required]
     });
   }
   /** Clicking on close */
