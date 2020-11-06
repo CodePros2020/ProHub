@@ -11,6 +11,8 @@ import {NewsroomComponent} from './pages/container/newsroom/newsroom.component';
 import {SettingsComponent} from './pages/container/settings/settings.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import {VerifyEmailAddressComponent} from './pages/signup/verify-email-address/verify-email-address.component';
+import {StaffManagementComponent} from './pages/container/settings/staff-management/staff-management.component';
+import {UnitsManagementComponent} from './pages/container/settings/units-management/units-management.component';
 
 
 const routes: Routes = [
@@ -29,6 +31,8 @@ const routes: Routes = [
       {path: 'newsroom', component: NewsroomComponent},
       {path: 'property-list', component: PropertyListComponent},
       {path: 'settings', component: SettingsComponent},
+      {path: 'staff', component: StaffManagementComponent},
+      {path: 'units', component: UnitsManagementComponent},
     ]
   }
 ];

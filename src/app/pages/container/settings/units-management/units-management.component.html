@@ -1,1 +1,89 @@
-<p>units-management works!</p>
+<div class="staff-list-container">
+
+
+  <form [formGroup]="unitListForm">
+    <div class="container-fluid">
+      <div class="titles justify-content-center" >
+
+        <div class="row" >
+          <div class="col title justify-content-center">
+            <span style="justify-content: center">Units Management</span>
+          </div>
+        </div>
+        <div class="row" >
+          <div class="col sub-title justify-content-center sub-title-div">
+            <span style="justify-content: center">8 Progress Street</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md d-flex justify-content-between">
+
+          <mat-form-field appearance="outline" style="width: 60%">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="Search" formControlName="unitSearch" type="text" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let unit of dataSource.data" [value]="unit.unitId">{{ unit.unitId }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <button class="add-staff-btn" mat-raised-button (click)="openAddUnitDialog()"><mat-icon>add</mat-icon> ADD</button>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="unitId">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Unit ID </mat-header-cell>
+              <mat-cell *matCellDef="let unit"> {{unit.unitId}} </mat-cell>
+            </ng-container>
+
+            <!-- Unit name Column -->
+            <ng-container matColumnDef="unitName">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Unit Name </mat-header-cell>
+              <mat-cell *matCellDef="let unit"> {{unit.unitName}} </mat-cell>
+            </ng-container>
+
+            <!-- Role Column -->
+            <ng-container matColumnDef="tenantId">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Tenant Id </mat-header-cell>
+              <mat-cell *matCellDef="let unit"> {{unit.tenantId}} </mat-cell>
+            </ng-container>
+            <!-- Role Column -->
+            <ng-container matColumnDef="tenantName">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Tenant Name </mat-header-cell>
+              <mat-cell *matCellDef="let unit"> {{unit.tenantName}} </mat-cell>
+            </ng-container>
+
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
+              <mat-cell *matCellDef="let unit" class="d-flex justify-content-between">
+                <mat-icon class="edit" (click)="openEditUnitDialog(unit)">edit</mat-icon>
+                <mat-icon class="delete">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="tbl-header"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+
+
+
+    </div>
+  </form>
+</div>
+
+<div class="table-sec">
+</div>

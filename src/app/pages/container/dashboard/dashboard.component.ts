@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   }
 
   goStaff() {
-    this.router.navigate(['container/property-list']);
+    this.router.navigate(['container/staff']);
   }
 
   goForms() {
@@ -33,11 +33,11 @@ export class DashboardComponent implements OnInit {
   }
 
   goUnits() {
-    this.router.navigate(['container/property-list']);
+    this.router.navigate(['container/units']);
   }
 
   goSettings() {
-    this.router.navigate(['container//settings']);
+    this.router.navigate(['container/settings']);
   }
 
 }

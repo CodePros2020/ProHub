@@ -36,11 +36,11 @@ export class UploadFormDialogComponent implements OnInit {
     this.isFileUploaded = false;
     //
     this.form = {
-      filename: "",
-      upload_date: "",
+      filename: '',
+      upload_date: '',
       size: 0,
       filedata: null
-    }
+    };
   }
 
   // life cycle hooks
@@ -48,7 +48,7 @@ export class UploadFormDialogComponent implements OnInit {
   }
 
   // event handlers
-  onFileChange(event:any) :void{
+  onFileChange(event: any): void{
     this.files = event.target.files;
     this.form.filename = this.files[0].name;
     this.selectedFileName = this.files[0].name;
@@ -62,11 +62,11 @@ export class UploadFormDialogComponent implements OnInit {
 
   removeFile(){
     this.fileInput.nativeElement.value = null;
-    this.fileNameInput.nativeElement.value = "";
+    this.fileNameInput.nativeElement.value = '';
     this.isFileUploaded = false;
   }
 
-  save() : void {
+  save(): void {
     // UNDER DEVELOPMENT
     // this.form.upload_date = Date.now().toString();
     // console.log(this.form);
