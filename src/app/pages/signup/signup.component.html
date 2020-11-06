@@ -26,7 +26,7 @@
         <div class="col-md-10">
           <mat-form-field appearance="outline" class="col-md-12" >
             <mat-label>Email</mat-label>
-            <input  formControlName="email" matInput maxlength="64" placeholder="Email" >
+            <input  formControlName="email" matInput maxlength="64" placeholder="Email" required>
             <mat-error style="margin-left: 5%"*ngIf="this.formControls.email.invalid">Please enter email.</mat-error>
           </mat-form-field>
 
@@ -36,7 +36,7 @@
         <div class="col-md-10">
           <mat-form-field appearance="outline" class="col-md-12">
             <mat-label>Password</mat-label>
-            <input formControlName="password" matInput maxlength="64" [type]="hide ? 'password' : 'text'" placeholder="Password" >
+            <input formControlName="password" matInput maxlength="64" [type]="hide ? 'password' : 'text'" placeholder="Password" required>
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
@@ -49,7 +49,7 @@
         <div class="col-md-10">
           <mat-form-field appearance="outline" class="col-md-12">
             <mat-label>Confirm Password</mat-label>
-            <input formControlName="confirmPassword" matInput maxlength="64" [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm Password" >
+            <input formControlName="confirmPassword" matInput maxlength="64" [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm Password" required>
             <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hideConfirmPassword" >
               <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
