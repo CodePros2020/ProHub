@@ -18,10 +18,11 @@ export class UploadFormDialogComponent implements OnInit {
   // public fields
   public uploadFormForm: FormGroup;
   public form: {
-    filename: string;
-    upload_date: string;
-    size: number;
-    filedata: File | null;
+    filename: string,
+    fileextension: string,
+    upload_date: string,
+    size: number,
+    filedata: File | null,
   };
 
   // private fields
@@ -37,6 +38,7 @@ export class UploadFormDialogComponent implements OnInit {
     //
     this.form = {
       filename: "",
+      fileextension: "",
       upload_date: "",
       size: 0,
       filedata: null
@@ -50,7 +52,10 @@ export class UploadFormDialogComponent implements OnInit {
   // event handlers
   onFileChange(event:any) :void{
     this.files = event.target.files;
-    this.form.filename = this.files[0].name;
+
+    this.form.filename = this.files[0].name.split('.').shift();
+    this.form.fileextension = this.files[0].name.split('.').pop();
+
     this.selectedFileName = this.files[0].name;
     this.isFileUploaded = true;
   }
