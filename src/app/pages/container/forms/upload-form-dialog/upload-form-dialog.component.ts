@@ -78,6 +78,7 @@ export class UploadFormDialogComponent implements OnInit {
     // alert(this.form.filename);
   }
 
+
   cancel() {
     this.dialogRef.close();
   }

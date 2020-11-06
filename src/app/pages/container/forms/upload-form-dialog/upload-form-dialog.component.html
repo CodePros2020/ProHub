@@ -30,7 +30,7 @@
       <div class="col-md-5" [hidden]="isFileUploaded">
         <button mat-raised-button (click)="fileInput.click()" style="width: 97% !important;">
           <span>Choose a file</span>
-          <input #fileInput id="fileInput" name="fileInput" type="file" accept=".pdf, .png, .jpg" (change)="onFileChange($event)" [(ngModel)]="form.filedata" observeFiles style="display:none;" />
+          <input #fileInput id="fileInput" name="fileInput" type="file" accept=".pdf, .png, .jpg" (change)="onFileChange($event)" [value]="form.filedata" observeFiles style="display:none;" />
         </button>
       </div>
     </div>
@@ -41,7 +41,7 @@
           File Name:
         </div>
           <div class="input-group col-md-5 d-flex justify-content-between">
-            <input #fileNameInput  id="fileNameInput" name="fileNameInput" class="form-control" [(ngModel)]="form.filename" type="text">
+            <input #fileNameInput  id="fileNameInput" name="fileNameInput" class="form-control" [value]="form.filename"  type="text">
             <span class="mt-2 ml-2 h6 input-group-addon">.{{ form.fileextension }}</span>
           </div>
       </div>
