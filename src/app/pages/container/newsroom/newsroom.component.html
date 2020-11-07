@@ -1,26 +1,39 @@
 <div class="container">
 
   <!-- Search -->
-  <div class="row">
-    <div class="col-xl-10">
+  <div class="row" style="margin-top: 25px">
+    <div class="col-xl-1"></div>
+    <div class="col-xl-9">
       <mat-form-field appearance="outline" style="width:100%;">
         <mat-icon matPrefix>search</mat-icon>
-        <input matInput placeholder="Search News" type="search" ng-model="q" aria-label="filter newsList">
+        <input matInput placeholder="Search News" type="text">
       </mat-form-field>
     </div>
     <!-- Button -->
     <div class="col-xl-2">
       <button class="btn-upload" mat-raised-button (click)="openAddNewsDialog()">
-        <mat-icon inline="true">plus</mat-icon>
+        +
       </button>
     </div>
   </div>
 
   <!-- news container -->
   <div class="news-container">
-    <div ng-repeat="news in newsList | filter:q as results track by news.Title | filter:q as results track by news.Content">
-
-    </div>
+    <mat-grid-list cols="1" rowHeight="450px">
+      <mat-grid-tile *ngFor="let news of newsList">
+        <div class="card news-card">
+          <div class="card-body">
+            <h4 class="card-title">{{news.newsTitle}}</h4>
+            <h5 class="card-subtitle mb-2 text-muted">{{news.createTime}}</h5>
+            <img class="card-img news-img" src="{{news.imageUrl}}" alt="News Image">
+            <p class="card-text">{{news.content}}</p>
+            <div class="text-right">
+              <a href="#" class="link-underline">View entire message</a>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
   </div>
 
   <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.

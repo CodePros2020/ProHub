@@ -1,10 +1,11 @@
 export class NewsModel {
   key: string;
   propId: string;
-  title: string;
+  newsTitle: string;
   content: string;
   imageUrl: string;
-  createdDate: string;
-  isHidden: boolean;
-  viewGroup: string;
+  createTime: string;
+  creatorPhoneNumber: string;
+  hideFlag: boolean;
+  targetViewer: string;
 }
