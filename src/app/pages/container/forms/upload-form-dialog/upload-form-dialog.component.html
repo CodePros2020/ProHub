@@ -31,7 +31,7 @@
       <div class="col-md-5" [hidden]="isFileUploaded">
         <button mat-raised-button (click)="fileInput.click()" style="width: 97% !important;">
           <span>Choose a file</span>
-          <input #fileInput id="fileInput" name="fileInput" type="file" accept=".pdf, .png, .jpg" (change)="onFileChange($event)" [value]="form.filedata" observeFiles style="display:none;" required/>
+          <input #fileInput id="fileInput" name="fileInput" type="file" accept=".pdf, .png, .jpg" (change)="onFileChange($event)" observeFiles style="display:none;" required/>
         </button>
       </div>
     </div>
@@ -42,21 +42,21 @@
           File Name:
         </div>
           <div class="input-group col-md-5 d-flex justify-content-between">
-            <input #fileNameInput (change)="onFileNameChange($event)" id="fileNameInput" name="fileNameInput" class="form-control" [value]="form.filename"  type="text" required>
-            <span class="mt-2 ml-2 h6 input-group-addon">.{{ form.fileextension }}</span>
+            <input #fileNameInput (change)="onFileNameChange($event)" id="fileNameInput" name="fileNameInput" class="form-control" [value]="filename"  type="text" required>
+            <span class="mt-2 ml-2 h6 input-group-addon">.{{ fileextension }}</span>
           </div>
       </div>
     </ng-container>
     <!-- Buttons -->
     <div class="row mt-4 justify-content-md-center buttons">
       <div class="ml-4 col-md-2 text-center">
-        <button class="save" mat-raised-button (click)="save()">SAVE</button>
+        <button class="save" [disabled]="isLoading" mat-raised-button (click)="save()">SAVE</button>
       </div>
       <div class="ml-4 col-md-2 text-center">
-        <button class="cancel" mat-raised-button (click)="cancel()">CANCEL</button>
+        <button class="cancel" [disabled]="isLoading" mat-raised-button (click)="cancel()">CANCEL</button>
       </div>
     </div>
   </div>
   </form>
-
+  <mat-spinner class="layout-fill" layout-align="center center" [hidden]="!isLoading"></mat-spinner>
 </div>

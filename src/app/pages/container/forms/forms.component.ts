@@ -1,14 +1,16 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatDialog} from "@angular/material/dialog";
 import {UploadFormDialogComponent} from "./upload-form-dialog/upload-form-dialog.component";
 import {FormService} from "../../../shared-services/form.service";
-import {map} from "rxjs/operators";
+import {finalize, map} from "rxjs/operators";
 import {FormModel} from "./manager/form.model";
 import {GenericDeleteDialogComponent} from "../../../shared-components/generic-delete-dialog/generic-delete-dialog.component";
 import {AuthService} from "../../../shared-services/auth.service";
+import {FileService} from "../../../shared-services/file.service";
+import {AngularFireStorage} from "@angular/fire/storage";
 
 @Component({
   selector: 'app-forms',
@@ -22,14 +24,17 @@ export class FormsComponent implements AfterViewInit  {
 
   forms = [];
   form: FormModel;
+   propId ="temp";
+
 
 //  displayedColumns: string[] = ['filename', 'upload_date', 'size', 'action'];
   displayedColumns: string[] = ['filename', 'upload_date', 'action'];
-  dataSource;
-
+  dataSource = new MatTableDataSource(this.forms)
   // constructor
   constructor(public dialog: MatDialog,
-              private formService: FormService
+              private formService: FormService,
+              private storage: AngularFireStorage,
+              @Inject(FileService) private fileService: FileService
               ) {
   }
 
@@ -53,8 +58,8 @@ export class FormsComponent implements AfterViewInit  {
       data.forEach(res=>{
         this.form = new FormModel();
         this.form.key = res.key;
-        this.form.filename = res.formTitle;
-        this.form.upload_date = res.dateCreated;
+        this.form.formTitle = res.formTitle;
+        this.form.dateCreated = res.dateCreated;
         this.form.contentUrl = res.contentUrl;
         this.form.propId = res.propId;
         // this.form.size = 1024;
@@ -62,6 +67,7 @@ export class FormsComponent implements AfterViewInit  {
       });
       // this.properties = data;
       console.log('Forms retrieved: ', this.forms);
+      // this.dataSource = new MatTableDataSource(this.forms);
       this.dataSource = new MatTableDataSource(this.forms);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -74,19 +80,28 @@ export class FormsComponent implements AfterViewInit  {
       width: '850px',
       disableClose: true
     });
-    dialogFilter.componentInstance.propId = "XXXX";
+    // dialogFilter.componentInstance.propId = this.propId;
+    dialogFilter.afterClosed().subscribe(res => {
+      if (res) {
+          this.retrieveForms();
+      }
+    });
+
   }
 
   deleteForm(element: FormModel) {
     console.log(JSON.stringify(element));
     const dialogRef = this.dialog.open(GenericDeleteDialogComponent, {
       width: '500px',
-      data: { currentDialog: element.filename }
+      data: { currentDialog: element.formTitle }
     });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.formService.delete(element.key).then(() => {
+          const deleteRef = this.storage.ref("form/" + this.propId + "/"  + element.formTitle);
+          deleteRef.delete()
+
           this.retrieveForms();
         });
       }

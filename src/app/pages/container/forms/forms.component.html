@@ -32,14 +32,15 @@
               <mat-cell *matCellDef="let form">
                 <!-- file icon -->
                 <mat-icon fontSet="material-icons-outlined">description</mat-icon>
-                {{form.filename}}
+                <a href={{form.contentUrl}} class=".accent-color" target="_blank">{{form.formTitle}}</a>
+
               </mat-cell>
             </ng-container>
 
             <!-- Creation Date Column -->
             <ng-container matColumnDef="upload_date">
               <mat-header-cell *matHeaderCellDef> Upload date </mat-header-cell>
-              <mat-cell *matCellDef="let form"> {{form.upload_date}} </mat-cell>
+              <mat-cell *matCellDef="let form"> {{form.dateCreated}} </mat-cell>
             </ng-container>
 
 <!--            &lt;!&ndash; Size Column &ndash;&gt;-->

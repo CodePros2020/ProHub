@@ -10,17 +10,20 @@ import {FormModel} from "../pages/container/forms/manager/form.model";
 })
 export class FormService {
   private dbPath = '/form'
-  // private propId ="M3Xe58nTHXxnaM6Mp-m";
+  // private propId ="-M3Xe58nTHXxnaM6Mp-m";
+  private propId ="temp";
 
   formsRef: AngularFireList<FirebaseFormsModel> = null;
   formsRefCreate: AngularFireList<FirebaseFormsModel> = null;
-  propId;
+  //propId;
 
   constructor(private db: AngularFireDatabase,
               private authService: AuthService) {
-    this.propId = this.authService.GetUserInSession().propId;
-
-    this.formsRef = db.list(this.dbPath);
+//    this.propId = this.authService.GetUserInSession().propId;
+    this.formsRef = db.list(this.dbPath, ref =>
+    ref.orderByChild('formTitle')
+      // .equalTo(this.propId)
+    );
     this.formsRefCreate = db.list(this.dbPath);
   }
 
