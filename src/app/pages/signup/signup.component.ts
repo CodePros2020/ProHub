@@ -44,9 +44,17 @@ export class SignupComponent implements OnInit {
   }
 
   sendEmail() {
-      this.authService.SignUp(this.formControls.email.value, this.formControls.password.value).then();
-      this.dialogRef.close();
+    if(!this.signUpForm.invalid){
+      if(this.signUpForm.get('confirmPassword').value === this.signUpForm.get('password').value){
+        this.authService.SignUp(this.formControls.email.value, this.formControls.password.value).then();
+        this.dialogRef.close();
+      } else {
+        window.alert("Password must match");
+      }
+    }
   }
+
+
 }
 
 
