@@ -4,6 +4,9 @@ import {MapsNominatimService} from "../../../../shared-services/maps-nominatim.s
 import {PropertyModel} from "../../property-list/manager/property.model";
 import {now} from "lodash-es";
 import {MatDialogRef} from "@angular/material/dialog";
+import {FormModel} from "../manager/form.model";
+import {PropertyService} from "../../../../shared-services/property.service";
+import {FormService} from "../../../../shared-services/form.service";
 
 @Component({
   selector: 'app-upload-form-dialog',
@@ -17,6 +20,8 @@ export class UploadFormDialogComponent implements OnInit {
 
   // public fields
   public uploadFormForm: FormGroup;
+  public formModel: FormModel;
+
   public form: {
     filename: string,
     fileextension: string,
@@ -32,7 +37,10 @@ export class UploadFormDialogComponent implements OnInit {
   selectedFileName: string;
 
   // constructors
-  constructor(public dialogRef: MatDialogRef<UploadFormDialogComponent>) {
+  constructor(
+    public dialogRef: MatDialogRef<UploadFormDialogComponent>,
+    private formService: FormService,
+  ) {
     this.isEditMode = false;
     this.isFileUploaded = false;
     //
@@ -73,9 +81,16 @@ export class UploadFormDialogComponent implements OnInit {
 
   save(): void {
     // UNDER DEVELOPMENT
-    // this.form.upload_date = Date.now().toString();
-    // console.log(this.form);
-    // alert(this.form.filename);
+    if (this.uploadFormForm.valid) {
+
+  //    this.formModel.filename = this.uploadFormForm.controls.;
+      this.formModel.propId = "";
+      this.formModel.contentUrl = "";
+//      this.formModel.upload_date = Date.now();
+
+      this.formService.upload(this.formModel);
+        this.dialogRef.close('added');
+    }
   }
 
 

@@ -3,6 +3,7 @@ import {AngularFireDatabase, AngularFireList} from "@angular/fire/database";
 import {FirebaseFormsModel} from "../pages/container/forms/manager/firebase-forms.model";
 import {FirebasePropertiesModel} from "../pages/container/property-list/manager/firebase-properties.model";
 import {AuthService} from "./auth.service";
+import {FormModel} from "../pages/container/forms/manager/form.model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class FormService {
   // private propId ="M3Xe58nTHXxnaM6Mp-m";
 
   formsRef: AngularFireList<FirebaseFormsModel> = null;
-  // formsRefCreate: AngularFireList<FirebaseFormsModel> = null;
+  formsRefCreate: AngularFireList<FirebaseFormsModel> = null;
   propId;
 
   constructor(private db: AngularFireDatabase,
@@ -20,12 +21,15 @@ export class FormService {
     this.propId = this.authService.GetUserInSession().propId;
 
     this.formsRef = db.list(this.dbPath);
-
-    // this.formsRefCreate = db.list(this.dbPath);
+    this.formsRefCreate = db.list(this.dbPath);
   }
 
   getAll(): AngularFireList<FirebaseFormsModel> {
     return this.formsRef;
+  }
+
+  upload(value: any): any {
+    return this.formsRefCreate.push(value);
   }
 
   delete(key: string): Promise<void> {
