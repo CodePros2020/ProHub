@@ -10,31 +10,29 @@
       </mat-form-field>
     </div>
     <!-- Button -->
-    <div class="col-xl-2">
-      <button class="btn-upload" mat-raised-button (click)="openAddNewsDialog()">
-        +
-      </button>
+    <div class="col-xl-2 icon">
+      <mat-icon (click)="openAddNewsDialog()" inline="true">post_add</mat-icon>
     </div>
   </div>
 
   <!-- news container -->
-  <div class="news-container">
-    <mat-grid-list cols="1" rowHeight="450px">
-      <mat-grid-tile *ngFor="let news of newsList">
-        <div class="card news-card">
-          <div class="card-body">
-            <h4 class="card-title">{{news.newsTitle}}</h4>
-            <h5 class="card-subtitle mb-2 text-muted">{{news.createTime}}</h5>
+  <mat-grid-list cols="1" rowHeight="500">
+    <mat-grid-tile *ngFor="let news of newsList">
+      <div class="card news-card">
+        <div class="card-body">
+          <h3 class="card-title">{{news.newsTitle}}</h3>
+          <h4 class="card-subtitle mb-2 text-muted">{{news.createTime}}</h4>
+          <div *ngIf="news.imageUrl !== undefined">
             <img class="card-img news-img" src="{{news.imageUrl}}" alt="News Image">
-            <p class="card-text">{{news.content}}</p>
-            <div class="text-right">
-              <a href="#" class="link-underline">View entire message</a>
-            </div>
+          </div>
+          <p class="card-text">{{news.content}}</p>
+          <div class="text-right">
+            <a href="#" class="link-underline">View entire message</a>
           </div>
         </div>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 
   <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
     All rights reserved.</h5></div>
