@@ -1,28 +1,28 @@
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <!-- Position Column -->
-  <ng-container matColumnDef="position">
-    <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-  </ng-container>
+<div class="container">
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-  </ng-container>
+  <!-- Search -->
+  <div class="row">
+    <div class="col-xl-10">
+      <mat-form-field appearance="outline" style="width:100%;">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Search News" type="search" ng-model="q" aria-label="filter newsList">
+      </mat-form-field>
+    </div>
+    <!-- Button -->
+    <div class="col-xl-2">
+      <button class="btn-upload" mat-raised-button (click)="openAddNewsDialog()">
+        <mat-icon inline="true">plus</mat-icon>
+      </button>
+    </div>
+  </div>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
-    <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-  </ng-container>
+  <!-- news container -->
+  <div class="news-container">
+    <div ng-repeat="news in newsList | filter:q as results track by news.Title | filter:q as results track by news.Content">
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="symbol">
-    <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-  </ng-container>
+    </div>
+  </div>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+  <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
+    All rights reserved.</h5></div>
+</div>
