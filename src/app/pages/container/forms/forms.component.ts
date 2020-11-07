@@ -8,6 +8,7 @@ import {FormService} from "../../../shared-services/form.service";
 import {map} from "rxjs/operators";
 import {FormModel} from "./manager/form.model";
 import {GenericDeleteDialogComponent} from "../../../shared-components/generic-delete-dialog/generic-delete-dialog.component";
+import {AuthService} from "../../../shared-services/auth.service";
 
 @Component({
   selector: 'app-forms',
@@ -73,6 +74,7 @@ export class FormsComponent implements AfterViewInit  {
       width: '850px',
       disableClose: true
     });
+    dialogFilter.componentInstance.propId = "XXXX";
   }
 
   deleteForm(element: FormModel) {
