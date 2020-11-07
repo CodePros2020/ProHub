@@ -27,6 +27,15 @@ export class FormService {
     this.formsRefCreate = db.list(this.dbPath);
   }
 
+  create(value: any): any {
+    return this.formsRefCreate.push(value);
+  }
+
+  update(key: string, value: any): any {
+    return this.formsRef.update(key, value)
+  }
+
+
   getAll(): AngularFireList<FirebaseFormsModel> {
     return this.formsRef;
   }

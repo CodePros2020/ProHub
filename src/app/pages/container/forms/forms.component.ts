@@ -11,6 +11,8 @@ import {GenericDeleteDialogComponent} from "../../../shared-components/generic-d
 import {AuthService} from "../../../shared-services/auth.service";
 import {FileService} from "../../../shared-services/file.service";
 import {AngularFireStorage} from "@angular/fire/storage";
+import {PropertyModel} from "../property-list/manager/property.model";
+import {CreateUpdatePropertyComponent} from "../property-list/create-update-property/create-update-property.component";
 
 @Component({
   selector: 'app-forms',
@@ -78,12 +80,30 @@ export class FormsComponent implements AfterViewInit  {
     const dialogFilter = this.dialog.open(UploadFormDialogComponent, {
       height: '400px',
       width: '850px',
-      disableClose: true
+      disableClose: true,
+      data: { update: false, form: new FormModel()}
     });
     // dialogFilter.componentInstance.propId = this.propId;
     dialogFilter.afterClosed().subscribe(res => {
       if (res) {
           this.retrieveForms();
+      }
+    });
+
+  }
+
+  updateForm(element: FormModel) {
+    const dialogFilter = this.dialog.open(UploadFormDialogComponent, {
+      height: '400px',
+      width: '850px',
+      disableClose: true,
+      data: { update: true, form: element}
+    });
+
+    // dialogFilter.componentInstance.propId = this.propId;
+    dialogFilter.afterClosed().subscribe(res => {
+      if (res) {
+        this.retrieveForms();
       }
     });
 
@@ -99,7 +119,7 @@ export class FormsComponent implements AfterViewInit  {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.formService.delete(element.key).then(() => {
-          const deleteRef = this.storage.ref("form/" + this.propId + "/"  + element.formTitle);
+          const deleteRef = this.storage.ref("form/" + this.propId + "/"  + element.key);
           deleteRef.delete()
 
           this.retrieveForms();

@@ -23,7 +23,9 @@
           <span style="font-size: 1.3em;">
             <mat-icon fontSet="material-icons-outlined">description</mat-icon>
             <span>{{selectedFileName}}</span>
+                 <ng-container *ngIf="!isEditMode">
             <mat-icon class="close-tip" (click)="(removeFile())">close</mat-icon>
+                 </ng-container>
           </span>
         </div>
       </ng-container>
@@ -50,7 +52,7 @@
     <!-- Buttons -->
     <div class="row mt-4 justify-content-md-center buttons">
       <div class="ml-4 col-md-2 text-center">
-        <button class="save" [disabled]="isLoading" mat-raised-button (click)="save()">SAVE</button>
+        <button class="save" [disabled]="isLoading" mat-raised-button (click)="save()">{{isEditMode  ? "UPDATE" : "SAVE" }}</button>
       </div>
       <div class="ml-4 col-md-2 text-center">
         <button class="cancel" [disabled]="isLoading" mat-raised-button (click)="cancel()">CANCEL</button>

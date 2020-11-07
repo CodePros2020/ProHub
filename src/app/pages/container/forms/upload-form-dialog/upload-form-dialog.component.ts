@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MapsNominatimService} from "../../../../shared-services/maps-nominatim.service";
 import {PropertyModel} from "../../property-list/manager/property.model";
 import {now} from "lodash-es";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormModel} from "../manager/form.model";
 import {PropertyService} from "../../../../shared-services/property.service";
 import {FormService} from "../../../../shared-services/form.service";
@@ -40,6 +40,8 @@ export class UploadFormDialogComponent implements OnInit {
   selectedFileName: string;
   isLoading: boolean = false;
 
+  formKey;
+
   // constructors
   constructor(
     public dialogRef: MatDialogRef<UploadFormDialogComponent>,
@@ -47,14 +49,32 @@ export class UploadFormDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
     private authService: AuthService,
-    @Inject(FileService) private fileService: FileService
+    @Inject(FileService) private fileService: FileService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.isEditMode = false;
-    this.isFileUploaded = false;
+    this.isEditMode = this.data.update;
 
-    this.formModel = new FormModel();
-    // this.formModel.propId = this.propId;
+    if(this.isEditMode){
+      this.formModel = this.data.form;
+      this.isFileUploaded = true;
 
+      this.selectedFileName = this.formModel.formTitle;
+      this.filename = this.formModel.formTitle.split('.').shift();
+      this.fileextension = this.formModel.formTitle.split('.').pop();
+
+      this.formKey = this.formModel.key
+      console.log(this.formKey);
+    } else {
+      this.isFileUploaded = false;
+      // this.formModel = new FormModel();
+      this.formModel = this.data.form;
+
+      this.formKey = this.formService.create(this.formModel).key
+    }
+
+
+
+    this.formModel.propId = this.propId;
     this.createUploadFormGroup();
   }
 
@@ -108,30 +128,46 @@ export class UploadFormDialogComponent implements OnInit {
     if(this.readyToUpload()){
       this.isLoading = true;
 
-      let newFileName = this.formModel.formTitle;
-      // let newFileName = this.form.filename + '.' +this.form.fileextension;
+      if(this.isEditMode) {
+        this.formService.update(this.formKey, this.formModel).then(()=>{
+          this.dialogRef.close('added');
+        })
+      } else {
+        let newFileName = this.formModel.formTitle;
 
-      const fileRef = this.storage.ref("form/" + this.propId + "/"  + newFileName);
-
-      this.storage.upload("form/" + this.propId + "/" + newFileName ,this.files[0])
-        .snapshotChanges().pipe(
+        const fileRef = this.storage.ref("form/" + this.propId + "/"  + this.formKey);
+        this.storage.upload("form/" + this.propId + "/" + this.formKey ,this.files[0])
+          .snapshotChanges().pipe(
           finalize(()=>{
             fileRef.getDownloadURL().subscribe((url)=>{
-               this.formModel.formTitle = newFileName;
-               // this.formModel.propId = this.propId;
+              this.formModel.formTitle = newFileName;
+              // this.formModel.propId = this.propId;
 //              this.formModel.propId = "XXXX";
-               this.formModel.contentUrl = url;
-               this.formModel.dateCreated = new Date().toISOString();
-               this.formService.upload(this.formModel).then(()=>{
-                 this.dialogRef.close('added');
-               });
+              this.formModel.contentUrl = url;
+              this.formModel.dateCreated = new Date().toISOString();
+
+              // this.formService.upload(this.formModel).then(()=>{
+              //   this.dialogRef.close('added');
+              // });
+              this.formService.update(this.formKey, this.formModel).then(()=>{
+                  this.dialogRef.close('added');
+              })
+
             })
           })
-      ).subscribe();
+        ).subscribe();
+
+      }
+
+
+
+
+
     }
-
-
   }
+
+
+
 
   view(){
     this.fileService.getImage(this.files[0]);
