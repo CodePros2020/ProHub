@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthService} from "../../../shared-services/auth.service";
+import {FirebaseService} from "../../../shared-services/firebase.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -9,12 +11,22 @@ import {Router} from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   constructor(
-    public router: Router
+    public router: Router,
+    public authService: AuthService,
+    public firebaseService: FirebaseService
   ) {
   }
 
   ngOnInit(): void {
+    this.getUser();
   }
+  getUser() {
+    this.firebaseService.getUser( this.authService.userData.uid).subscribe( res => {
+      console.log('Get user is', res);
+    });
+  }
+
+
 
   goChats() {
     this.router.navigate(['container/chat']);
