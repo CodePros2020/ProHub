@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthService} from "../../../shared-services/auth.service";
-import {FirebaseService} from "../../../shared-services/firebase.service";
+import {AuthService} from '../../../shared-services/auth.service';
+import {FirebaseService} from '../../../shared-services/firebase.service';
 
 @Component({
   selector: 'app-dashboard',

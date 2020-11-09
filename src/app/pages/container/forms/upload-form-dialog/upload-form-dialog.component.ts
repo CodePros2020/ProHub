@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {MapsNominatimService} from "../../../../shared-services/maps-nominatim.service";
-import {PropertyModel} from "../../property-list/manager/property.model";
-import {now} from "lodash-es";
-import {MatDialogRef} from "@angular/material/dialog";
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MapsNominatimService} from '../../../../shared-services/maps-nominatim.service';
+import {PropertyModel} from '../../property-list/manager/property.model';
+import {now} from 'lodash-es';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-upload-form-dialog',
@@ -37,9 +37,9 @@ export class UploadFormDialogComponent implements OnInit {
     this.isFileUploaded = false;
     //
     this.form = {
-      filename: "",
-      fileextension: "",
-      upload_date: "",
+      filename: '',
+      fileextension: '',
+      upload_date: '',
       size: 0,
       filedata: null
     };

@@ -35,6 +35,7 @@ export class PropertyService {
   }
 
   create(value: any): any {
+    value.propId = this.db.createPushId();
     return this.propertiesRefCreate.push(value);
   }
 }
