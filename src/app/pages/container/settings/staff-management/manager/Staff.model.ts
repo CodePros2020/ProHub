@@ -8,7 +8,7 @@ postalCode: string;
 city: string;
 province: string;
 country: string;
-propertyId: string;
+propId: string;
 staffId: string;
 photo: string;
 role: string;

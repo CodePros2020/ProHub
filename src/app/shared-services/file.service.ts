@@ -1,20 +1,20 @@
 // Reference:
 // https://medium.com/linkit-intecs/upload-and-view-files-in-firebase-storage-using-angular-firebase-realtime-database-b7da8bdfb20a
 import {Inject, Injectable} from '@angular/core';
-import {AngularFireDatabase, AngularFireList} from "@angular/fire/database";
+import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
 
-  imageDetailList: AngularFireList<any>
+  imageDetailList: AngularFireList<any>;
   fileList: any[];
   dataSet: Data = {
     id: '',
     url: ''
-  }
-  msg:string = 'error'
+  };
+  msg = 'error';
   constructor(@Inject(AngularFireDatabase) private firebase: AngularFireDatabase){}
 
   getImageDetailList() {
@@ -23,18 +23,18 @@ export class FileService {
 
   insertImageDetails(id, url) {
     this.dataSet = {
-      id: id,
-      url: url
-    }
+      id,
+      url
+    };
     this.imageDetailList.push(this.dataSet);
   }
 
   getImage(value) {
     this.imageDetailList.snapshotChanges().subscribe(
       list => {
-        this.fileList = list.map(item => {return item.payload.val(); });
-        this.fileList.forEach(element =>{
-          if(element.id === value) {
+        this.fileList = list.map(item => item.payload.val());
+        this.fileList.forEach(element => {
+          if (element.id === value) {
             this.msg = element.url;
           }
         });
@@ -46,12 +46,12 @@ export class FileService {
           this.msg = 'error';
         }
       }
-    )
+    );
   }
 
 }
 
 export interface Data{
-  id:string;
-  url:string;
+  id: string;
+  url: string;
 }

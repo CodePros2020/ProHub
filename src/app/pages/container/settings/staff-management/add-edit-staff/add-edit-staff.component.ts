@@ -3,6 +3,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProvinceEnum} from '../../../../../shared-models/enum/province.enum';
 import {StaffModel} from '../manager/Staff.model';
+import {GenericMessageDialogComponent} from '../../../../../shared-components/genericmessagedialog/genericmessagedialog.component';
+import {PendingChangesDialogComponent} from "../../../../../shared-components/pending-changes-dialog/pending-changes-dialog.component";
 
 @Component({
   selector: 'app-add-edit-staff',
@@ -83,18 +85,17 @@ export class AddEditStaffComponent implements OnInit {
 
   /** Clicking on close */
   close() {
-    // if (this.addMedicationForm.dirty) {
-    //   const unsavedDialog = this.dialog.open(PendingChangesDialogComponent);
-    //
-    //   unsavedDialog.afterClosed().subscribe(res => {
-    //     if (res === true) {
-    //       this.dialogRef.close(false);
-    //     }
-    //   });
-    // } else {
-    //   this.dialogRef.close(false);
-    // }
-    this.dialogRef.close();
+    if (this.staffForm.dirty) {
+      const unsavedDialog = this.dialog.open(PendingChangesDialogComponent);
+
+      unsavedDialog.afterClosed().subscribe(res => {
+        if (res === true) {
+          this.dialogRef.close(false);
+        }
+      });
+    } else {
+      this.dialogRef.close(false);
+    }
   }
 
 
@@ -110,8 +111,22 @@ export class AddEditStaffComponent implements OnInit {
     this.newStaff.role = this.formControls.role.value;
     this.newStaff.fullName = this.formControls.fullName.value;
     this.newStaff.photo = this.formControls.photo.value;
-    this.newStaff.propertyId = this.propId;
+    this.newStaff.propId = this.propId;
+    this.dialogRef.close(this.newStaff);
+
+    }
+  else {
+    this.openMessageDialog('E R R O R', 'Please enter the required information');
   }
+
+
+  }
+  /**  Error Message pop up */
+  openMessageDialog(titleMsg, msg) {
+    this.dialog.open(GenericMessageDialogComponent,
+      {
+        data: {title: titleMsg, message: msg}
+      });
   }
 
   onFileChange(files: FileList) {

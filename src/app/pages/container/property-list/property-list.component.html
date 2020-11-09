@@ -32,13 +32,13 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Property Name </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="cell-txt"> Property Name </mat-header-cell>
               <mat-cell *matCellDef="let prop"> {{prop.name}} </mat-cell>
             </ng-container>
 
             <!-- Address Column -->
             <ng-container matColumnDef="address">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Property Address </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header class="cell-txt"> Property Address </mat-header-cell>
               <mat-cell *matCellDef="let prop">
                 {{prop.streetLine1 + ', ' + prop.streetLine2 + ', ' + prop.city +
               ', ' + prop.province + ', ' + prop.postalCode}}
@@ -47,15 +47,15 @@
 
             <!-- Action Column -->
             <ng-container matColumnDef="action">
-              <mat-header-cell *matHeaderCellDef> &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
               <mat-cell *matCellDef="let prop" class="d-flex justify-content-between">
                 <mat-icon class="edit" (click)="updateProperty(prop)">edit</mat-icon>
                 <mat-icon class="delete" (click)="deleteProperty(prop)">delete</mat-icon>
               </mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="header-clr"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="setProperty(row)" ></mat-row>
           </mat-table>
           <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
         </div>

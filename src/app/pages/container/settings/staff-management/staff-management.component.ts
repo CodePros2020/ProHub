@@ -5,10 +5,15 @@ import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
-import {PropertyListInterface} from '../../property-list/property-list.component';
-import {CreateUpdatePropertyComponent} from '../../property-list/create-update-property/create-update-property.component';
 import {AddEditStaffComponent} from './add-edit-staff/add-edit-staff.component';
 import {Router} from '@angular/router';
+import {PropertyService} from '../../../../shared-services/property.service';
+import {StaffModel} from './manager/Staff.model';
+import {StaffService} from '../../../../shared-services/staff.service';
+import {Overlay} from '@angular/cdk/overlay';
+import {ComponentPortal} from '@angular/cdk/portal';
+import {LoaderComponent} from '../../../../shared-components/loader/loader.component';
+
 
 @Component({
   selector: 'app-staff-management',
@@ -22,18 +27,32 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
   public staffListForm: FormGroup;
   public staffList: Observable<Staff[]>;
   propertyId: string;
-
+  property: any;
+  propertyName: string;
   displayedColumns: string[] = ['fullName', 'role', 'action'];
   dataSource = new MatTableDataSource(STAFF_LIST);
-
+  overlayRef = this.overlay.create({
+    positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+    hasBackdrop: true
+  });
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
-              public router: Router) {
+              public router: Router,
+              public propertyService: PropertyService,
+              public staffService: StaffService,
+              private overlay: Overlay) {
     this.searchStaffFormGroup();
-    this.propertyId = '101';
+    this.propertyId = this.propertyService.getPropId();
+  }
+  showOverlay() {
+    this.overlayRef.attach(new ComponentPortal(LoaderComponent));
   }
 
+  hideOverLay() {
+    this.overlayRef.detach();
+  }
   ngOnInit(): void {
+    this.property = this.propertyService.getClickedProp();
   }
 
   ngAfterViewInit() {
@@ -53,11 +72,19 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
 
 
   openAddStaffDialog() {
-    const dialogFilter = this.dialog.open(AddEditStaffComponent, {
+    const dialogRef = this.dialog.open(AddEditStaffComponent, {
       height: '100%',
       width: '50%',
       autoFocus: false,
-      data: {update: false, propId: this.propertyId}
+      data: {update: false, propId: this.property.propId}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== false) {
+        console.log('After closing dialog', JSON.stringify(result));
+        let staff = new StaffModel();
+        staff = result;
+        this.staffService.addStaff(staff);
+      }
     });
   }
 
@@ -66,7 +93,7 @@ openEditStaffDialog(staff) {
     height: '100%',
     width: '50%',
     autoFocus: false,
-    data: {update: true, staffData : staff, propId: this.propertyId}
+    data: {update: true, staffData : staff, propId: this.property.propId}
   });
 }
 

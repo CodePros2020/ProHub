@@ -10,6 +10,8 @@ import {FirebaseService} from '../../../shared-services/firebase.service';
 })
 export class DashboardComponent implements OnInit {
 
+  loggedInUserName: string;
+  loggedInUser: any;
   constructor(
     public router: Router,
     public authService: AuthService,
@@ -23,6 +25,10 @@ export class DashboardComponent implements OnInit {
   getUser() {
     this.firebaseService.getUser( this.authService.userData.uid).subscribe( res => {
       console.log('Get user is', res);
+      this.loggedInUser = res;
+      this.loggedInUserName = (this.loggedInUser.firstName !== undefined ? this.loggedInUser.firstName : '') + ' ' +
+        (this.loggedInUser.lastName !== undefined ? this.loggedInUser.lastName : '');
+
     });
   }
 
@@ -49,7 +55,7 @@ export class DashboardComponent implements OnInit {
   }
 
   goSettings() {
-    this.router.navigate(['container/settings']);
+    this.router.navigate(['container/property-list']);
   }
 
 }

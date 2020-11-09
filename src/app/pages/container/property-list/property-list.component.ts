@@ -11,6 +11,10 @@ import {PropertyService} from '../../../shared-services/property.service';
 import {FirebasePropertiesModel} from './manager/firebase-properties.model';
 import {PropertyModel} from './manager/property.model';
 import {GenericDeleteDialogComponent} from '../../../shared-components/generic-delete-dialog/generic-delete-dialog.component';
+import {Router} from '@angular/router';
+import {Overlay} from '@angular/cdk/overlay';
+import {ComponentPortal} from '@angular/cdk/portal';
+import {LoaderComponent} from '../../../shared-components/loader/loader.component';
 
 @Component({
   selector: 'app-property-list',
@@ -31,22 +35,34 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['name', 'address', 'action'];
   dataSource;
   // dataSource = new MatTableDataSource(PROPERTY_LIST_DATA);
-
+  overlayRef = this.overlay.create({
+    positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+    hasBackdrop: true
+  });
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
-              private propertyService: PropertyService) {
+              private propertyService: PropertyService,
+              public router: Router,
+              public overlay: Overlay) {
     this.createPropertyListFormGroup();
   }
 
   ngOnInit(): void {
     this.filteredOptions();
     this.retrieveProperties();
+    this.showOverlay();
   }
 
   ngAfterViewInit() {
 
   }
+  showOverlay() {
+    this.overlayRef.attach(new ComponentPortal(LoaderComponent));
+  }
 
+  hideOverLay() {
+    this.overlayRef.detach();
+  }
   retrieveProperties() {
     this.properties = [];
     this.propertyService.getAll().snapshotChanges().pipe(
@@ -75,6 +91,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
       this.dataSource = new MatTableDataSource(this.properties);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this. hideOverLay();
     });
   }
 
@@ -130,6 +147,10 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
         });
       }
     });
+  }
+  setProperty(prop) {
+    this.propertyService.setProperty(prop);
+    this.router.navigate(['container/dashboard']);
   }
 
   updateProperty(element: PropertyModel) {

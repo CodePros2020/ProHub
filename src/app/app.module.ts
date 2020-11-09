@@ -46,7 +46,9 @@ import { VerifyEmailAddressComponent } from './pages/signup/verify-email-address
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GenericDeleteDialogComponent } from './shared-components/generic-delete-dialog/generic-delete-dialog.component';
-
+import { GenericMessageDialogComponent } from './shared-components/genericmessagedialog/genericmessagedialog.component';
+import { PendingChangesDialogComponent } from './shared-components/pending-changes-dialog/pending-changes-dialog.component';
+import {LoaderComponent} from './shared-components/loader/loader.component';
 
 
 @NgModule({
@@ -77,6 +79,9 @@ import { GenericDeleteDialogComponent } from './shared-components/generic-delete
     VerifyEmailAddressComponent,
     ErrorDialogComponent,
     GenericDeleteDialogComponent,
+    GenericMessageDialogComponent,
+    PendingChangesDialogComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

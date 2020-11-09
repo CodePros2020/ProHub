@@ -292,6 +292,7 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
       } else {
         this.propertyModel.phone = this.authService.GetUserInSession().phoneNumber;
         this.propertyModel.propId = '';
+        this.propertyModel.creatorEmail = this.authService.userData.email;
         this.propertyService.create(this.propertyModel);
         this.dialogRef.close('added');
       }
