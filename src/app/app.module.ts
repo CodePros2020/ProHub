@@ -47,8 +47,12 @@ import { VerifyEmailAddressComponent } from './pages/signup/verify-email-address
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GenericDeleteDialogComponent } from './shared-components/generic-delete-dialog/generic-delete-dialog.component';
-
-
+import { ChatListComponent } from './pages/container/chat/chat-list/chat-list.component';
+import { ChatRoomComponent } from './pages/container/chat/chat-room/chat-room.component';
+import { ChatListCardComponent } from './pages/container/chat/chat-list/chat-list-card/chat-list-card.component';
+import { DatePipe } from '@angular/common';
+import { PropertyService } from './shared-services/property.service';
+import { ChatService } from './shared-services/chat.service';
 
 @NgModule({
   declarations: [
@@ -79,6 +83,9 @@ import { GenericDeleteDialogComponent } from './shared-components/generic-delete
     VerifyEmailAddressComponent,
     ErrorDialogComponent,
     GenericDeleteDialogComponent,
+    ChatListComponent,
+    ChatRoomComponent,
+    ChatListCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +106,14 @@ import { GenericDeleteDialogComponent } from './shared-components/generic-delete
     FlexLayoutModule
 
   ],
-  providers: [FirebaseService, AuthService, MapsNominatimService],
+  providers: [
+    FirebaseService,
+    AuthService,
+    MapsNominatimService,
+    DatePipe,
+    ChatService,
+    PropertyService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
