@@ -1,5 +1,14 @@
+.transparent .mat-dialog-container {
+  box-shadow: none;
+  background: rgba(0, 0, 0, 0.0);
+}
+
 .upload-form-container {
 
+  .spinner {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   .close-tip {
     font-size: 1em;
@@ -56,11 +65,11 @@
     .save {
       background-color: #2f4550;
       color: #fff;
-      width: 7rem;
+      width: 8rem;
     }
 
     .cancel {
-      width: 7rem;
+      width: 8rem;
       background-color: #b8dbd9;
       color: #2f4550;
     }

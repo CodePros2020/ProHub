@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {AddEditStaffComponent} from './add-edit-staff/add-edit-staff.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-staff-management',
@@ -18,17 +19,21 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
 
   public staffListForm: FormGroup;
   public staffList: Observable<Staff[]>;
+  propertyId: string;
 
-  displayedColumns: string[] = ['name', 'role', 'action'];
+  displayedColumns: string[] = ['fullName', 'role', 'action'];
   dataSource = new MatTableDataSource(STAFF_LIST);
 
-  constructor( public dialog: MatDialog,
-               private formBuilder: FormBuilder, public dialogRef: MatDialogRef<StaffManagementComponent>) {
+  constructor(public dialog: MatDialog,
+              private formBuilder: FormBuilder,
+              public router: Router) {
     this.searchStaffFormGroup();
+    this.propertyId = '101';
   }
 
   ngOnInit(): void {
   }
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -44,51 +49,72 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
     return this.staffListForm.controls;
   }
 
-  openAddEditStaffDialog() {
+
+  openAddStaffDialog() {
     const dialogFilter = this.dialog.open(AddEditStaffComponent, {
-      height: '80%',
-      width: '70%',
-      disableClose: true
+      height: '100%',
+      width: '50%',
+      autoFocus: false,
+      data: {update: false, propId: this.propertyId}
     });
   }
 
-  /** Clicking on close */
-  close() {
-    // if (this.addMedicationForm.dirty) {
-    //   const unsavedDialog = this.dialog.open(PendingChangesDialogComponent);
-    //
-    //   unsavedDialog.afterClosed().subscribe(res => {
-    //     if (res === true) {
-    //       this.dialogRef.close(false);
-    //     }
-    //   });
-    // } else {
-    //   this.dialogRef.close(false);
-    // }
-    this.dialogRef.close();
-  }
+openEditStaffDialog(staff) {
+  const dialogFilter = this.dialog.open(AddEditStaffComponent, {
+    height: '100%',
+    width: '50%',
+    autoFocus: false,
+    data: {update: true, staffData : staff, propId: this.propertyId}
+  });
+}
+
 }
 
 export interface Staff {
-  id: number;
-  name: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  addressLine1: string;
+  addressLine2: string;
+  postalCode: string;
+  city: string;
+  province: string;
+  country: string;
+  propertyId: string;
+  staffId: string;
+  photo: string;
   role: string;
 }
 const STAFF_LIST: Staff[] = [
   {
-    id: 1,
-    name: 'Ann Smith',
+    fullName: 'Ann Smith',
+    email: 'ann@gmail.com',
+    phone: '(416) 111-1111',
+    addressLine1: 'Progress Ave',
+    addressLine2: 'Suite 1001',
+    postalCode: 'H0H0H0',
+    city: 'Toronto',
+    province: 'Ontario',
+    country: 'Country',
+    propertyId: '101',
+    staffId: 'PM-101',
+    photo: '',
     role: 'Property Manager'
   },
   {
-    id: 2,
-    name: 'Jane Doe',
+    fullName: 'JOhn Smith',
+    email: 'john@gmail.com',
+    phone: '(416) 111-1111',
+    addressLine1: 'Progress Ave',
+    addressLine2: 'Suite 1001',
+    postalCode: 'H0H0H0',
+    city: 'Toronto',
+    province: 'Ontario',
+    country: 'Country',
+    propertyId: '101',
+    staffId: 'PM-101',
+    photo: '',
     role: 'Superintendent'
-  },
-  {
-    id: 3,
-    name: 'Chris Thomas',
-    role: 'Manager'
-  },
+  }
 
 ];
