@@ -10,7 +10,7 @@
             <p class="msg" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber" text-wrap>{{chat.message}}</p>
           </ng-container>
           <ng-container *ngIf="chat.imageUrl !== undefined">
-            <img style="max-height: 400px;" src="{{chat.imageUrl}}">
+            <img style="max-height: 100%; max-width: 100%" src="{{chat.imageUrl}}">
           </ng-container>
         </div>
       </div>
@@ -28,7 +28,7 @@
             </mat-form-field>
           </div>
           <div class="buttons">
-            <button type="submit" mat-button mat-icon-button>
+            <button type="submit" mat-button mat-icon-button (click)="openImageUploadDialog()">
               <mat-icon>image</mat-icon>
             </button>
             <button (click)="sendChat()" type="submit" [disabled]="!chatForm.valid" mat-button mat-icon-button>

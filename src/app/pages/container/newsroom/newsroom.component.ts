@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-newsroom',
@@ -7,19 +7,9 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 })
 export class NewsroomComponent implements OnInit {
 
-  @ViewChild('FileSelectInputDialog') fileSelectInputDialog: ElementRef;
-
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  openAddFilesDialog() {
-    const e: HTMLElement = this.fileSelectInputDialog.nativeElement;
-    e.click();
-  }
-
-  handle(event) {
-    console.log('what is event: ', event.target.files[0]);
-  }
 }

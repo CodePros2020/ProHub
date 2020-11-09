@@ -1,0 +1,43 @@
+<div class="image-upload-container">
+
+    <div class="row">
+      <div class="col justify-content-between">
+
+          <span class="title">Send Image</span>
+
+        <mat-icon class="close" (click)="onCancelClick()">close</mat-icon>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+             [style.width]="(uploadProgress | async) + '%'"
+             [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+
+      <div class="row">
+        <div class="col d-flex justify-content-between">
+          <button class="btn-select-image" mat-raised-button (click)="openAddFilesDialog()">
+            <mat-icon>add_photo_alternate</mat-icon>
+            SELECT IMAGE TO SEND
+            <input #fileSelectInputDialog style="display: none" type="file" (change)="upload($event)" accept=".png,.jpg" />
+          </button>
+          <button class="btn-send-image" mat-raised-button (click)="sendImage()"><mat-icon>send</mat-icon></button>
+        </div>
+      </div>
+
+      <div class="row image-container">
+        <div class="col">
+          <img [src]="localUrl" *ngIf="localUrl">
+        </div>
+      </div>
+    </div>
+
+</div>

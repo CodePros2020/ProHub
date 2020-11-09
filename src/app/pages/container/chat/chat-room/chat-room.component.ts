@@ -6,6 +6,8 @@ import {ChatService} from '../../../../shared-services/chat.service';
 import {map} from 'rxjs/operators';
 import {ChatModel} from '../manager/chat.model';
 import {AuthService} from '../../../../shared-services/auth.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ImageUploadDialogComponent} from './image-upload-dialog/image-upload-dialog.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -32,10 +34,11 @@ export class ChatRoomComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   constructor(private formBuilder: FormBuilder,
+              private dialog: MatDialog,
               private chatService: ChatService,
               private authService: AuthService,
               public datePipe: DatePipe) {
-    this.chatModel = new ChatModel();
+    // this.chatModel = new ChatModel();
     this.loggedInUserPhoneNumber = this.authService.GetUserInSession().phoneNumber;
     this.createChatFormGroup();
   }
@@ -45,13 +48,13 @@ export class ChatRoomComponent implements OnInit {
   }
 
   retrieveChats() {
-   this.chats = [];
    this.chatService.getAll().snapshotChanges().pipe(
      map(chats =>
      chats.map(c =>
        ({key: c.payload.key, ...c.payload.val()})
      ))
    ).subscribe(data => {
+     this.chats = [];
      data.forEach(res => {
        this.chatModel = new ChatModel();
        this.chatModel.chatId = res.chatId;
@@ -81,6 +84,7 @@ export class ChatRoomComponent implements OnInit {
   }
 
   sendChat() {
+    this.chatModel = new ChatModel();
     this.chatModel.chatMessageId = '6475545687_6478319441';
     this.chatModel.chatSeen = false;
     this.chatModel.fullName = this.authService.GetUserInSession().firstName + ' ' + this.authService.GetUserInSession().lastName;
@@ -88,10 +92,35 @@ export class ChatRoomComponent implements OnInit {
     this.chatModel.phoneNumber = this.loggedInUserPhoneNumber;
     this.chatModel.photoUrl = '';
     this.chatModel.timeStamp = new Date().toString();
-    this.chatModel.imageUrl = '';
     this.chatService.create(this.chatModel);
+    // this.retrieveChats();
     this.createChatFormGroup();
   }
 
+  openImageUploadDialog() {
+    const dialogFilter = this.dialog.open(ImageUploadDialogComponent, {
+      height: '500px',
+      width: '550px',
+      disableClose: true,
+      data: { update: false }
+    });
+
+    dialogFilter.afterClosed().subscribe(res => {
+
+      if (res) {
+        this.chatModel = new ChatModel();
+        this.chatModel.chatMessageId = '6475545687_6478319441';
+        this.chatModel.chatSeen = false;
+        this.chatModel.fullName = this.authService.GetUserInSession().firstName + ' ' + this.authService.GetUserInSession().lastName;
+        this.chatModel.phoneNumber = this.loggedInUserPhoneNumber;
+        this.chatModel.photoUrl = '';
+        this.chatModel.timeStamp = new Date().toString();
+        this.chatModel.imageUrl = res;
+        this.chatService.create(this.chatModel);
+        // this.retrieveChats();
+        this.createChatFormGroup();
+      }
+    });
+  }
 
 }

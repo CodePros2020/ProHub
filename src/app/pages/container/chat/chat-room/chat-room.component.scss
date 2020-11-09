@@ -45,16 +45,6 @@
   margin-left: 10px;
 }
 
-footer.sticky-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 10px;
-  background-color: #ffffff;
-  border-top: solid 1px #efefef;
-}
-
 .message-form {
   margin-left: 200px;
 }
@@ -141,6 +131,8 @@ footer.sticky-footer {
   border-bottom-right-radius: .4em;
   padding: 5px 10px 10px;
   left: 5%;
+  display: flex;
+  flex-direction: column;
 }
 .chat-message .left-bubble span.msg-name {
   font-size: 12px;
