@@ -1,0 +1,65 @@
+.chat-list-card-container {
+  height: 65px;
+  padding: 0;
+  width: 100%;
+  background: #2f4550;;
+
+  .circle-base {
+    border-radius: 50%;
+    width: 100%;
+    padding-bottom: 100%;
+    border: 3px solid #b8dbd9;
+    background: #b8dbd9 url('/assets/chatUserImg.jpg') no-repeat center;
+    background-size: cover;
+  }
+
+  .chat-info {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    padding-top: 5px;
+
+    .top-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-right: 2px;
+
+      .sender-name {
+        color: #b8dbd9;
+        font-size: 16px;
+      }
+
+      .time-sent {
+        font-size: x-small;
+        color: white;
+      }
+    }
+
+    .base-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-right: 5px;
+
+      .unit-number {
+        font-size: x-small;
+        color: white;
+      }
+
+      .last-message {
+        color: white;
+      }
+
+      .unread-messages-num {
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        background: #0097a7;
+        text-align: center;
+        color: #fff;
+      }
+    }
+  }
+
+}

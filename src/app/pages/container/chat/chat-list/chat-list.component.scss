@@ -1,0 +1,45 @@
+.chat-list-container {
+  width: 100%;
+  margin: auto;
+  height: calc(100vh - 202px);
+  background-color: #2f4550;
+  padding: 1rem 1rem 0;
+  display: flex;
+  flex-direction: column;
+
+  .circleBase {
+    //border-radius: 50%;
+    //width: 50%;
+    //height: 70%;
+    //background: yellow;
+    //border: 3px solid red;
+    border-radius: 50%;
+    width: 100%;
+    padding-bottom: 100%;
+    border: 3px solid white;
+    background: white url('/assets/chatUserImg.jpg') no-repeat center;
+    background-size: cover;
+  }
+
+  .profile-image {
+    margin-bottom: 0.5rem;
+  }
+
+  .user-name {
+    padding: 0;
+    color: white;
+    font-size: larger;
+  }
+
+  .chat-list {
+    padding-top: 0.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+  }
+
+  .card-container {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}

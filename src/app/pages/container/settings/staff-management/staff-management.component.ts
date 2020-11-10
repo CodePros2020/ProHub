@@ -5,8 +5,6 @@ import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
-import {PropertyListInterface} from '../../property-list/property-list.component';
-import {CreateUpdatePropertyComponent} from '../../property-list/create-update-property/create-update-property.component';
 import {AddEditStaffComponent} from './add-edit-staff/add-edit-staff.component';
 import {Router} from '@angular/router';
 

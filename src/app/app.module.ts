@@ -41,13 +41,18 @@ import { AddImageDialogComponent } from './pages/container/newsroom/add-edit-new
 import { ChatComponent } from './pages/container/chat/chat.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapsNominatimService } from './shared-services/maps-nominatim.service';
-import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.component';
+import { ProhubLogoComponent } from './shared-components/prohub-logo/prohub-logo.component';
 import { VerifyEmailAddressComponent } from './pages/signup/verify-email-address/verify-email-address.component';
-import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
+import { ErrorDialogComponent } from './shared-components/error-dialog/error-dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GenericDeleteDialogComponent } from './shared-components/generic-delete-dialog/generic-delete-dialog.component';
-
-
+import { ChatListComponent } from './pages/container/chat/chat-list/chat-list.component';
+import { ChatRoomComponent } from './pages/container/chat/chat-room/chat-room.component';
+import { ChatListCardComponent } from './pages/container/chat/chat-list/chat-list-card/chat-list-card.component';
+import { DatePipe } from '@angular/common';
+import { PropertyService } from './shared-services/property.service';
+import { ChatService } from './shared-services/chat.service';
+import { ImageUploadDialogComponent } from './pages/container/chat/chat-room/image-upload-dialog/image-upload-dialog.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +82,10 @@ import { GenericDeleteDialogComponent } from './shared-components/generic-delete
     VerifyEmailAddressComponent,
     ErrorDialogComponent,
     GenericDeleteDialogComponent,
+    ChatListComponent,
+    ChatRoomComponent,
+    ChatListCardComponent,
+    ImageUploadDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,7 +106,14 @@ import { GenericDeleteDialogComponent } from './shared-components/generic-delete
     FlexLayoutModule
 
   ],
-  providers: [FirebaseService, AuthService, MapsNominatimService],
+  providers: [
+    FirebaseService,
+    AuthService,
+    MapsNominatimService,
+    DatePipe,
+    ChatService,
+    PropertyService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
