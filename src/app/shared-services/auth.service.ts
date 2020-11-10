@@ -6,7 +6,7 @@ import { User } from '../shared/services/user';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import { VerifyEmailAddressComponent } from '../pages/signup/verify-email-address/verify-email-address.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.component';
+import { ErrorDialogComponent } from '../shared-components/error-dialog/error-dialog.component';
 import { FirebaseService } from './firebase.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs';
