@@ -7,6 +7,10 @@
 
 }
 
+.default-container {
+  height: calc(100vh - 202px);
+}
+
 .chat-room-content {
   height: calc(88vh - 202px);
   overflow-y: auto;

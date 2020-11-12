@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 export class ChatComponent implements OnInit {
 
   chatSearchForm: FormGroup;
+  chatMessageId;
 
   constructor(private formBuilder: FormBuilder) {
     this.createChatSearchFormGroup();
@@ -27,4 +28,8 @@ export class ChatComponent implements OnInit {
     return this.chatSearchForm.controls;
   }
 
+  getChatMessageID(event) {
+    this.chatMessageId = event;
+    console.log('chat message id in chat component: ', this.chatMessageId);
+  }
 }

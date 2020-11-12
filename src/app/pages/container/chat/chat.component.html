@@ -11,8 +11,8 @@
 
     <div class="row main-chat">
       <div class="col d-flex flex-md-row">
-        <app-chat-list class="chat-list"></app-chat-list>
-        <app-chat-room class="chat-room"></app-chat-room>
+        <app-chat-list class="chat-list" (chatMessageId)="getChatMessageID($event)" ></app-chat-list>
+        <app-chat-room class="chat-room" [chatMessageId]="chatMessageId"></app-chat-room>
       </div>
     </div>
   </form>
