@@ -30,7 +30,6 @@ export class PropertyListComponent implements OnInit, AfterViewInit{
 
   displayedColumns: string[] = ['name', 'address', 'action'];
   dataSource;
-  // dataSource = new MatTableDataSource(PROPERTY_LIST_DATA);
 
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,

@@ -8,20 +8,17 @@ import {ChatModel} from '../pages/container/chat/manager/chat.model';
 export class ChatService {
 
   private dbPath = '/chat';
-  chatMessageId;
 
   chatRef: AngularFireList<ChatModel> = null;
   chatRefCreate: AngularFireList<ChatModel> = null;
 
   constructor(private db: AngularFireDatabase) {
-    // this.chatMessageId = this.authService.GetUserInSession().phoneNumber;
-    this.chatMessageId = '6475545687_6478319441';
-    this.chatRef = db.list(this.dbPath, ref =>
-      ref.orderByChild('chatMessageId').equalTo(this.chatMessageId));
     this.chatRefCreate = db.list(this.dbPath);
   }
 
-  getAll(): AngularFireList<ChatModel> {
+  getAll(chatMessageId): AngularFireList<ChatModel> {
+    this.chatRef = this.db.list(this.dbPath, ref =>
+      ref.orderByChild('chatMessageId').equalTo(chatMessageId));
     return this.chatRef;
   }
 
