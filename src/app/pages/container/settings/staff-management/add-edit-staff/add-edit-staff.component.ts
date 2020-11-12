@@ -27,6 +27,7 @@ export class AddEditStaffComponent implements OnInit {
   propId: string;
   staffList = STAFF_LIST;
   isSuccess = false;
+  isEditMode = false;
 
   constructor(public dialogRef: MatDialogRef<AddEditStaffComponent>, public formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA)private data: any, public dialog: MatDialog,
@@ -44,6 +45,7 @@ export class AddEditStaffComponent implements OnInit {
   ngOnInit(): void {
     this.provinces = ProvinceEnum;
     if (this.data.update === true) {
+      this.isEditMode = true;
       this.updateStaffForm();
     } else {
       this.getStaffForm();
@@ -87,6 +89,9 @@ export class AddEditStaffComponent implements OnInit {
       role: [this.staff.role, Validators.required],
       photo: [this.staff.imgUrl]
     });
+  }
+  getImageLink(){
+    return this.formControls.photo.value || '/assets/no-photo.png';
   }
 
 
@@ -143,7 +148,7 @@ export class AddEditStaffComponent implements OnInit {
   openPhotoDialog() {
     const dialogRef = this.dialog.open(UploadImageDialogComponent, {
       height: '40%',
-      width: '70%',
+      width: '50%',
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -158,13 +163,11 @@ export class AddEditStaffComponent implements OnInit {
 
 export interface Select {
   value: string;
-  viewValue: string;
 }
 
 const STAFF_LIST: Select[] = [
-  { value: 'NULL', viewValue: 'Select Role' },
-  { value: 'SUPERINTENDENT', viewValue: 'Superintendent' },
-  { value: 'PROPERTYMANAGER', viewValue: 'Property Manager' },
-  { value: 'HOUSEKEEPER', viewValue: 'House Keeper' },
-  { value: 'MAINTENENCESTAFF', viewValue: 'Maintenance Staff' },
+  { value: 'Superintendent'},
+  { value: 'Property Manager' },
+  { value: 'House Keeper' },
+  { value: 'Maintenance Staff' },
 ];

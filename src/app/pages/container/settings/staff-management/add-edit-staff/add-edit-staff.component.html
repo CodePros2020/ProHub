@@ -12,6 +12,20 @@
     </mat-toolbar>
     <form [formGroup]="staffForm" class="justify-content-center form-style">
       <div class="row justify-content-center">
+        <div class="col-8 div-center"  *ngIf=" this.isEditMode === true; else elseBlock">
+          <div class="img-div input-group photo-size" >
+            <img class="image-container"  [src]="getImageLink()">
+            <mat-icon (click)="openPhotoDialog()" >add_a_photo</mat-icon>
+          </div>
+        </div>
+        <div class="col-8 div-center">
+          <label *ngIf="isSuccess" class="lbl-color">Image uploaded successfully!</label>
+        </div>
+        <ng-template #elseBlock>
+          <div class="col-8 input-group photo-size" style="display: flex; justify-content: center;margin-bottom: 20px" >
+          <mat-icon (click)="openPhotoDialog()" >add_a_photo</mat-icon>
+        </div>
+        </ng-template>
       <div class="col-8">
         <mat-form-field class="col-md-12" appearance="outline">
           <mat-label>Full Name <span class="star">*</span></mat-label>
@@ -24,7 +38,7 @@
             <mat-label>Role <span class="star">*</span></mat-label>
             <mat-select formControlName="role">
               <mat-option *ngFor="let staff of staffList " value="{{staff.value}}">
-                {{staff.viewValue}}
+                {{staff.value}}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="this.formControls.role.invalid">Please choose role</mat-error>
@@ -89,15 +103,7 @@
           <mat-error *ngIf="this.formControls.country.invalid">Please enter country</mat-error>
         </mat-form-field>
       </div>
-        <div class="col-8" *ngIf="this.data.update; else #elseBlock">
 
-        </div>
-        <div class="col-8 input-group photo-size" style="display: flex; justify-content: center;margin-bottom: 20px" >
-         <mat-icon (click)="openPhotoDialog()" >add_a_photo</mat-icon>
-        </div>
-        <div class="col-8">
-          <label *ngIf="isSuccess">Image uploaded successfully!</label>
-        </div>
     </div>
     </form>
   <div class="btn-div">

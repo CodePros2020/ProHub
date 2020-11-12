@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../../../shared-services/auth.service';
-import {ChatMessagesService} from '../../../../shared-services/chat-messages.service';
 import {ChatMessagesModel} from '../manager/chat-messages.model';
 import {map} from 'rxjs/operators';
 import {ChatModel} from '../manager/chat.model';
+import {ChatMessagesService} from '../../../../shared-services/chat-messages.service';
 
 @Component({
   selector: 'app-chat-list',

@@ -58,6 +58,10 @@ import { PropertyService } from './shared-services/property.service';
 import { ChatService } from './shared-services/chat.service';
 import { ImageUploadDialogComponent } from './pages/container/chat/chat-room/image-upload-dialog/image-upload-dialog.component';
 import { UploadImageDialogComponent } from './pages/container/settings/staff-management/upload-image-dialog/upload-image-dialog.component';
+import {StaffService} from './shared-services/staff.service';
+import {UnitsService} from './shared-services/units.service';
+import {ChatMessagesService} from './shared-services/chat-messages.service';
+
 
 @NgModule({
   declarations: [
@@ -95,6 +99,7 @@ import { UploadImageDialogComponent } from './pages/container/settings/staff-man
     ChatListCardComponent,
     ImageUploadDialogComponent,
     UploadImageDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -121,6 +126,9 @@ import { UploadImageDialogComponent } from './pages/container/settings/staff-man
     DatePipe,
     ChatService,
     PropertyService,
+    StaffService,
+    UnitsService,
+    ChatMessagesService
   ],
   bootstrap: [AppComponent],
 })

@@ -39,6 +39,7 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
     positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
     hasBackdrop: true
   });
+
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
               public router: Router,
@@ -47,6 +48,7 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
               private overlay: Overlay) {
     this.searchStaffFormGroup();
   }
+
   showOverlay() {
     this.overlayRef.attach(new ComponentPortal(LoaderComponent));
   }
@@ -54,14 +56,17 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
   hideOverLay() {
     this.overlayRef.detach();
   }
+
   ngOnInit(): void {
     this.propertyId = this.propertyService.GetPropertyInSession().propId;
     this.filteredOptions();
     this.getStaff();
   }
+
   ngAfterViewInit() {
 
   }
+
   getStaff() {
     this.showOverlay();
     this.staff = [];
@@ -94,17 +99,21 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource(this.staff);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this. hideOverLay();
+      this.hideOverLay();
     });
   }
+
+
   get formControls() {
     return this.staffListForm.controls;
   }
+
   searchStaffFormGroup() {
     this.staffListForm = this.formBuilder.group({
       staffSearch: ['']
     });
   }
+
   filteredOptions() {
     this.staffList = this.formControls.staffSearch.valueChanges.pipe(
       startWith(''),
@@ -116,8 +125,6 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
     const filterValue = value.toLowerCase();
     return this.dataSource.data.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
-
-
 
 
   openAddStaffDialog() {
@@ -137,7 +144,7 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
   deleteStaff(element: StaffModel) {
     const dialogRef = this.dialog.open(GenericDeleteDialogComponent, {
       width: '500px',
-      data: { currentDialog: element.name }
+      data: {currentDialog: element.name}
     });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -149,62 +156,20 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
     });
   }
 
-openEditStaffDialog(staff) {
-  const dialogFilter = this.dialog.open(AddEditStaffComponent, {
-    height: '100%',
-    width: '50%',
-    autoFocus: false,
-    data: {update: true, staffData : staff, propId: this.propertyId}
-  });
-}
-
-}
-
-export interface Staff {
-  fullName: string;
-  email: string;
-  phone: string;
-  addressLine1: string;
-  addressLine2: string;
-  postalCode: string;
-  city: string;
-  province: string;
-  country: string;
-  propertyId: string;
-  staffId: string;
-  photo: string;
-  role: string;
-}
-const STAFF_LIST: Staff[] = [
-  {
-    fullName: 'Ann Smith',
-    email: 'ann@gmail.com',
-    phone: '(416) 111-1111',
-    addressLine1: 'Progress Ave',
-    addressLine2: 'Suite 1001',
-    postalCode: 'H0H0H0',
-    city: 'Toronto',
-    province: 'Ontario',
-    country: 'Country',
-    propertyId: '101',
-    staffId: 'PM-101',
-    photo: '',
-    role: 'Property Manager'
-  },
-  {
-    fullName: 'JOhn Smith',
-    email: 'john@gmail.com',
-    phone: '(416) 111-1111',
-    addressLine1: 'Progress Ave',
-    addressLine2: 'Suite 1001',
-    postalCode: 'H0H0H0',
-    city: 'Toronto',
-    province: 'Ontario',
-    country: 'Country',
-    propertyId: '101',
-    staffId: 'PM-101',
-    photo: '',
-    role: 'Superintendent'
+  openEditStaffDialog(staff) {
+    const dialogFilter = this.dialog.open(AddEditStaffComponent, {
+      height: '100%',
+      width: '70%',
+      autoFocus: false,
+      data: {update: true, staffData: staff, propId: this.propertyId}
+    });
+    dialogFilter.afterClosed().subscribe(result => {
+      if (result) {
+        this.getStaff();
+      }
+    });
   }
+}
 
-];
+
+
