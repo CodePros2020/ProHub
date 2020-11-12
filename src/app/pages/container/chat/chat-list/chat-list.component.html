@@ -10,11 +10,8 @@
   <mat-divider></mat-divider>
   <div class="row chat-list">
     <div class="col">
-      <div class="row">
-        <app-chat-list-card class="card-container"></app-chat-list-card>
-      </div>
-      <div class="row">
-        <app-chat-list-card class="card-container"></app-chat-list-card>
+      <div class="row" *ngFor="let list of chatList">
+        <app-chat-list-card [chatMessageModel]="list" (click)="getChatMessageId(list.chatMessageId)" class="card-container"></app-chat-list-card>
       </div>
     </div>
   </div>

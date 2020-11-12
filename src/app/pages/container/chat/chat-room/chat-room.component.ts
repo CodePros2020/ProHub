@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {DatePipe} from '@angular/common';
@@ -21,7 +21,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss']
 })
-export class ChatRoomComponent implements OnInit {
+export class ChatRoomComponent implements OnInit, OnChanges {
+
+  @Input() chatMessageId;
 
   @ViewChild('chatContent') chatContent: ElementRef;
   scrollTop: number = null;
@@ -45,32 +47,40 @@ export class ChatRoomComponent implements OnInit {
 
   ngOnInit(): void {
     this.retrieveChats();
+    console.log('what is the chat message id in chat room: ', this.chatMessageId);
+  }
+
+  ngOnChanges() {
+    console.log('chat message in on changes', this.chatMessageId);
+    this.retrieveChats();
   }
 
   retrieveChats() {
-   this.chatService.getAll().snapshotChanges().pipe(
-     map(chats =>
-     chats.map(c =>
-       ({key: c.payload.key, ...c.payload.val()})
-     ))
-   ).subscribe(data => {
-     this.chats = [];
-     data.forEach(res => {
-       this.chatModel = new ChatModel();
-       this.chatModel.chatId = res.chatId;
-       this.chatModel.chatMessageId = res.chatMessageId;
-       this.chatModel.chatSeen = res.chatSeen;
-       this.chatModel.fullName = res.fullName;
-       this.chatModel.message = res.message;
-       this.chatModel.phoneNumber = res.phoneNumber;
-       this.chatModel.photoUrl = res.photoUrl;
-       this.chatModel.timeStamp = res.timeStamp;
-       this.chatModel.imageUrl = res.imageUrl;
-       this.chats.push(this.chatModel);
-     });
-     console.log('list of chats', this.chats);
-     setTimeout(() => this.scrollTop = this.chatContent.nativeElement.scrollHeight, 500);
-   });
+    if (this.chatMessageId !== undefined) {
+      this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
+        map(chats =>
+          chats.map(c =>
+            ({key: c.payload.key, ...c.payload.val()})
+          ))
+      ).subscribe(data => {
+        this.chats = [];
+        data.forEach(res => {
+          this.chatModel = new ChatModel();
+          this.chatModel.chatId = res.chatId;
+          this.chatModel.chatMessageId = res.chatMessageId;
+          this.chatModel.chatSeen = res.chatSeen;
+          this.chatModel.fullName = res.fullName;
+          this.chatModel.message = res.message;
+          this.chatModel.phoneNumber = res.phoneNumber;
+          this.chatModel.photoUrl = res.photoUrl;
+          this.chatModel.timeStamp = res.timeStamp;
+          this.chatModel.imageUrl = res.imageUrl;
+          this.chats.push(this.chatModel);
+        });
+        console.log('list of chats', this.chats);
+        setTimeout(() => this.scrollTop = this.chatContent.nativeElement.scrollHeight, 500);
+      });
+    }
   }
 
   createChatFormGroup() {
@@ -109,7 +119,7 @@ export class ChatRoomComponent implements OnInit {
 
       if (res) {
         this.chatModel = new ChatModel();
-        this.chatModel.chatMessageId = '6475545687_6478319441';
+        this.chatModel.chatMessageId = this.chatMessageId;
         this.chatModel.chatSeen = false;
         this.chatModel.fullName = this.authService.GetUserInSession().firstName + ' ' + this.authService.GetUserInSession().lastName;
         this.chatModel.phoneNumber = this.loggedInUserPhoneNumber;
@@ -122,5 +132,4 @@ export class ChatRoomComponent implements OnInit {
       }
     });
   }
-
 }

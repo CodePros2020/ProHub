@@ -12,20 +12,11 @@
   </div>
 
   <div class="nav-link" fxShow="true" fxHide.lt-md="true">
-    <ng-container *ngIf="isPropertySelected">
+    <ng-container *ngIf="!isInPropertyListComponent">
       <button [routerLink]="['dashboard']" mat-button>Dashboard</button>
       <button [routerLink]="['newsroom']" mat-button>Newsroom</button>
       <button [routerLink]="['chat']" mat-button>Chat</button>
       <button [routerLink]="['forms']" mat-button>Forms</button>
-<!--      <button [routerLink]="['settings']" [matMenuTriggerFor]="settingsDropdown" mat-button>Settings</button>-->
-<!--      <mat-menu #settingsDropdown="matMenu">-->
-<!--        <button mat-menu-item>Account Information</button>-->
-<!--        <ng-container *ngIf="userType === 'lessor'">-->
-<!--          <button mat-menu-item>Property List</button>-->
-<!--          <button mat-menu-item>Staff List</button>-->
-<!--          <button mat-menu-item>Unit List</button>-->
-<!--        </ng-container>-->
-<!--      </mat-menu>-->
     </ng-container>
 
     <button  mat-button (click)="SignOut()" >Logout</button>
@@ -35,7 +26,7 @@
 <mat-sidenav-container fxFlexFill class="example-container">
   <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
     <div fxLayout="column">
-      <ng-container *ngIf="isPropertySelected">
+      <ng-container *ngIf="!isInPropertyListComponent">
         <button [routerLink]="['dashboard']" mat-button>Dashboard</button>
         <button [routerLink]="['newsroom']" mat-button>Newsroom</button>
         <button [routerLink]="['chat']" mat-button>Chat</button>
