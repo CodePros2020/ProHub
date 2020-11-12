@@ -4,10 +4,20 @@
 
     </div>
     <div class="name-container">
-     {{this.loggedInUserName}}
+      <div class="name-div">
+        {{this.loggedInUserName}}
+      </div>
+      <div class="prop-div">
+        {{this.property.name}}
+      </div>
+
+
+    </div>
+    <div class="name-container">
+
     </div>
     <div class="setting-container">
-      <button mat-button class="setting-btn" (click)="goSettings()" >
+      <button mat-button class="setting-btn" (click)="goPropertyList()" >
         <mat-icon class="setting-icon">swap_horiz</mat-icon>
         Switch Property
       </button>

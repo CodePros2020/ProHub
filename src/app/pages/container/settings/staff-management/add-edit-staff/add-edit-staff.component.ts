@@ -4,7 +4,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProvinceEnum} from '../../../../../shared-models/enum/province.enum';
 import {StaffModel} from '../manager/Staff.model';
 import {GenericMessageDialogComponent} from '../../../../../shared-components/genericmessagedialog/genericmessagedialog.component';
-import {PendingChangesDialogComponent} from "../../../../../shared-components/pending-changes-dialog/pending-changes-dialog.component";
+import {PendingChangesDialogComponent} from '../../../../../shared-components/pending-changes-dialog/pending-changes-dialog.component';
+import {FileService} from '../../../../../shared-services/file.service';
+import {UploadImageDialogComponent} from '../upload-image-dialog/upload-image-dialog.component';
+import {StaffService} from '../../../../../shared-services/staff.service';
 
 @Component({
   selector: 'app-add-edit-staff',
@@ -16,18 +19,22 @@ export class AddEditStaffComponent implements OnInit {
   @ViewChild('labelImport')
   labelImport: ElementRef;
 
-  formImport: FormGroup;
-  fileToUpload: File = null;
   public provinces;
-  userSelect = USERTYPE_LIST;
   staffForm: FormGroup;
   staff: StaffModel;
   newStaff: StaffModel;
+  editStaff: StaffModel;
   propId: string;
+  staffList = STAFF_LIST;
+  isSuccess = false;
+
   constructor(public dialogRef: MatDialogRef<AddEditStaffComponent>, public formBuilder: FormBuilder,
-              @Inject(MAT_DIALOG_DATA)private data: any, public dialog: MatDialog) {
+              @Inject(MAT_DIALOG_DATA)private data: any, public dialog: MatDialog,
+              public staffService: StaffService
+              ) {
     this.staff = new StaffModel();
     this.newStaff = new StaffModel();
+    this.editStaff = new StaffModel();
     this.propId = this.data.propId;
     if (this.data.update === true){
     this.staff = this.data.staffData;
@@ -68,17 +75,17 @@ export class AddEditStaffComponent implements OnInit {
   }
  updateStaffForm() {
     this.staffForm = this.formBuilder.group({
-      fullName: [this.staff.fullName, Validators.required],
+      fullName: [this.staff.name, Validators.required],
       email: [this.staff.email, Validators.required],
-      phone: [this.staff.phone, Validators.required],
-      addressLine1: [this.staff.addressLine1, Validators.required],
+      phone: [this.staff.phoneNum, Validators.required],
+      addressLine1: [this.staff.address, Validators.required],
       addressLine2: [this.staff.addressLine2 || ''],
       postalCode: [this.staff.postalCode, Validators.required],
       city: [this.staff.city, Validators.required],
       country: [this.staff.country, Validators.required],
       province: [this.staff.province, Validators.required],
       role: [this.staff.role, Validators.required],
-      photo: [this.staff.photo]
+      photo: [this.staff.imgUrl]
     });
   }
 
@@ -98,28 +105,32 @@ export class AddEditStaffComponent implements OnInit {
     }
   }
 
-
-  addStaff() {
+  saveStaff() {
   if (this.staffForm.valid) {
+
     this.newStaff.province = this.formControls.province.value;
     this.newStaff.country = this.formControls.country.value;
     this.newStaff.city = this.formControls.city.value;
     this.newStaff.postalCode = this.formControls.postalCode.value;
-    this.newStaff.addressLine2 = this.formControls.addressLine2.value;
-    this.newStaff.addressLine1 = this.formControls.addressLine1.value;
-    this.newStaff.phone = this.formControls.phone.value;
+    this.newStaff.addressLine2 = this.formControls.addressLine2.value || '';
+    this.newStaff.address = this.formControls.addressLine1.value;
+    this.newStaff.phoneNum = this.formControls.phone.value;
+    this.newStaff.email = this.formControls.email.value;
     this.newStaff.role = this.formControls.role.value;
-    this.newStaff.fullName = this.formControls.fullName.value;
-    this.newStaff.photo = this.formControls.photo.value;
+    this.newStaff.name = this.formControls.fullName.value;
+    this.newStaff.imgUrl = this.formControls.photo.value;
     this.newStaff.propId = this.propId;
-    this.dialogRef.close(this.newStaff);
-
+    if (this.data.update === true) {
+      this.newStaff.staffId = this.staff.staffId;
+      this.staffService.updateStaff(this.newStaff.staffId, this.newStaff );
+    } else {
+      this.staffService.addStaff(this.newStaff);
+    }
+    this.dialogRef.close(true);
     }
   else {
     this.openMessageDialog('E R R O R', 'Please enter the required information');
   }
-
-
   }
   /**  Error Message pop up */
   openMessageDialog(titleMsg, msg) {
@@ -129,12 +140,20 @@ export class AddEditStaffComponent implements OnInit {
       });
   }
 
-  onFileChange(files: FileList) {
-    // this.labelImport.nativeElement.innerText = Array.from(files)
-    //   .map(f => f.name)
-    //   .join(', ');
-    // this.fileToUpload = files.item(0);
+  openPhotoDialog() {
+    const dialogRef = this.dialog.open(UploadImageDialogComponent, {
+      height: '40%',
+      width: '70%',
+      autoFocus: false,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== false) {
+         this.formControls.photo.setValue(result);
+         this.isSuccess = true;
+      }
+    });
   }
+
 }
 
 export interface Select {
@@ -142,7 +161,10 @@ export interface Select {
   viewValue: string;
 }
 
-const USERTYPE_LIST: Select[] = [
-  { value: 'LANDLORD', viewValue: 'Landlord' },
-  { value: 'TENANT', viewValue: 'Tenant' }
+const STAFF_LIST: Select[] = [
+  { value: 'NULL', viewValue: 'Select Role' },
+  { value: 'SUPERINTENDENT', viewValue: 'Superintendent' },
+  { value: 'PROPERTYMANAGER', viewValue: 'Property Manager' },
+  { value: 'HOUSEKEEPER', viewValue: 'House Keeper' },
+  { value: 'MAINTENENCESTAFF', viewValue: 'Maintenance Staff' },
 ];

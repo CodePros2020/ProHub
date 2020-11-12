@@ -21,6 +21,7 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'verify-email-address', component: VerifyEmailAddressComponent},
+
   {
     path: 'container',
     component: ContainerComponent,
@@ -29,8 +30,8 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'forms', component: FormsComponent},
       {path: 'newsroom', component: NewsroomComponent},
-      {path: 'property-list', component: PropertyListComponent},
       {path: 'settings', component: SettingsComponent},
+      {path: 'property-list', component: PropertyListComponent},
       {path: 'staff', component: StaffManagementComponent},
       {path: 'units', component: UnitsManagementComponent},
     ]

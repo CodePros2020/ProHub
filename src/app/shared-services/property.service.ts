@@ -13,7 +13,6 @@ export class PropertyService {
   private dbPath = '/properties';
   lessorPhoneNumber;
   public propId: string;
-  property: PropertyModel;
 
 
   propertiesRef: AngularFireList<FirebasePropertiesModel> = null;
@@ -27,7 +26,6 @@ export class PropertyService {
     this.propertiesRefCreate = db.list(this.dbPath);
     // Assigning Property Id
     this.propId = this.db.createPushId();
-    this.property = new PropertyModel();
   }
 
   getAll(): AngularFireList<FirebasePropertiesModel> {
@@ -46,32 +44,17 @@ export class PropertyService {
      value.propId = this.propId;
      return this.db.database.ref('properties').child(value.propId).set(value);
   }
-  getPropId(){
-  return  this.propId;
-}
+
   getPropertyById(propID: string){
     return this.db.object('/properties/' + propID).valueChanges();
   }
   setProperty(property) {
-    console.log('Setting prop');
-    this.property.creatorEmail = property.creatorEmail;
-    this.property.city = property.city;
-    this.property.key = property.key;
-    this.property.lat = property.lat;
-    this.property.long = property.long;
-    this.property.name = property.name;
-    this.property.phone = property.phone;
-    this.property.postalCode = property.postalCode;
-    this.property.propId = property.propId;
-    this.property.province = property.province;
-    this.property.streetLine1 = property.string;
-    this.property.streetLine2 = property.streetLine2;
+    console.log('Setting prop', property);
+    localStorage.setItem('property', JSON.stringify(property));
   }
-  getClickedProp(){
-    return this.property;
+  GetPropertyInSession() {
+    return JSON.parse(localStorage.getItem('property'));
   }
-
-
 
 }
 
