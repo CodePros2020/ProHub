@@ -1,15 +1,24 @@
 <div class="dashboard-container">
   <div class="header">
     <div class="image-container">
+    </div>
+    <div class="name-container">
+      <div class="name-div">
+        {{this.loggedInUserName}}
+      </div>
+      <div class="prop-div">
+        {{this.property.name}}
+      </div>
+
 
     </div>
     <div class="name-container">
-      Logan Kim
+
     </div>
     <div class="setting-container">
-      <button mat-button class="setting-btn" (click)="goSettings()" >
-        <mat-icon class="setting-icon">settings</mat-icon>
-        Settings
+      <button mat-button class="setting-btn" (click)="goPropertyList()" >
+        <mat-icon class="setting-icon">swap_horiz</mat-icon>
+        Switch Property
       </button>
     </div>
   </div>

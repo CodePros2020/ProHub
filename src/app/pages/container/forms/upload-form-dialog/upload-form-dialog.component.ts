@@ -1,23 +1,29 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MapsNominatimService} from "../../../../shared-services/maps-nominatim.service";
-import {PropertyModel} from "../../property-list/manager/property.model";
-import {now} from "lodash-es";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormModel} from "../manager/form.model";
-import {PropertyService} from "../../../../shared-services/property.service";
-import {FormService} from "../../../../shared-services/form.service";
-import {AngularFireStorage} from "@angular/fire/storage";
-import {finalize} from "rxjs/operators";
-import {FileService} from "../../../../shared-services/file.service";
-import {AuthService} from "../../../../shared-services/auth.service";
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MapsNominatimService } from '../../../../shared-services/maps-nominatim.service';
+import { PropertyModel } from '../../property-list/manager/property.model';
+import { now } from 'lodash-es';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormModel } from '../manager/form.model';
+import { PropertyService } from '../../../../shared-services/property.service';
+import { FormService } from '../../../../shared-services/form.service';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { finalize } from 'rxjs/operators';
+import { FileService } from '../../../../shared-services/file.service';
+import { AuthService } from '../../../../shared-services/auth.service';
 import Timestamp = firebase.firestore.Timestamp;
 import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-upload-form-dialog',
   templateUrl: './upload-form-dialog.component.html',
-  styleUrls: ['./upload-form-dialog.component.scss']
+  styleUrls: ['./upload-form-dialog.component.scss'],
 })
 export class UploadFormDialogComponent implements OnInit {
   // property decorators
@@ -28,7 +34,7 @@ export class UploadFormDialogComponent implements OnInit {
   public uploadFormForm: FormGroup;
   public formModel: FormModel;
   // propId ="-M3Xe58nTHXxnaM6Mp-m";
-  propId ="temp";
+  propId = 'temp';
 
   filename: string;
   fileextension: string;
@@ -54,7 +60,7 @@ export class UploadFormDialogComponent implements OnInit {
   ) {
     this.isEditMode = this.data.update;
 
-    if(this.isEditMode){
+    if (this.isEditMode) {
       this.formModel = this.data.form;
       this.isFileUploaded = true;
 
@@ -62,26 +68,22 @@ export class UploadFormDialogComponent implements OnInit {
       this.filename = this.formModel.formTitle.split('.').shift();
       this.fileextension = this.formModel.formTitle.split('.').pop();
 
-      this.formKey = this.formModel.key
+      this.formKey = this.formModel.key;
       console.log(this.formKey);
     } else {
       this.isFileUploaded = false;
       // this.formModel = new FormModel();
       this.formModel = this.data.form;
 
-      this.formKey = this.formService.create(this.formModel).key
+      this.formKey = this.formService.create(this.formModel).key;
     }
-
-
 
     this.formModel.propId = this.propId;
     this.createUploadFormGroup();
   }
 
   // life cycle hooks
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 
   createUploadFormGroup() {
     this.uploadFormForm = this.formBuilder.group({
@@ -95,7 +97,7 @@ export class UploadFormDialogComponent implements OnInit {
   }
 
   // event handlers
-  onFileChange(event: any): void{
+  onFileChange(event: any): void {
     this.files = event.target.files;
     this.selectedFileName = this.files[0].name;
     this.isFileUploaded = true;
@@ -106,75 +108,70 @@ export class UploadFormDialogComponent implements OnInit {
     this.formModel.formTitle = this.selectedFileName;
   }
 
-  onFileNameChange(event: any): void{
+  onFileNameChange(event: any): void {
     this.filename = event.target.value;
     this.formModel.formTitle = this.filename + '.' + this.fileextension;
   }
 
   // private methods
-  readyToUpload(){
+  readyToUpload() {
     // return this.isFileUploaded && this.fileNameInput.nativeElement.value;
-    return this.isFileUploaded && this.fileNameInput.nativeElement.value !== "";
+    return this.isFileUploaded && this.fileNameInput.nativeElement.value !== '';
   }
 
-  removeFile(){
+  removeFile() {
     this.fileInput.nativeElement.value = null;
     this.fileNameInput.nativeElement.value = '';
     this.isFileUploaded = false;
   }
 
-
   save(): void {
-    if(this.readyToUpload()){
+    if (this.readyToUpload()) {
       this.isLoading = true;
 
-      if(this.isEditMode) {
-        this.formService.update(this.formKey, this.formModel).then(()=>{
+      if (this.isEditMode) {
+        this.formService.update(this.formKey, this.formModel).then(() => {
           this.dialogRef.close('added');
-        })
+        });
       } else {
         let newFileName = this.formModel.formTitle;
 
-        const fileRef = this.storage.ref("form/" + this.propId + "/"  + this.formKey);
-        this.storage.upload("form/" + this.propId + "/" + this.formKey ,this.files[0])
-          .snapshotChanges().pipe(
-          finalize(()=>{
-            fileRef.getDownloadURL().subscribe((url)=>{
-              this.formModel.formTitle = newFileName;
-              // this.formModel.propId = this.propId;
-//              this.formModel.propId = "XXXX";
-              this.formModel.contentUrl = url;
-              this.formModel.dateCreated = new Date().toISOString();
+        const fileRef = this.storage.ref(
+          'form/' + this.propId + '/' + this.formKey
+        );
+        this.storage
+          .upload('form/' + this.propId + '/' + this.formKey, this.files[0])
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              fileRef.getDownloadURL().subscribe((url) => {
+                this.formModel.formTitle = newFileName;
+                // this.formModel.propId = this.propId;
+                //              this.formModel.propId = "XXXX";
+                this.formModel.contentUrl = url;
+                this.formModel.dateCreated = new Date().toISOString();
 
-              // this.formService.upload(this.formModel).then(()=>{
-              //   this.dialogRef.close('added');
-              // });
-              this.formService.update(this.formKey, this.formModel).then(()=>{
-                  this.dialogRef.close('added');
-              })
-
+                // this.formService.upload(this.formModel).then(()=>{
+                //   this.dialogRef.close('added');
+                // });
+                this.formService
+                  .update(this.formKey, this.formModel)
+                  .then(() => {
+                    this.dialogRef.close('added');
+                  });
+              });
             })
-          })
-        ).subscribe();
-
+          )
+          .subscribe();
       }
-
-
-
-
-
     }
   }
 
-
-
-
-  view(){
+  view() {
     this.fileService.getImage(this.files[0]);
   }
 
   cancel() {
     this.dialogRef.close();
   }
-
 }

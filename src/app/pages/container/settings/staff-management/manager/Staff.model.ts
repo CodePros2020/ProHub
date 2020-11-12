@@ -1,15 +1,15 @@
 export class StaffModel {
-fullName: string;
+name: string;
 email: string;
-phone: string;
-addressLine1: string;
+phoneNum: string;
+address: string;
 addressLine2: string;
 postalCode: string;
 city: string;
 province: string;
 country: string;
-propertyId: string;
+propId: string;
 staffId: string;
-photo: string;
+imgUrl: string;
 role: string;
 }

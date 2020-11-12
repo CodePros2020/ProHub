@@ -82,3 +82,37 @@ background-color: #B8DBD9;
 .star{
   color: red;
 }
+
+.mat-icon{
+  height:48px !important;
+  width:48px !important;
+  font-size:48px !important;
+  cursor: pointer;
+}
+.image-container {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  margin-left: 100px;
+  margin-right: 50px;
+  background-color: #ccc;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  box-shadow: 0 0 10px #000000;
+}
+.img-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.div-center{
+  display: flex;
+  justify-content: center;
+}
+.lbl-color{
+  color: #0f6674;
+}

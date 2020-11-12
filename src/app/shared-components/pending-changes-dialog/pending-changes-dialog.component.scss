@@ -1,0 +1,36 @@
+#pending-changes-container{
+  text-align: center;
+
+  .blue-underline{
+    margin: 0 auto;
+    border-bottom: 3px solid #25BAF0;
+    width: 60px;
+  }
+
+  p{
+    margin-top: 2rem;
+  }
+
+  .continue-btn {
+    color: #fff;
+    background-color: #0cbd65;
+    font-weight: lighter;
+    padding: 7px 50px;
+    margin-bottom: 1rem;
+    margin-top:2rem;
+    font-weight: bold;
+  }
+
+  .cancel-btn {
+    color: #0cbd65;
+    background-color: #fff;
+    border: 1px solid #0cbd65;
+    font-weight: lighter;
+    padding: 7px 50px;
+    margin-bottom: 1rem;
+    margin-top:2rem;
+    margin-left: 1rem;
+    font-weight: bold;
+  }
+
+}

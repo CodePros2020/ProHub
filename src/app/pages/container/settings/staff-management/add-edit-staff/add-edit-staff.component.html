@@ -12,6 +12,20 @@
     </mat-toolbar>
     <form [formGroup]="staffForm" class="justify-content-center form-style">
       <div class="row justify-content-center">
+        <div class="col-8 div-center"  *ngIf=" this.isEditMode === true; else elseBlock">
+          <div class="img-div input-group photo-size" >
+            <img class="image-container"  [src]="getImageLink()">
+            <mat-icon (click)="openPhotoDialog()" >add_a_photo</mat-icon>
+          </div>
+        </div>
+        <div class="col-8 div-center">
+          <label *ngIf="isSuccess" class="lbl-color">Image uploaded successfully!</label>
+        </div>
+        <ng-template #elseBlock>
+          <div class="col-8 input-group photo-size" style="display: flex; justify-content: center;margin-bottom: 20px" >
+          <mat-icon (click)="openPhotoDialog()" >add_a_photo</mat-icon>
+        </div>
+        </ng-template>
       <div class="col-8">
         <mat-form-field class="col-md-12" appearance="outline">
           <mat-label>Full Name <span class="star">*</span></mat-label>
@@ -20,10 +34,14 @@
         </mat-form-field>
       </div>
         <div class="col-8">
-          <mat-form-field class="col-md-12" appearance="outline">
+          <mat-form-field appearance="outline" class="col-md-12">
             <mat-label>Role <span class="star">*</span></mat-label>
-            <input matInput placeholder="e.g. Property Manager" formControlName="role">
-            <mat-error *ngIf="this.formControls.role.invalid">Please enter role</mat-error>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let staff of staffList " value="{{staff.value}}">
+                {{staff.value}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="this.formControls.role.invalid">Please choose role</mat-error>
           </mat-form-field>
         </div>
       <div class="col-8">
@@ -85,17 +103,12 @@
           <mat-error *ngIf="this.formControls.country.invalid">Please enter country</mat-error>
         </mat-form-field>
       </div>
-        <div class="col-8 input-group " style="display: flex; justify-content: center;">
-            <div class="custom-file col-md-11">
-              <label class="custom-file-label" #labelImport for="importFile" ><i class="fas fa-search" ></i> Upload Photo</label>
-              <input type="file" class="custom-file-input"  formControlName="photo" id="importFile"  >
-            </div>
-        </div>
+
     </div>
     </form>
   <div class="btn-div">
     <button mat-button class="btn-cancel" (click)="close()">CANCEL </button>
-    <button mat-button class="btn-save" (click)="addStaff()" >SAVE</button>
+    <button mat-button class="btn-save" (click)="saveStaff()" >SAVE</button>
   </div>
 
   </div>

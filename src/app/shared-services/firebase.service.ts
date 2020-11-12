@@ -3,23 +3,26 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {RegistrationModel} from '../pages/registration/manager/registration.model';
 import {Router} from '@angular/router';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
+  user: Observable<any>;
   constructor(
     private firestore: AngularFirestore,
     private db: AngularFireDatabase,
-    public router: Router ) { }
+    public router: Router ) {
+  }
 
   getUser(uid){
     return this.db.object('/users/' + uid).valueChanges();
   }
 
   addUser(user: RegistrationModel, uid) {
-    localStorage.setItem('user', JSON.stringify(user));
+    // localStorage.setItem('sessionUser', JSON.stringify(user));
     return this.db.database.ref('users').child(uid).set(user).then( () => {
       if (user.userType.toUpperCase() === 'BUSINESS'){
           this.router.navigate(['container/property-list']);
@@ -29,6 +32,7 @@ export class FirebaseService {
       }
     );
   }
+
 
   async getUserPassword(username) {
     const snapshot = await this.db.database.ref('users/' + username)

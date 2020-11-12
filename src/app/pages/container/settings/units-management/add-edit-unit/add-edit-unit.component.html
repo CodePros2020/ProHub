@@ -12,13 +12,6 @@
       <div class="row justify-content-center">
         <div class="col-8">
           <mat-form-field class="col-md-12" appearance="outline">
-            <mat-label>Unit ID <span class="star">*</span></mat-label>
-            <input matInput placeholder="e.g 1001" formControlName="unitId">
-            <mat-error *ngIf="this.formControls.unitId.invalid">Please enter unit id</mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-8">
-          <mat-form-field class="col-md-12" appearance="outline">
             <mat-label>Unit Name <span class="star">*</span></mat-label>
             <input matInput placeholder="e.g Suite" formControlName="unitName">
             <mat-error *ngIf="this.formControls.unitName.invalid">Please enter unit name</mat-error>
@@ -26,9 +19,9 @@
         </div>
         <div class="col-8">
           <mat-form-field class="col-md-12" appearance="outline">
-            <mat-label>Tenant ID <span class="star">*</span></mat-label>
-            <input matInput placeholder="e.g. 2020" formControlName="tenantId">
-            <mat-error *ngIf="this.formControls.tenantId.invalid">Please enter tenant Id</mat-error>
+            <mat-label>Tenant Phone <span class="star">*</span></mat-label>
+            <input matInput placeholder="e.g. (416) 111-1111" formControlName="tenantId" mask="(000) 000-0000">
+            <mat-error *ngIf="this.formControls.tenantId.invalid">Please enter tenant phone</mat-error>
           </mat-form-field>
         </div>
         <div class="col-8">
@@ -42,7 +35,7 @@
     </form>
     <div class="btn-div">
       <button mat-button class="btn-cancel" (click)="close()">CANCEL </button>
-      <button mat-button class="btn-save">SAVE</button>
+      <button mat-button class="btn-save" (click)="saveUnit()" >SAVE</button>
     </div>
   </div>
 </div>

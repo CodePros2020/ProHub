@@ -44,40 +44,6 @@ export class AuthService {
     });
   }
 
-  // // Sign in with email/password
-  // SignIn(email, password) {
-  //   return this.firebaseAuth
-  //     .signInWithEmailAndPassword(email, password)
-  //     .then((result) => {
-  //       console.log('User Received =>', result.user);
-  //       this.ngZone.run(() => {
-  //         this.SetUserData(result.user);
-  //         if (this.userData.emailVerified && this.userData.phoneNumber === null) {
-  //           this.router.navigate(['register']);
-  //         }
-  //         else {
-  //           const dialog = this.dialog.open(ErrorDialogComponent, {
-  //             height: '250px',
-  //             width: '450px',
-  //             autoFocus: false,
-  //             restoreFocus: false,
-  //             panelClass: 'no-padding-container',
-  //             data: {
-  //               msg:
-  //                 'An email verification link has been sent at ' +
-  //                 this.userData.email +
-  //                 '. Please verify email to login.',
-  //             },
-  //           });
-  //         }
-  //       });
-  //
-  //     })
-  //     .catch((error) => {
-  //       window.alert(error.message);
-  //     });
-  // }
-
   // Sign in with email/password
   SignIn(email, password) {
     return this.firebaseAuth
@@ -85,10 +51,8 @@ export class AuthService {
       .then((result) => {
         console.log('User Received =>', result.user);
         this.firebaseService.getUser(result.user.uid).subscribe(res => {
+          localStorage.setItem('sessionUser', JSON.stringify(res));
           this.loggedInUser = res;
-          console.log('checking logged in user', this.loggedInUser);
-          console.log('checking logged in user phone', this.loggedInUser.phoneNumber);
-
           if (result.user.emailVerified === true && this.loggedInUser.phoneNumber === undefined) {
             this.SetUserData(result.user);
             this.router.navigate(['register']);
@@ -122,7 +86,7 @@ export class AuthService {
   }
 
   GetUserInSession() {
-    return JSON.parse(localStorage.getItem('user'));
+    return JSON.parse(localStorage.getItem('sessionUser'));
   }
 
   // Sign up with email/password
