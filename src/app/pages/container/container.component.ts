@@ -14,9 +14,14 @@ export class ContainerComponent implements OnInit {
   constructor(public authService: AuthService,
               private router: Router) {
     console.log('what is router url? ', this.router.url);
-    if (this.router.url === '/container/property-list') {
-      this.isInPropertyListComponent = true;
-    }
+    this.router.events.subscribe(val => {
+      if (this.router.url === '/container/property-list') {
+        this.isInPropertyListComponent = true;
+      } else {
+        this.isInPropertyListComponent = false;
+      }
+    });
+
   }
 
   ngOnInit(): void {
