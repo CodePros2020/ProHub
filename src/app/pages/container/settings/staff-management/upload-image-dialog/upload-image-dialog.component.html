@@ -1,0 +1,30 @@
+<div class="image-upload-container">
+
+  <div class="row title-bg">
+    <div class="col justify-content-between">
+
+      <span class="title">Upload Photo</span>
+
+      <mat-icon class="close" (click)="close()">close</mat-icon>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="row">
+      <div class="col btn-div div-flex justify-content-between">
+        <button class="btn-select-image" mat-raised-button (click)="openAddFilesDialog()">
+          <mat-icon>add_photo_alternate</mat-icon>
+          Choose Image
+          <input #fileSelectInputDialog style="display: none" type="file" (change)="upload($event)" accept=".png,.jpg" />
+        </button>
+        <button class="btn-send-image" mat-raised-button (click)="sendImage()">Upload Image</button>
+      </div>
+    </div>
+</div>
+</div>

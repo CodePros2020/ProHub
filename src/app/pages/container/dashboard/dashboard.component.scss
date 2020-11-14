@@ -31,8 +31,21 @@
   }
 
   .name-container {
-    display: inline-block;
-    font-size: 2em;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+  }
+  .name-div{
+font-size: 2em;
+    margin-bottom: 25px;
+    font-weight: bold;
+  }
+  .prop-div{
+    font-size: 1.5em;
+    color: #7a7a7a;
+
   }
 
   .setting-container {
@@ -47,7 +60,7 @@
     padding: 3px 10px;
     background-color: #2f4550;
     color: white;
-    font-size: 1em;
+    font-size: .75em;
     transition: 0.3s ease;
   }
 

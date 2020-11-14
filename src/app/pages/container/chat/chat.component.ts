@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
@@ -7,9 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
 
-  constructor() { }
+  chatSearchForm: FormGroup;
+  chatMessageId;
+
+  constructor(private formBuilder: FormBuilder) {
+    this.createChatSearchFormGroup();
+  }
 
   ngOnInit(): void {
   }
 
+  createChatSearchFormGroup() {
+    this.chatSearchForm = this.formBuilder.group({
+      chatSearch: ['']
+    });
+  }
+
+  get formControls() {
+    return this.chatSearchForm.controls;
+  }
+
+  getChatMessageID(event) {
+    this.chatMessageId = event;
+    console.log('chat message id in chat component: ', this.chatMessageId);
+  }
 }

@@ -11,7 +11,7 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./newsroom.component.scss']
 })
 export class NewsroomComponent implements OnInit {
-
+  
   panelOpenState = false;
   newsList: NewsModel[];
   news: NewsModel;
@@ -37,5 +37,3 @@ export class NewsroomComponent implements OnInit {
     });
   }
 }
-
-

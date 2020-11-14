@@ -13,7 +13,9 @@ import { SignupComponent } from './pages/signup/signup.component';
 import {VerifyEmailAddressComponent} from './pages/signup/verify-email-address/verify-email-address.component';
 import {StaffManagementComponent} from './pages/container/settings/staff-management/staff-management.component';
 import {UnitsManagementComponent} from './pages/container/settings/units-management/units-management.component';
+import {AngularFireAuthGuard, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -21,16 +23,19 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'verify-email-address', component: VerifyEmailAddressComponent},
+
   {
     path: 'container',
     component: ContainerComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
     children: [
       {path: 'chat', component: ChatComponent},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'forms', component: FormsComponent},
       {path: 'newsroom', component: NewsroomComponent},
-      {path: 'property-list', component: PropertyListComponent},
       {path: 'settings', component: SettingsComponent},
+      {path: 'property-list', component: PropertyListComponent},
       {path: 'staff', component: StaffManagementComponent},
       {path: 'units', component: UnitsManagementComponent},
     ]

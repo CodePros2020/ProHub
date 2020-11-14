@@ -287,11 +287,12 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
 
       if (this.isEditMode) {
         console.log('in update save');
-        this.propertyService.update(this.propertyModel.key, this.propertyModel)
+        this.propertyService.update(this.propertyModel.propId, this.propertyModel)
           .then(() => this.dialogRef.close('updated'));
       } else {
         this.propertyModel.phone = this.authService.GetUserInSession().phoneNumber;
         this.propertyModel.propId = '';
+        this.propertyModel.creatorEmail = this.authService.userData.email;
         this.propertyService.create(this.propertyModel);
         this.dialogRef.close('added');
       }

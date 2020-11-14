@@ -1,0 +1,52 @@
+<div class="chat-room-container">
+  <ng-container *ngIf="chatMessageId !== undefined">
+    <div #chatContent [scrollTop]="scrollTop" class="chat-room-content">
+      <div class="row" *ngFor="let chat of chats">
+        <div class="chat-message">
+          <div class="right-bubble" [ngClass]="{'right-bubble': chat.phoneNumber === loggedInUserPhoneNumber, 'left-bubble': chat.phoneNumber !== loggedInUserPhoneNumber}">
+            <span class="msg-name" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber">{{chat.fullName}}</span>
+            <span class="msg-name" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber">{{chat.fullName}}</span>
+            <ng-container *ngIf="chat.message !== undefined">
+              <p class="msg" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber" text-wrap>{{chat.message}}</p>
+              <p class="msg" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber" text-wrap>{{chat.message}}</p>
+            </ng-container>
+            <ng-container *ngIf="chat.imageUrl !== undefined">
+              <img style="max-height: 100%; max-width: 100%" src="{{chat.imageUrl}}">
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="send-message-container">
+      <form [formGroup]="chatForm">
+        <div class="rows">
+          <div class="col d-flex justify-content-between">
+            <div class="field">
+              <mat-form-field appearance="outline" class="message-form-field">
+              <textarea formControlName="message" matInput matTextareaAutosize
+                        matAutosizeMinRows=1 matAutosizeMaxRows=2 (keyup.enter)="sendChat()"
+                        placeholder="Enter message here" [errorStateMatcher]="matcher"></textarea>
+              </mat-form-field>
+            </div>
+            <div class="buttons">
+              <button type="submit" mat-button mat-icon-button (click)="openImageUploadDialog()">
+                <mat-icon>image</mat-icon>
+              </button>
+              <button (click)="sendChat()" type="submit" [disabled]="!chatForm.valid" mat-button mat-icon-button>
+                <mat-icon>send</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="chatMessageId === undefined">
+    <div class="row default-container">
+      <div class="col-sm-12 my-auto text-center" style="font-weight: bolder; font-size: x-large">
+        Please choose a message from the list.
+      </div>
+    </div>
+  </ng-container>
+</div>

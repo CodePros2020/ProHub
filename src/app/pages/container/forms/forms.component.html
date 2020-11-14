@@ -28,18 +28,19 @@
           <mat-table [dataSource]="dataSource" matSort>
             <!-- File Name Column -->
             <ng-container matColumnDef="filename">
-              <mat-header-cell *matHeaderCellDef> File name </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> File name </mat-header-cell>
               <mat-cell *matCellDef="let form">
                 <!-- file icon -->
                 <mat-icon fontSet="material-icons-outlined">description</mat-icon>
-                {{form.filename}}
+                <a href={{form.contentUrl}} class=".accent-color" target="_blank">{{form.formTitle}}</a>
+
               </mat-cell>
             </ng-container>
 
             <!-- Creation Date Column -->
             <ng-container matColumnDef="upload_date">
-              <mat-header-cell *matHeaderCellDef> Upload date </mat-header-cell>
-              <mat-cell *matCellDef="let form"> {{form.upload_date}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Upload date </mat-header-cell>
+              <mat-cell *matCellDef="let form"> {{form.dateCreated}}  </mat-cell>
             </ng-container>
 
 <!--            &lt;!&ndash; Size Column &ndash;&gt;-->
@@ -50,15 +51,15 @@
 
             <!-- Action Column -->
             <ng-container matColumnDef="action">
-              <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-              <mat-cell *matCellDef="let form">
-                <mat-icon class="edit">edit</mat-icon>
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Actions </mat-header-cell>
+              <mat-cell *matCellDef="let form" >
+                <mat-icon class="edit" (click)="updateForm(form)">edit</mat-icon>
                 <mat-icon class="delete" (click)="deleteForm(form)">delete</mat-icon>
 
               </mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="header-clr"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
         </form>

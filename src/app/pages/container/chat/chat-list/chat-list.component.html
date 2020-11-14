@@ -1,0 +1,18 @@
+<div class="chat-list-container">
+  <div class="row profile-image">
+    <div class="col-4">
+      <div class="circleBase"></div>
+    </div>
+    <div class="col-6 d-flex align-items-center text-center user-name">
+      <div>{{loggedInFullName}}</div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row chat-list">
+    <div class="col">
+      <div class="row" *ngFor="let list of chatList">
+        <app-chat-list-card [chatMessageModel]="list" (click)="getChatMessageId(list.chatMessageId)" class="card-container"></app-chat-list-card>
+      </div>
+    </div>
+  </div>
+</div>

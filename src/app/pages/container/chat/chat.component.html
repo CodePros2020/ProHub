@@ -1,1 +1,19 @@
-<p>chat works!</p>
+<div class="chat-container">
+  <form [formGroup]="chatSearchForm">
+    <div class="row search-bar">
+      <div class="col">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput placeholder="Search" formControlName="chatSearch" type="text">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row main-chat">
+      <div class="col d-flex flex-md-row">
+        <app-chat-list class="chat-list" (chatMessageId)="getChatMessageID($event)" ></app-chat-list>
+        <app-chat-room class="chat-room" [chatMessageId]="chatMessageId"></app-chat-room>
+      </div>
+    </div>
+  </form>
+</div>

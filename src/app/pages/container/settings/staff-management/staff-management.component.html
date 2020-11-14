@@ -12,7 +12,7 @@
   </div>
   <div class="row" >
     <div class="col sub-title justify-content-center sub-title-div">
-      <span style="justify-content: center">8 Progress Street</span>
+      <span style="justify-content: center">{{this.propertyService.GetPropertyInSession().name}}</span>
     </div>
   </div>
     </div>
@@ -25,7 +25,7 @@
             <mat-icon matPrefix>search</mat-icon>
             <input matInput placeholder="Search" formControlName="staffSearch" type="text" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let staff of dataSource.data" [value]="staff.fullName">{{ staff.fullName }}</mat-option>
+              <mat-option *ngFor="let s of staff" [value]="s.name">{{ s.name }}</mat-option>
             </mat-autocomplete>
           </mat-form-field>
 
@@ -37,26 +37,26 @@
 
       <div class="row">
         <div class="col">
-          <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
             <!-- Name Column -->
-            <ng-container matColumnDef="fullName">
-              <mat-header-cell *matHeaderCellDef class="cell-txt"> Staff Name </mat-header-cell>
-              <mat-cell *matCellDef="let staff"> {{staff.fullName}} </mat-cell>
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef class="cell-txt" mat-sort-header> Staff Name </mat-header-cell>
+              <mat-cell *matCellDef="let staff"> {{staff.name}} </mat-cell>
             </ng-container>
 
             <!-- Role Column -->
             <ng-container matColumnDef="role">
-              <mat-header-cell *matHeaderCellDef class="cell-txt"> Staff Role </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef class="cell-txt" mat-sort-header> Staff Role </mat-header-cell>
               <mat-cell *matCellDef="let staff"> {{staff.role}} </mat-cell>
             </ng-container>
 
             <!-- Action Column -->
             <ng-container matColumnDef="action">
-              <mat-header-cell *matHeaderCellDef class="cell-txt"> &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef class="cell-txt" > &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
               <mat-cell *matCellDef="let staff" class="d-flex justify-content-between">
                 <mat-icon class="edit" (click)="openEditStaffDialog(staff)">edit</mat-icon>
-                <mat-icon class="delete">delete</mat-icon>
+                <mat-icon class="delete" (click)="deleteStaff(staff)" >delete</mat-icon>
               </mat-cell>
             </ng-container>
 

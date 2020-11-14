@@ -10,4 +10,5 @@ export class PropertyModel {
   postalCode: string;
   long: string;
   lat: string;
+  creatorEmail: string;
 }

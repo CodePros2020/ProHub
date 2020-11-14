@@ -1,9 +1,8 @@
 export class FormModel {
   key: string;
-//  formId: string;
+  formId: string;
   propId: string;
-  filename: string; // formTitle
+  formTitle: string;
   contentUrl: string;
-  upload_date: string; // dateCreated
-  // size: number; //
+  dateCreated: string;
 }

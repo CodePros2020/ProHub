@@ -2,7 +2,7 @@
   width: 1024px;
   margin: auto;
   height: 100%;
-  //background-color: #fff;
+  background-color: #fff;
   top: 0;
   bottom: 0;
   left: 0;
@@ -13,6 +13,12 @@
     font-size: xx-large;
     margin: 2.5rem 0;
   }
+
+  a:link, a:visited {
+    //text-decoration: none;
+    color: #2f4550;
+  }
+
 
   /* Search */
   .mat-form-field {
@@ -87,4 +93,16 @@
     font-size:24px !important;
     cursor: pointer;
   }
+}
+
+.header-clr{
+  background-color: #2f4550;
+  color: #ffffff;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  font-size: 1rem;
+}
+.cell-txt{
+  color:#ffffff;
+  font-size: 1rem;
 }

@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FirebaseService } from './shared-services/firebase.service';
-import { SignupComponent} from './pages/signup/signup.component';
+import { SignupComponent } from './pages/signup/signup.component';
 // firebase set up
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
@@ -41,12 +41,26 @@ import { AddImageDialogComponent } from './pages/container/newsroom/add-edit-new
 import { ChatComponent } from './pages/container/chat/chat.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapsNominatimService } from './shared-services/maps-nominatim.service';
-import { ProhubLogoComponent } from './components/prohub-logo/prohub-logo.component';
+import { ProhubLogoComponent } from './shared-components/prohub-logo/prohub-logo.component';
 import { VerifyEmailAddressComponent } from './pages/signup/verify-email-address/verify-email-address.component';
-import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
+import { ErrorDialogComponent } from './shared-components/error-dialog/error-dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GenericDeleteDialogComponent } from './shared-components/generic-delete-dialog/generic-delete-dialog.component';
+import { GenericMessageDialogComponent } from './shared-components/genericmessagedialog/genericmessagedialog.component';
+import { PendingChangesDialogComponent } from './shared-components/pending-changes-dialog/pending-changes-dialog.component';
+import { LoaderComponent } from './shared-components/loader/loader.component';
 
+import { ChatListComponent } from './pages/container/chat/chat-list/chat-list.component';
+import { ChatRoomComponent } from './pages/container/chat/chat-room/chat-room.component';
+import { ChatListCardComponent } from './pages/container/chat/chat-list/chat-list-card/chat-list-card.component';
+import { DatePipe } from '@angular/common';
+import { PropertyService } from './shared-services/property.service';
+import { ChatService } from './shared-services/chat.service';
+import { ImageUploadDialogComponent } from './pages/container/chat/chat-room/image-upload-dialog/image-upload-dialog.component';
+import { UploadImageDialogComponent } from './pages/container/settings/staff-management/upload-image-dialog/upload-image-dialog.component';
+import {StaffService} from './shared-services/staff.service';
+import {UnitsService} from './shared-services/units.service';
+import {ChatMessagesService} from './shared-services/chat-messages.service';
 
 
 @NgModule({
@@ -77,6 +91,15 @@ import { GenericDeleteDialogComponent } from './shared-components/generic-delete
     VerifyEmailAddressComponent,
     ErrorDialogComponent,
     GenericDeleteDialogComponent,
+    GenericMessageDialogComponent,
+    PendingChangesDialogComponent,
+    LoaderComponent,
+    ChatListComponent,
+    ChatRoomComponent,
+    ChatListCardComponent,
+    ImageUploadDialogComponent,
+    UploadImageDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -94,10 +117,19 @@ import { GenericDeleteDialogComponent } from './shared-components/generic-delete
     AngularFireStorageModule, // Only required for storage features
     AngularFireMessagingModule,
     LeafletModule,
-    FlexLayoutModule
-
+    FlexLayoutModule,
   ],
-  providers: [FirebaseService, AuthService, MapsNominatimService],
-  bootstrap: [AppComponent]
+  providers: [
+    FirebaseService,
+    AuthService,
+    MapsNominatimService,
+    DatePipe,
+    ChatService,
+    PropertyService,
+    StaffService,
+    UnitsService,
+    ChatMessagesService
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

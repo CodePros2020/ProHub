@@ -1,0 +1,29 @@
+#unsaved-changes-container{
+  text-align: center;
+
+  .blue-underline{
+    margin: 0 auto;
+    border-bottom: 3px solid #25BAF0;
+    width: 60px;
+  }
+
+  p{
+    margin-top: 2rem;
+  }
+
+  .green-submit-btn {
+    color: #fff;
+    background-color: #0cbd65;
+    font-weight: 500;
+    padding: 7px 50px;
+    margin-bottom: 1rem;
+    margin-top:1rem;
+  }
+
+  h3 {
+    font-weight: bold;
+    font: 16px Roboto;
+    letter-spacing: 7.2px;
+    color: #2B2B2B;
+  }
+}
