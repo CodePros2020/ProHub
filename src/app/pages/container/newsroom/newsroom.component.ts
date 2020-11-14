@@ -12,6 +12,7 @@ import {map} from 'rxjs/operators';
 })
 export class NewsroomComponent implements OnInit {
 
+  panelOpenState = false;
   newsList: NewsModel[];
   news: NewsModel;
 

@@ -10,29 +10,42 @@
       </mat-form-field>
     </div>
     <!-- Button -->
-    <div class="col-xl-2 icon">
-      <mat-icon (click)="openAddNewsDialog()" inline="true">post_add</mat-icon>
+    <div class="col-xl-2 icon" style="margin-top:0 !important;">
+      <button mat-fab color="primary" aria-label="add-icon-button" (click)="openAddNewsDialog()">
+        <mat-icon inline="true" style="font-size: 24px;">post_add</mat-icon>
+      </button>
     </div>
   </div>
 
   <!-- news container -->
-  <mat-grid-list cols="1" rowHeight="500">
-    <mat-grid-tile *ngFor="let news of newsList">
-      <div class="card news-card">
-        <div class="card-body">
-          <h3 class="card-title">{{news.newsTitle}}</h3>
-          <h4 class="card-subtitle mb-2 text-muted">{{news.createTime}}</h4>
-          <div *ngIf="news.imageUrl !== undefined">
-            <img class="card-img news-img" src="{{news.imageUrl}}" alt="News Image">
+  <mat-accordion>
+    <div class="news-panel mt-2 mb-2" *ngFor="let news of newsList">
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                           (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>{{news.newsTitle}}</h3>
+          </mat-panel-title>
+          <mat-panel-description>
+            <p>{{news.content.substr(0, 60)}}...</p>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="justify-content-between" style="display: flex;">
+          <div>
+            <h4 class="mb-2 text-muted">{{news.createTime}}</h4>
+            <div *ngIf="news.imageUrl !== undefined">
+              <img class="card-img news-img" src="{{news.imageUrl}}" alt="News Image">
+            </div>
+            <p>{{news.content}}</p>
           </div>
-          <p class="card-text">{{news.content}}</p>
-          <div class="text-right">
-            <a href="#" class="link-underline">View entire message</a>
+          <div>
+            <button class="mr-2" inline="true" mat-flat-button color="primary">Edit</button>
+            <button inline="true" mat-flat-button color="warn">Hide</button>
           </div>
         </div>
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion>
 
   <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
     All rights reserved.</h5></div>
