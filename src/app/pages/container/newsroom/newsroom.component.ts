@@ -31,26 +31,26 @@ export class NewsroomComponent implements OnInit {
 
   public openAddNewsDialog(){
     const dialogFilter = this.dialog.open(AddEditNewsDialogComponent, {
-      height: '400px',
-      width: '850px',
+      height: '680px',
+      width: '1200px',
       disableClose: false
     });
   }
 
-  public openEditDialog(key: string){
+  public openEditDialog(newsObject: NewsModel){
     const dialogFilter = this.dialog.open(AddEditNewsDialogComponent, {
-      height: '400px',
-      width: '850px',
-      data: {key: key},
+      height: '680px',
+      width: '1200px',
+      data: {news: newsObject},
       disableClose: false
     });
   }
 
-  public openHideDialog(newsKey: string, newsObject: NewsModel){
+  public openHideDialog(newsObject: NewsModel){
     const dialogFilter = this.dialog.open(HideNewsDialogComponent, {
       height: '200px',
       width: '400px',
-      data: {key: newsKey, news: newsObject},
+      data: {news: newsObject},
       disableClose: false
     });
   }

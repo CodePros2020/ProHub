@@ -10,11 +10,9 @@ import {NewsModel} from '../manager/news.model';
 })
 export class HideNewsDialogComponent implements OnInit {
 
-  key: string;
   news: NewsModel;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private newsService: NewsService) {
-    this.key = data.key;
     this.news = data.news;
   }
 
@@ -23,7 +21,7 @@ export class HideNewsDialogComponent implements OnInit {
   }
 
   public HideNews() {
-    this.newsService.hide(this.key, this.news).then( () => {
+    this.newsService.hide(this.news.key, this.news).then( () => {
       console.log('news hidden!');
     });
   }

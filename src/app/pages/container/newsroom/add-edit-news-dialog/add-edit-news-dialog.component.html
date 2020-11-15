@@ -1,1 +1,45 @@
-<p>add-edit-news-dialog works!</p>
+<h2 mat-dialog-title>Add/Edit News</h2>
+<mat-dialog-content>
+  <form [formGroup]="newsForm" class="justify-content-center form-style">
+    <div class="col-8">
+      <mat-form-field class="col-md-12" appearance="outline">
+        <mat-label>Title <span class="star">*</span></mat-label>
+        <input matInput formControlName="newsTitle">
+        <mat-error *ngIf="this.newsForm.controls.newsTitle.invalid">Please enter Title</mat-error>
+      </mat-form-field>
+      <div class="justify-content-between" style="display: flex">
+        <mat-form-field class="ml-2">
+          <mat-label>Target Viewer</mat-label>
+          <mat-select formControlName="targetViewer" required>
+            <mat-option *ngFor="let option of viewerOptions" [value]="option.value">
+              {{option.value}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.newsForm.controls.targetViewer.invalid">Please select target viewer</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-icon-button aria-label="attach file" (click)="openAddAttachDialog()">
+            <mat-icon aria-hidden="false" aria-label="attach file icon">attach_file</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="attach image" (click)="openAddImageDialog()">
+            <mat-icon aria-hidden="false" aria-label="add photo icon">add_photo_alternate</mat-icon>
+          </button>
+        </div>
+      </div>
+      <mat-form-field class="col-md-12" appearance="outline">
+        <mat-label>Content <span class="star">*</span></mat-label>
+        <textarea matInput formControlName="content" style="height: 200px !important;"></textarea>
+        <mat-error *ngIf="this.newsForm.controls.content.invalid">Please enter Content</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-md-12" appearance="outline">
+        <mat-label>Attached Image/File</mat-label>
+        <input matInput formControlName="imageUrl">
+        <img src="{{getImageLink()}}" alt="uploaded-image">
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close color="primary" (click)="SaveNews()">Save</button>
+</mat-dialog-actions>

@@ -27,6 +27,17 @@ export class NewsService{
     return this.newsRef.remove(key);
   }
 
+  save(news: NewsModel): Promise<void> {
+    if (news.key != null){
+      const newsId = this.db.createPushId();
+      news.key = newsId;
+      return this.db.database.ref('staff').child(newsId).set(news);
+    }
+    else {
+      return this.newsRef.update(news.key, news);
+    }
+  }
+
   update(key: string, news: NewsModel): Promise<void> {
     return this.newsRef.update(key, news);
   }
