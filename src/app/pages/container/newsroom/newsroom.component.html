@@ -39,8 +39,8 @@
             <p>{{news.content}}</p>
           </div>
           <div>
-            <button class="mr-2" inline="true" mat-flat-button color="primary">Edit</button>
-            <button inline="true" mat-flat-button color="warn">Hide</button>
+            <button class="mr-2" inline="true" mat-flat-button color="primary" (click)="openEditDialog(news.key)">Edit</button>
+            <button inline="true" mat-flat-button color="warn" (click)="openHideDialog(news.key, news)">Hide</button>
           </div>
         </div>
       </mat-expansion-panel>

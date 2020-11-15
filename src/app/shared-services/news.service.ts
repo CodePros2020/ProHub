@@ -26,4 +26,13 @@ export class NewsService{
   delete(key: string): Promise<void> {
     return this.newsRef.remove(key);
   }
+
+  update(key: string, news: NewsModel): Promise<void> {
+    return this.newsRef.update(key, news);
+  }
+
+  hide(key: string, news: NewsModel): Promise<void> {
+    news.hideFlag = true;
+    return this.newsRef.update(key, news);
+  }
 }

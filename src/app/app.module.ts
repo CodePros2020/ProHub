@@ -35,6 +35,7 @@ import { UploadFormDialogComponent } from './pages/container/forms/upload-form-d
 import { UnitsManagementComponent } from './pages/container/settings/units-management/units-management.component';
 import { AddEditUnitComponent } from './pages/container/settings/units-management/add-edit-unit/add-edit-unit.component';
 import { NewsroomComponent } from './pages/container/newsroom/newsroom.component';
+import { HideNewsDialogComponent } from './pages/container/newsroom/hide-news-dialog/hide-news-dialog.component';
 import { AddEditNewsDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-edit-news-dialog.component';
 import { AddAttachmentDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-attachment-dialog/add-attachment-dialog.component';
 import { AddImageDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-image-dialog/add-image-dialog.component';
@@ -82,6 +83,7 @@ import {ChatMessagesService} from './shared-services/chat-messages.service';
     UnitsManagementComponent,
     AddEditUnitComponent,
     NewsroomComponent,
+    HideNewsDialogComponent,
     AddEditNewsDialogComponent,
     AddAttachmentDialogComponent,
     AddImageDialogComponent,

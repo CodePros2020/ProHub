@@ -4,6 +4,7 @@ import {AddEditNewsDialogComponent} from './add-edit-news-dialog/add-edit-news-d
 import {NewsModel} from './manager/news.model';
 import {NewsService} from '../../../shared-services/news.service';
 import {map} from 'rxjs/operators';
+import {HideNewsDialogComponent} from './hide-news-dialog/hide-news-dialog.component';
 
 @Component({
   selector: 'app-newsroom',
@@ -11,7 +12,6 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./newsroom.component.scss']
 })
 export class NewsroomComponent implements OnInit {
-  
   panelOpenState = false;
   newsList: NewsModel[];
   news: NewsModel;
@@ -33,7 +33,25 @@ export class NewsroomComponent implements OnInit {
     const dialogFilter = this.dialog.open(AddEditNewsDialogComponent, {
       height: '400px',
       width: '850px',
-      disableClose: true
+      disableClose: false
+    });
+  }
+
+  public openEditDialog(key: string){
+    const dialogFilter = this.dialog.open(AddEditNewsDialogComponent, {
+      height: '400px',
+      width: '850px',
+      data: {key: key},
+      disableClose: false
+    });
+  }
+
+  public openHideDialog(newsKey: string, newsObject: NewsModel){
+    const dialogFilter = this.dialog.open(HideNewsDialogComponent, {
+      height: '200px',
+      width: '400px',
+      data: {key: newsKey, news: newsObject},
+      disableClose: false
     });
   }
 }
