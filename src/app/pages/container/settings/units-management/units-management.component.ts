@@ -60,6 +60,9 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
 
   }
   ngAfterViewInit() {
+    this.dataSource = new MatTableDataSource();
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
   showOverlay() {
     this.overlayRef.attach(new ComponentPortal(LoaderComponent));
@@ -133,7 +136,13 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
       autoFocus: false,
       data: {update: false, propId: this.property.propId}
     });
-  }
+    dialogFilter.afterClosed().subscribe(result => {
+      if (result) {
+        this.getUnits();
+      }
+    });
+}
+
 
   openEditUnitDialog(unit) {
     const dialogFilter = this.dialog.open(AddEditUnitComponent, {
@@ -141,6 +150,12 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
       width: '50%',
       autoFocus: false,
       data: {update: true, unitData : unit}
+    });
+    dialogFilter.afterClosed().subscribe(result => {
+      if (result) {
+        // Check if the Unit already Exists
+        this.getUnits();
+      }
     });
   }
 

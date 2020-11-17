@@ -83,13 +83,15 @@ export class AddEditUnitComponent implements OnInit {
   if (this.data.update === true){
     this.newUnit.unitId = this.unit.unitId;
     this.newUnit.propId = this.unit.propId;
-    this.unitsService.updateUnit(this.newUnit.unitId, this.newUnit);
+   // this.unitsService.updateUnit(this.newUnit.unitId, this.newUnit);
+    this.dialogRef.close(this.newUnit);
 
   } else {
     this.newUnit.propId = this.propId;
-    this.unitsService.addUnit(this.newUnit);
+   // this.unitsService.addUnit(this.newUnit);
+    this.dialogRef.close(this.newUnit);
   }
-  this.dialogRef.close(true);
+
 }
 
   }

@@ -23,7 +23,6 @@ export class AddEditStaffComponent implements OnInit {
   staffForm: FormGroup;
   staff: StaffModel;
   newStaff: StaffModel;
-  editStaff: StaffModel;
   propId: string;
   staffList = STAFF_LIST;
   isSuccess = false;
@@ -35,7 +34,6 @@ export class AddEditStaffComponent implements OnInit {
               ) {
     this.staff = new StaffModel();
     this.newStaff = new StaffModel();
-    this.editStaff = new StaffModel();
     this.propId = this.data.propId;
     if (this.data.update === true){
     this.staff = this.data.staffData;
@@ -131,6 +129,7 @@ export class AddEditStaffComponent implements OnInit {
     } else {
       this.staffService.addStaff(this.newStaff);
     }
+    this.newStaff = new StaffModel();
     this.dialogRef.close(true);
     }
   else {

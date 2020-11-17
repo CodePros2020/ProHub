@@ -46,6 +46,7 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
               public propertyService: PropertyService,
               public staffService: StaffService,
               private overlay: Overlay) {
+    this.staff = [];
     this.searchStaffFormGroup();
   }
 
