@@ -1,6 +1,52 @@
-<div class="newsroom-container">
+<div class="container">
 
+  <!-- Search -->
+  <div class="row" style="margin-top: 25px">
+    <div class="col-xl-1"></div>
+    <div class="col-xl-9">
+      <mat-form-field appearance="outline" style="width:100%;">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Search News" type="text">
+      </mat-form-field>
+    </div>
+    <!-- Button -->
+    <div class="col-xl-2 icon" style="margin-top:0 !important;">
+      <button mat-fab color="primary" aria-label="add-icon-button" (click)="openAddNewsDialog()">
+        <mat-icon inline="true" style="font-size: 24px;">post_add</mat-icon>
+      </button>
+    </div>
+  </div>
 
+  <!-- news container -->
+  <mat-accordion>
+    <div class="news-panel mt-2 mb-2" *ngFor="let news of newsList">
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                           (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>{{news.newsTitle}}</h3>
+          </mat-panel-title>
+          <mat-panel-description>
+            <p>{{news.content.substr(0, 60)}}...</p>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="justify-content-between" style="display: flex;">
+          <div>
+            <h4 class="mb-2 text-muted">{{news.createTime}}</h4>
+            <div *ngIf="news.imageUrl !== undefined">
+              <img class="card-img news-img" src="{{news.imageUrl}}" alt="News Image">
+            </div>
+            <p>{{news.content}}</p>
+          </div>
+          <div>
+            <button class="mr-2" inline="true" mat-flat-button color="primary">Edit</button>
+            <button inline="true" mat-flat-button color="warn">Hide</button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion>
 
+  <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
+    All rights reserved.</h5></div>
 </div>
-
