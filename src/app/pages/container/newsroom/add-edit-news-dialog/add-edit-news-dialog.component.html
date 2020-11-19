@@ -37,12 +37,15 @@
       </mat-form-field>
       <mat-form-field class="col-md-12" appearance="outline">
         <mat-label>Attached Image/File</mat-label>
-        <input matInput formControlName="imageUrl" hidden>
-        <div *ngIf="getImageLink().includes('.jpg') || getImageLink().includes('.png')">
-          <img src="{{getImageLink()}}" height="120px" width="auto">
-        </div>
-        <div *ngIf="!getImageLink().includes('.jpg') && !getImageLink().includes('.png')">
-          <iframe [src]="getImageLink() | safe" height="120px" width="auto"></iframe>
+        <div class="justify-content-between" style="display: flex">
+          <div *ngIf="getImageLink() !== undefined">
+            <input matInput formControlName="imageUrl" hidden>
+            <img src="{{getImageLink()}}" height="120px" width="auto">
+          </div>
+          <div *ngIf="getFileLink() !== undefined">
+            <input matInput formControlName="fileUrl" hidden>
+            <iframe [src]="getFileLink() | safe" height="120px" width="auto"></iframe>
+          </div>
         </div>
       </mat-form-field>
     </div>

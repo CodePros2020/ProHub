@@ -33,14 +33,15 @@
         <div class="justify-content-between" style="display: flex;">
           <div>
             <h4 class="mb-2 text-muted">{{news.createTime}}</h4>
-            <div *ngIf="news.imageUrl !== undefined">
-              <div *ngIf="news.imageUrl.includes('.jpg') || news.imageUrl.includes('.png')">
+            <div class="justify-content-between" style="display: flex">
+              <div *ngIf="news.imageUrl !== undefined">
                 <img src="{{news.imageUrl}}" height="120px" width="auto">
               </div>
-              <div *ngIf="!news.imageUrl.includes('.jpg') && !news.imageUrl.includes('.png')">
-                <iframe [src]="news.imageUrl | safe" height="120px" width="auto"></iframe>
+              <div *ngIf="news.fileUrl !== undefined">
+                <iframe [src]="news.fileUrl | safe" height="120px" width="auto"></iframe>
               </div>
             </div>
+            <br>
             <p>{{news.content}}</p>
           </div>
           <div>

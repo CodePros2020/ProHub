@@ -4,6 +4,7 @@ export class NewsModel {
   newsTitle: string;
   content: string;
   imageUrl: string;
+  fileUrl: string;
   createTime: string;
   creatorPhoneNumber: string;
   hideFlag: boolean;

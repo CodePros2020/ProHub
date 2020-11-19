@@ -54,6 +54,7 @@ export class AddEditNewsDialogComponent implements OnInit {
       newsTitle: [this.news.newsTitle, Validators.required],
       content: [this.news.content, Validators.required],
       imageUrl: [this.news.imageUrl, Validators.required],
+      fileUrl: [this.news.fileUrl, Validators.required],
       hideFlag: [this.news.hideFlag, Validators.required],
       targetViewer: [this.news.targetViewer, Validators.required],
     });
@@ -64,6 +65,7 @@ export class AddEditNewsDialogComponent implements OnInit {
       newsTitle: ['', Validators.required],
       content: ['', Validators.required],
       imageUrl: '',
+      fileUrl: undefined,
       hideFlag: [false, Validators.required],
       targetViewer: ['', Validators.required],
     });
@@ -77,7 +79,7 @@ export class AddEditNewsDialogComponent implements OnInit {
     });
     dialogFilter.afterClosed().subscribe(result => {
       if (result !== false) {
-        this.newsForm.controls.imageUrl.setValue(result);
+        this.newsForm.controls.fileUrl.setValue(result);
       }
     });
   }
@@ -102,7 +104,8 @@ export class AddEditNewsDialogComponent implements OnInit {
       this.news.hideFlag = this.newsForm.controls.hideFlag.value;
       this.news.targetViewer = this.newsForm.controls.targetViewer.value;
       this.news.createTime = this.getCurrentTime();
-      this.news.imageUrl = this.newsForm.controls.imageUrl.value;
+      this.news.imageUrl = this.newsForm.controls.imageUrl.value || '';
+      this.news.fileUrl = this.newsForm.controls.fileUrl.value || '';
       this.news.propId = this.propId || '';
       this.news.creatorPhoneNumber = this.phoneNumber || '';
       this.news.key = this.keyId;
@@ -125,7 +128,11 @@ export class AddEditNewsDialogComponent implements OnInit {
   }
 
   getImageLink() {
-    return this.newsForm.controls.imageUrl.value.toString() || '/assets/no-photo.png';
+    return this.newsForm.controls.imageUrl.value || '/assets/no-photo.png';
+  }
+
+  getFileLink() {
+    return this.newsForm.controls.fileUrl.value || undefined;
   }
 
   getCurrentTime() {
