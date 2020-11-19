@@ -78,6 +78,9 @@ export class AuthService {
               this.router.navigate(['container/dashboard']);
             }
           }
+          // } else if () {
+          //
+          // }
         });
       })
       .catch((error) => {
@@ -148,6 +151,7 @@ export class AuthService {
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
       phoneNumber: user.phoneNumber || null,
+      userType: user.userType
     };
     return userRef.set(userData);
     // return userRef.set(userData, {

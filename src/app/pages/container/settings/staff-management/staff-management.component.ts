@@ -46,6 +46,7 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
               public propertyService: PropertyService,
               public staffService: StaffService,
               private overlay: Overlay) {
+    this.staff = [];
     this.searchStaffFormGroup();
   }
 
@@ -94,6 +95,7 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
           this.staffModel.role = res.role;
           this.staff.push(this.staffModel);
         }
+
       });
       console.log('Staff List: ', this.staff);
       this.dataSource = new MatTableDataSource(this.staff);
@@ -136,6 +138,7 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+
         this.getStaff();
       }
     });
