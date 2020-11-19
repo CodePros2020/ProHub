@@ -40,7 +40,7 @@
             <!-- Creation Date Column -->
             <ng-container matColumnDef="upload_date">
               <mat-header-cell *matHeaderCellDef class="cell-txt"> Upload date </mat-header-cell>
-              <mat-cell *matCellDef="let form"> {{form.dateCreated}}  </mat-cell>
+              <mat-cell *matCellDef="let form"> {{formatDate(form.dateCreated)}}  </mat-cell>
             </ng-container>
 
 <!--            &lt;!&ndash; Size Column &ndash;&gt;-->
