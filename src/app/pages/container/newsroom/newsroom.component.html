@@ -18,10 +18,9 @@
   </div>
 
   <!-- news container -->
-  <mat-accordion>
+  <mat-accordion multi>
     <div class="news-panel mt-2 mb-2" *ngFor="let news of newsList">
-      <mat-expansion-panel (opened)="panelOpenState = true"
-                           (closed)="panelOpenState = false">
+      <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <h3>{{news.newsTitle}}</h3>
