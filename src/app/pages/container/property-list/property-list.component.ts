@@ -152,6 +152,9 @@ export class PropertyListComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
         this.propertyService.delete(element.key).then(() => {
+          this.propertyService.RemovePropertyInSession();
+          this.router.navigate(['container/property-list'])
+
           this.retrieveProperties();
         });
       }

@@ -55,6 +55,9 @@ export class PropertyService {
   GetPropertyInSession() {
     return JSON.parse(localStorage.getItem('property'));
   }
+  RemovePropertyInSession(){
+    localStorage.removeItem('property');
+  }
 
 }
 
