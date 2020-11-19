@@ -70,13 +70,13 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
 
   getStaff() {
     this.showOverlay();
-    this.staff = [];
     this.staffService.getAllStaff().pipe(
       map(changes =>
         changes.map(c =>
           ({key: c.payload.key, ...c.payload.val()})
         ))
     ).subscribe(data => {
+      this.staff = [];
       data.forEach(res => {
         if (res.propId === this.propertyId) {
           this.staffModel = new StaffModel();
@@ -134,14 +134,15 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
       height: '100%',
       width: '70%',
       autoFocus: false,
+      disableClose: true,
       data: {update: false, propId: this.propertyId}
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-
-        this.getStaff();
-      }
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //
+    //     this.getStaff();
+    //   }
+    // });
   }
 
   deleteStaff(element: StaffModel) {
@@ -164,13 +165,14 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
       height: '100%',
       width: '70%',
       autoFocus: false,
+      disableClose: true,
       data: {update: true, staffData: staff, propId: this.propertyId}
     });
-    dialogFilter.afterClosed().subscribe(result => {
-      if (result) {
-        this.getStaff();
-      }
-    });
+    // dialogFilter.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     this.getStaff();
+    //   }
+    // });
   }
 }
 
