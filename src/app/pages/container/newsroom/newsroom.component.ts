@@ -25,7 +25,7 @@ export class NewsroomComponent implements OnInit {
         key: c.payload.key, ...c.payload.val()
       })))
     ).subscribe(data => {
-      this.newsList = data;
+      this.newsList = data.reverse().filter(a => !a.hideFlag);
     });
   }
 
@@ -33,6 +33,7 @@ export class NewsroomComponent implements OnInit {
     const dialogFilter = this.dialog.open(AddEditNewsDialogComponent, {
       height: '680px',
       width: '1200px',
+      data: {news: null},
       disableClose: false
     });
   }

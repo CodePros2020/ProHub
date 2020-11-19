@@ -1,4 +1,8 @@
 <h2 mat-dialog-title>Add/Edit News</h2>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close color="primary" (click)="SaveNews()">Save</button>
+</mat-dialog-actions>
 <mat-dialog-content>
   <form [formGroup]="newsForm" class="justify-content-center form-style">
     <div class="col-8">
@@ -33,13 +37,14 @@
       </mat-form-field>
       <mat-form-field class="col-md-12" appearance="outline">
         <mat-label>Attached Image/File</mat-label>
-        <input matInput formControlName="imageUrl">
-        <img src="{{getImageLink()}}" alt="uploaded-image">
+        <input matInput formControlName="imageUrl" hidden>
+        <div *ngIf="getImageLink().includes('.jpg') || getImageLink().includes('.png')">
+          <img src="{{getImageLink()}}" height="120px" width="auto">
+        </div>
+        <div *ngIf="!getImageLink().includes('.jpg') && !getImageLink().includes('.png')">
+          <iframe [src]="getImageLink() | safe" height="120px" width="auto"></iframe>
+        </div>
       </mat-form-field>
     </div>
   </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button mat-dialog-close color="primary" (click)="SaveNews()">Save</button>
-</mat-dialog-actions>

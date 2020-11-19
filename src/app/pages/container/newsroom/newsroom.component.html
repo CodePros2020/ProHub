@@ -34,7 +34,12 @@
           <div>
             <h4 class="mb-2 text-muted">{{news.createTime}}</h4>
             <div *ngIf="news.imageUrl !== undefined">
-              <img class="card-img news-img" src="{{news.imageUrl}}" alt="News Image">
+              <div *ngIf="news.imageUrl.includes('.jpg') || news.imageUrl.includes('.png')">
+                <img src="{{news.imageUrl}}" height="120px" width="auto">
+              </div>
+              <div *ngIf="!news.imageUrl.includes('.jpg') && !news.imageUrl.includes('.png')">
+                <iframe [src]="news.imageUrl | safe" height="120px" width="auto"></iframe>
+              </div>
             </div>
             <p>{{news.content}}</p>
           </div>
