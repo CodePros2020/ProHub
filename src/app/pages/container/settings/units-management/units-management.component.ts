@@ -92,7 +92,6 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     });
   }
   getUnits() {
-    this.units = [];
     this.showOverlay();
     this.unitsService.getAllUnits().pipe(
       map(changes =>
@@ -100,6 +99,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
           ({key: c.payload.key, ...c.payload.val()})
         ))
     ).subscribe(data => {
+      this.units = [];
       data.forEach(res => {
         if (res.propId === this.property.propId) {
           this.unit = new UnitModel();
