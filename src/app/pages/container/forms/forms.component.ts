@@ -8,11 +8,10 @@ import {FormService} from "../../../shared-services/form.service";
 import {finalize, map} from "rxjs/operators";
 import {FormModel} from "./manager/form.model";
 import {GenericDeleteDialogComponent} from "../../../shared-components/generic-delete-dialog/generic-delete-dialog.component";
-import {AuthService} from "../../../shared-services/auth.service";
 import {FileService} from "../../../shared-services/file.service";
 import {AngularFireStorage} from "@angular/fire/storage";
 import {PropertyModel} from "../property-list/manager/property.model";
-import {CreateUpdatePropertyComponent} from "../property-list/create-update-property/create-update-property.component";
+import {PropertyService} from "../../../shared-services/property.service";
 
 @Component({
   selector: 'app-forms',
@@ -26,18 +25,21 @@ export class FormsComponent implements AfterViewInit  {
 
   forms = [];
   form: FormModel;
-   propId ="temp";
+  propId: string;
 
-
-//  displayedColumns: string[] = ['filename', 'upload_date', 'size', 'action'];
+  //  displayedColumns: string[] = ['filename', 'upload_date', 'size', 'action'];
   displayedColumns: string[] = ['filename', 'upload_date', 'action'];
   dataSource = new MatTableDataSource(this.forms)
   // constructor
   constructor(public dialog: MatDialog,
               private formService: FormService,
+              private propertyService: PropertyService,
               private storage: AngularFireStorage,
               @Inject(FileService) private fileService: FileService
-              ) {
+  ) {
+    let prop: PropertyModel = this.propertyService.GetPropertyInSession();
+    this.propId = prop.propId;
+
   }
 
   // life cycle hooks
@@ -46,30 +48,33 @@ export class FormsComponent implements AfterViewInit  {
   }
 
   ngAfterViewInit() {
-    // this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
   }
 
   retrieveForms() {
+
     this.forms = [];
     this.formService.getAll().snapshotChanges().pipe(
-      map(changes => changes.map(c=>({
-        key: c.payload.key, ...c.payload.val()
-      })))
+      map(changes => changes
+        .map(c=>({
+          key: c.payload.key, ...c.payload.val()
+        })))
     ).subscribe(data =>{
-      data.forEach(res=>{
-        this.form = new FormModel();
-        this.form.key = res.key;
-        this.form.formTitle = res.formTitle;
-        this.form.dateCreated = res.dateCreated;
-        this.form.contentUrl = res.contentUrl;
-        this.form.propId = res.propId;
-        // this.form.size = 1024;
-        this.forms.push(this.form);
-      });
-      // this.properties = data;
+      this.forms = [];
+      data
+        .filter(d=>{
+          return d.propId == this.propId
+        })
+        .forEach(res=>{
+          this.form = new FormModel();
+          this.form.key = res.key;
+          this.form.formTitle = res.formTitle;
+          this.form.dateCreated = res.dateCreated;
+          this.form.contentUrl = res.contentUrl;
+          this.form.propId = res.propId;
+          // this.form.size = 1024;
+          this.forms.push(this.form);
+        });
       console.log('Forms retrieved: ', this.forms);
-      // this.dataSource = new MatTableDataSource(this.forms);
       this.dataSource = new MatTableDataSource(this.forms);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -83,11 +88,10 @@ export class FormsComponent implements AfterViewInit  {
       disableClose: true,
       data: { update: false, form: new FormModel()}
     });
-    // dialogFilter.componentInstance.propId = this.propId;
-    dialogFilter.afterClosed().subscribe(res => {
-      if (res) {
-          this.retrieveForms();
-      }
+    dialogFilter.beforeClosed().subscribe(res => {
+      // if (res) {
+      //     this.retrieveForms();
+      // }
     });
 
   }
@@ -101,10 +105,10 @@ export class FormsComponent implements AfterViewInit  {
     });
 
     // dialogFilter.componentInstance.propId = this.propId;
-    dialogFilter.afterClosed().subscribe(res => {
-      if (res) {
-        this.retrieveForms();
-      }
+    dialogFilter.beforeClosed().subscribe(res => {
+      // if (res) {
+      //   this.retrieveForms();
+      // }
     });
 
   }
@@ -116,16 +120,22 @@ export class FormsComponent implements AfterViewInit  {
       data: { currentDialog: element.formTitle }
     });
 
-    dialogRef.afterClosed().subscribe(res => {
+    dialogRef.beforeClosed().subscribe(res => {
       if (res) {
         this.formService.delete(element.key).then(() => {
           const deleteRef = this.storage.ref("form/" + this.propId + "/"  + element.key);
           deleteRef.delete()
-
-          this.retrieveForms();
+//          this.retrieveForms();
         });
       }
     });
+  }
+
+  formatDate(dateString) {
+    let date: Date = new Date(dateString);
+    const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let formatted_date = months[date.getMonth()] + " " + date.getDate() +  ", " + date.getFullYear()
+    return formatted_date;
   }
 
 }
