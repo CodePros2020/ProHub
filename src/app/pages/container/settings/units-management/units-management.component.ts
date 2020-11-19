@@ -8,7 +8,6 @@ import {Router} from '@angular/router';
 import {AddEditUnitComponent} from './add-edit-unit/add-edit-unit.component';
 import {PropertyService} from '../../../../shared-services/property.service';
 import {PropertyModel} from '../../property-list/manager/property.model';
-import {StaffModel} from '../staff-management/manager/Staff.model';
 import {GenericDeleteDialogComponent} from '../../../../shared-components/generic-delete-dialog/generic-delete-dialog.component';
 import {UnitModel} from './manager/Unit.model';
 import {UnitsService} from '../../../../shared-services/units.service';
@@ -17,6 +16,7 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {LoaderComponent} from '../../../../shared-components/loader/loader.component';
 import {Overlay} from '@angular/cdk/overlay';
 import {Observable} from 'rxjs';
+import {GenericMessageDialogComponent} from '../../../../shared-components/genericmessagedialog/genericmessagedialog.component';
 
 
 @Component({
@@ -25,20 +25,7 @@ import {Observable} from 'rxjs';
   styleUrls: ['./units-management.component.scss']
 })
 export class UnitsManagementComponent implements OnInit, AfterViewInit {
-  constructor(public dialog: MatDialog,
-              private formBuilder: FormBuilder,
-              public router: Router,
-              public propertyService: PropertyService,
-              public unitsService: UnitsService,
-              public overlay: Overlay,
-              ) {
-    this.searchUnitFormGroup();
-    this.property = this.propertyService.GetPropertyInSession();
-  }
-  get formControls() {
-    return this.unitListForm.controls;
-  }
-
+  private unitExist = false;
   property: PropertyModel;
   unit: UnitModel;
   units = [];
@@ -48,6 +35,23 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
   public unitListForm: FormGroup;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
+  constructor(public dialog: MatDialog,
+              private formBuilder: FormBuilder,
+              public router: Router,
+              public propertyService: PropertyService,
+              public unitsService: UnitsService,
+              public overlay: Overlay,
+              ) {
+    this.searchUnitFormGroup();
+    this.property = this.propertyService.GetPropertyInSession();
+    this.units = [];
+  }
+  get formControls() {
+    return this.unitListForm.controls;
+  }
+
   overlayRef = this.overlay.create({
     positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
     hasBackdrop: true
@@ -60,9 +64,6 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
 
   }
   ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource();
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
   }
   showOverlay() {
     this.overlayRef.attach(new ComponentPortal(LoaderComponent));
@@ -85,15 +86,14 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.unitsService.deleteUnit(element.unitId).then(() => {
-          this.getUnits();
-        });
+        this.unitsService.deleteUnit(element.unitId);
+        this.getUnits();
       }
     });
   }
   getUnits() {
-    this.showOverlay();
     this.units = [];
+    this.showOverlay();
     this.unitsService.getAllUnits().pipe(
       map(changes =>
         changes.map(c =>
@@ -118,6 +118,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
       this. hideOverLay();
     });
   }
+
   filteredOptions() {
     this.unitsList = this.formControls.unitSearch.valueChanges.pipe(
       startWith(''),
@@ -138,11 +139,35 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     });
     dialogFilter.afterClosed().subscribe(result => {
       if (result) {
-        this.getUnits();
+        for (const i in this.units) {
+          if (this.units[i].unitName === result.unitName) {
+            console.log('The unit in list,' , this.units[i].unitName);
+            this.unitExist = true;
+            break;
+          } else {
+            this.unitExist = false;
+          }
+        }
+        if (!this.unitExist) {
+          this.units = [];
+          this.units.push(result);
+          this.unitsService.addUnit(result);
+          this.openMessageDialog('S U C C E S S', 'Unit added successfully!');
+          this.getUnits();
+        } else {
+          this.openMessageDialog('E R R O R', 'Unit with this name already exist.');
+        }
       }
     });
 }
 
+  /**  Error Message pop up */
+  openMessageDialog(titleMsg, msg) {
+    this.dialog.open(GenericMessageDialogComponent,
+      {
+        data: {title: titleMsg, message: msg}
+      });
+  }
 
   openEditUnitDialog(unit) {
     const dialogFilter = this.dialog.open(AddEditUnitComponent, {
@@ -153,8 +178,11 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     });
     dialogFilter.afterClosed().subscribe(result => {
       if (result) {
-        // Check if the Unit already Exists
-        this.getUnits();
+        this.units.push(result);
+        this.unitsService.updateUnit(result.unitId, result).then( res => {
+          console.log('Updated Unit ', res);
+          this.getUnits();
+        });
       }
     });
   }

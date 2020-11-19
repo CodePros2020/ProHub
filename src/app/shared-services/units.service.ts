@@ -4,24 +4,32 @@ import {AngularFireDatabase} from '@angular/fire/database';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {UnitModel} from '../pages/container/settings/units-management/manager/Unit.model';
+import {map} from 'rxjs/operators';
+import {PropertyService} from './property.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UnitsService {
   units: Observable<any[]>;
+  allUnits = [];
+  unit: UnitModel;
   constructor(private firestore: AngularFirestore,
               private db: AngularFireDatabase,
-              public router: Router ) {
+              public router: Router ,
+              public propertyService: PropertyService) {
+    this.unit = new UnitModel();
   }
 
   getUnit(unitId){
     return this.db.object('/units/' + unitId).valueChanges();
   }
+
   getAllUnits(): Observable<any> {
     this.units = this.db.list('units').snapshotChanges();
     return this.units;
   }
+
   deleteUnit(unitId: string): Promise<void> {
     return this.db.list('units').remove(unitId);
   }

@@ -18,14 +18,15 @@ export class AddEditUnitComponent implements OnInit {
   newUnit: UnitModel;
   unitForm: FormGroup;
   propId: string;
+
   constructor(public dialogRef: MatDialogRef<AddEditUnitComponent>, public formBuilder: FormBuilder,
-              @Inject(MAT_DIALOG_DATA)private data: any, public dialog: MatDialog,
+              @Inject(MAT_DIALOG_DATA) private data: any, public dialog: MatDialog,
               public unitsService: UnitsService) {
 
     this.unit = new UnitModel();
     this.newUnit = new UnitModel();
     this.propId = this.data.propId;
-    if (this.data.update === true){
+    if (this.data.update === true) {
       this.unit = this.data.unitData;
     }
   }
@@ -39,9 +40,11 @@ export class AddEditUnitComponent implements OnInit {
 
 
   }
+
   get formControls() {
     return this.unitForm.controls;
   }
+
   returnZero() {
     return 0;
   }
@@ -53,6 +56,7 @@ export class AddEditUnitComponent implements OnInit {
       tenantName: ['', Validators.required]
     });
   }
+
   updateUnitForm() {
     this.unitForm = this.formBuilder.group({
       unitName: [this.unit.unitName, Validators.required],
@@ -60,6 +64,7 @@ export class AddEditUnitComponent implements OnInit {
       tenantName: [this.unit.tenantName, Validators.required]
     });
   }
+
   /** Clicking on close */
   close() {
     if (this.unitForm.dirty) {
@@ -74,25 +79,23 @@ export class AddEditUnitComponent implements OnInit {
       this.dialogRef.close(false);
     }
   }
+
   saveUnit() {
-  if  (this.unitForm.valid){
-  this.newUnit.tenantName = this.formControls.tenantName.value;
-  this.newUnit.tenantId = this.formControls.tenantId.value;
-  this.newUnit.unitName = this.formControls.unitName.value;
+    if (this.unitForm.valid) {
+      this.newUnit.tenantName = this.formControls.tenantName.value;
+      this.newUnit.tenantId = this.formControls.tenantId.value;
+      this.newUnit.unitName = this.formControls.unitName.value;
 
-  if (this.data.update === true){
-    this.newUnit.unitId = this.unit.unitId;
-    this.newUnit.propId = this.unit.propId;
-   // this.unitsService.updateUnit(this.newUnit.unitId, this.newUnit);
-    this.dialogRef.close(this.newUnit);
+      if (this.data.update === true) {
+        this.newUnit.unitId = this.unit.unitId;
+        this.newUnit.propId = this.unit.propId;
+        this.dialogRef.close(this.newUnit);
 
-  } else {
-    this.newUnit.propId = this.propId;
-   // this.unitsService.addUnit(this.newUnit);
-    this.dialogRef.close(this.newUnit);
-  }
+      } else {
+        this.newUnit.propId = this.propId;
+        this.dialogRef.close(this.newUnit);
+      }
 
-}
-
+    }
   }
 }
