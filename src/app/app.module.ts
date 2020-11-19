@@ -35,6 +35,7 @@ import { UploadFormDialogComponent } from './pages/container/forms/upload-form-d
 import { UnitsManagementComponent } from './pages/container/settings/units-management/units-management.component';
 import { AddEditUnitComponent } from './pages/container/settings/units-management/add-edit-unit/add-edit-unit.component';
 import { NewsroomComponent } from './pages/container/newsroom/newsroom.component';
+import { HideNewsDialogComponent } from './pages/container/newsroom/hide-news-dialog/hide-news-dialog.component';
 import { AddEditNewsDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-edit-news-dialog.component';
 import { AddAttachmentDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-attachment-dialog/add-attachment-dialog.component';
 import { AddImageDialogComponent } from './pages/container/newsroom/add-edit-news-dialog/add-image-dialog/add-image-dialog.component';
@@ -61,46 +62,49 @@ import { UploadImageDialogComponent } from './pages/container/settings/staff-man
 import {StaffService} from './shared-services/staff.service';
 import {UnitsService} from './shared-services/units.service';
 import {ChatMessagesService} from './shared-services/chat-messages.service';
+import {SafePipeline} from './pages/container/newsroom/manager/SafePipe.model';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    RegistrationComponent,
-    LoginComponent,
-    PropertyListComponent,
-    ForgotPasswordDialogComponent,
-    ContainerComponent,
-    CreateUpdatePropertyComponent,
-    DashboardComponent,
-    SettingsComponent,
-    AccountInfoComponent,
-    StaffManagementComponent,
-    AddEditStaffComponent,
-    FormsComponent,
-    UploadFormDialogComponent,
-    UnitsManagementComponent,
-    AddEditUnitComponent,
-    NewsroomComponent,
-    AddEditNewsDialogComponent,
-    AddAttachmentDialogComponent,
-    AddImageDialogComponent,
-    ChatComponent,
-    SignupComponent,
-    ProhubLogoComponent,
-    VerifyEmailAddressComponent,
-    ErrorDialogComponent,
-    GenericDeleteDialogComponent,
-    GenericMessageDialogComponent,
-    PendingChangesDialogComponent,
-    LoaderComponent,
-    ChatListComponent,
-    ChatRoomComponent,
-    ChatListCardComponent,
-    ImageUploadDialogComponent,
-    UploadImageDialogComponent,
+    declarations: [
+        AppComponent,
+        RegistrationComponent,
+        LoginComponent,
+        PropertyListComponent,
+        ForgotPasswordDialogComponent,
+        ContainerComponent,
+        CreateUpdatePropertyComponent,
+        DashboardComponent,
+        SettingsComponent,
+        AccountInfoComponent,
+        StaffManagementComponent,
+        AddEditStaffComponent,
+        FormsComponent,
+        UploadFormDialogComponent,
+        UnitsManagementComponent,
+        AddEditUnitComponent,
+        NewsroomComponent,
+        HideNewsDialogComponent,
+        AddEditNewsDialogComponent,
+        AddAttachmentDialogComponent,
+        AddImageDialogComponent,
+        ChatComponent,
+        SignupComponent,
+        ProhubLogoComponent,
+        VerifyEmailAddressComponent,
+        ErrorDialogComponent,
+        GenericDeleteDialogComponent,
+        GenericMessageDialogComponent,
+        PendingChangesDialogComponent,
+        LoaderComponent,
+        ChatListComponent,
+        ChatRoomComponent,
+        ChatListCardComponent,
+        ImageUploadDialogComponent,
+        UploadImageDialogComponent,
+        SafePipeline,
 
-  ],
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

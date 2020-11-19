@@ -32,14 +32,20 @@
         <div class="justify-content-between" style="display: flex;">
           <div>
             <h4 class="mb-2 text-muted">{{news.createTime}}</h4>
-            <div *ngIf="news.imageUrl !== undefined">
-              <img class="card-img news-img" src="{{news.imageUrl}}" alt="News Image">
+            <div class="justify-content-between" style="display: flex">
+              <div *ngIf="news.imageUrl !== undefined">
+                <img src="{{news.imageUrl}}" height="120px" width="auto">
+              </div>
+              <div *ngIf="news.fileUrl !== undefined">
+                <iframe [src]="news.fileUrl | safe" height="120px" width="auto"></iframe>
+              </div>
             </div>
+            <br>
             <p>{{news.content}}</p>
           </div>
           <div>
-            <button class="mr-2" inline="true" mat-flat-button color="primary">Edit</button>
-            <button inline="true" mat-flat-button color="warn">Hide</button>
+            <button class="mr-2" inline="true" mat-flat-button color="primary" (click)="openEditDialog(news)">Edit</button>
+            <button inline="true" mat-flat-button color="warn" (click)="openHideDialog(news)">Hide</button>
           </div>
         </div>
       </mat-expansion-panel>
