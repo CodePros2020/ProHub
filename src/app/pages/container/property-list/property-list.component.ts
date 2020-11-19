@@ -68,7 +68,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit {
     this.overlayRef.detach();
   }
   retrieveProperties() {
-    this.properties = [];
+    // this.properties = [];
     this.propertyService
       .getAll()
       .snapshotChanges()
@@ -78,6 +78,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit {
         )
       )
       .subscribe((data) => {
+        this.properties = [];
         data.forEach((res) => {
           this.property = new PropertyModel();
           this.property.key = res.key;
@@ -120,11 +121,11 @@ export class PropertyListComponent implements OnInit, AfterViewInit {
       data: { update: false },
     });
 
-    dialogFilter.afterClosed().subscribe((res) => {
-      if (res === 'added') {
-        this.retrieveProperties();
-      }
-    });
+    // dialogFilter.afterClosed().subscribe((res) => {
+    //   if (res === 'added') {
+    //     this.retrieveProperties();
+    //   }
+    // });
   }
 
   filteredOptions() {

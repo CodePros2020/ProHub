@@ -33,8 +33,7 @@ export class UploadFormDialogComponent implements OnInit {
   // public fields
   public uploadFormForm: FormGroup;
   public formModel: FormModel;
-  // propId ="-M3Xe58nTHXxnaM6Mp-m";
-  propId = 'temp';
+  private propId: string;
 
   filename: string;
   fileextension: string;
@@ -55,9 +54,16 @@ export class UploadFormDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
     private authService: AuthService,
+    private propertyService: PropertyService,
     @Inject(FileService) private fileService: FileService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+
+    let prop: PropertyModel = this.propertyService.GetPropertyInSession();
+    this.propId = prop.propId;
+    console.log(prop.propId);
+
+
     this.isEditMode = this.data.update;
 
     if (this.isEditMode) {
@@ -146,14 +152,10 @@ export class UploadFormDialogComponent implements OnInit {
             finalize(() => {
               fileRef.getDownloadURL().subscribe((url) => {
                 this.formModel.formTitle = newFileName;
-                // this.formModel.propId = this.propId;
-                //              this.formModel.propId = "XXXX";
+                this.formModel.propId = this.propId;
                 this.formModel.contentUrl = url;
                 this.formModel.dateCreated = new Date().toISOString();
 
-                // this.formService.upload(this.formModel).then(()=>{
-                //   this.dialogRef.close('added');
-                // });
                 this.formService
                   .update(this.formKey, this.formModel)
                   .then(() => {
