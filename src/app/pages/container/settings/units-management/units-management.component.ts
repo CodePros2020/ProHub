@@ -17,6 +17,9 @@ import {LoaderComponent} from '../../../../shared-components/loader/loader.compo
 import {Overlay} from '@angular/cdk/overlay';
 import {Observable} from 'rxjs';
 import {GenericMessageDialogComponent} from '../../../../shared-components/genericmessagedialog/genericmessagedialog.component';
+import {ChatMessagesService} from '../../../../shared-services/chat-messages.service';
+import {AuthService} from '../../../../shared-services/auth.service';
+import {ChatMessagesModel} from '../../chat/manager/chat-messages.model';
 
 
 @Component({
@@ -25,9 +28,13 @@ import {GenericMessageDialogComponent} from '../../../../shared-components/gener
   styleUrls: ['./units-management.component.scss']
 })
 export class UnitsManagementComponent implements OnInit, AfterViewInit {
+  landlordPhoneNumber;
+  landlordName;
+  landlordPhotoUrl;
   private unitExist = false;
   property: PropertyModel;
   unit: UnitModel;
+  chatMessage: ChatMessagesModel;
   units = [];
   displayedColumns: string[] = ['unitName', 'tenantId', 'tenantName', 'action'];
   dataSource;
@@ -42,9 +49,12 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
               public router: Router,
               public propertyService: PropertyService,
               public unitsService: UnitsService,
+              public chatMessageService: ChatMessagesService,
+              public authService: AuthService,
               public overlay: Overlay,
               ) {
     this.searchUnitFormGroup();
+    this.getLandlordDetails();
     this.property = this.propertyService.GetPropertyInSession();
     this.units = [];
   }
@@ -154,6 +164,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
           this.units = [];
           this.units.push(result);
           this.unitsService.addUnit(result);
+          // this.createChatMessageInstances(result.tenantId, result.tenantName, '');
           this.openMessageDialog('S U C C E S S', 'Unit added successfully!');
           this.getUnits();
         } else {
@@ -189,7 +200,35 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     });
   }
 
+  createChatMessageInstances(tenantNumber, tenantName, tenantPhotoUrl) {
+    this.chatMessage = new ChatMessagesModel();
+    this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
+    this.chatMessage.receiverNumber = this.landlordPhoneNumber;
+    this.chatMessage.senderName = tenantName;
+    this.chatMessage.senderNumber = tenantNumber;
+    this.chatMessage.senderPhotoUrl = tenantPhotoUrl;
+    this.chatMessageService.create(this.chatMessage);
 
+    this.chatMessage = new ChatMessagesModel();
+    this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
+    this.chatMessage.receiverNumber = tenantNumber;
+    this.chatMessage.senderName = this.landlordName;
+    this.chatMessage.senderNumber = this.landlordPhoneNumber;
+    this.chatMessage.senderPhotoUrl = this.landlordPhotoUrl;
+    this.chatMessageService.create(this.chatMessage);
+  }
+
+  getLandlordDetails() {
+    this.landlordPhoneNumber = this.authService.GetUserInSession().phoneNumber;
+    this.landlordName = this.authService.GetUserInSession().firstName + ' ' +
+      this.authService.GetUserInSession().lastName;
+
+    if (this.authService.GetUserInSession().photoURL !== undefined) {
+      this.landlordPhotoUrl = this.authService.GetUserInSession().photoURL;
+    } else {
+      this.landlordPhotoUrl = '';
+    }
+  }
 }
 
 

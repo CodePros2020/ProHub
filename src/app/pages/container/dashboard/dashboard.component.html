@@ -7,7 +7,7 @@
         {{this.loggedInUserName}}
       </div>
       <div class="prop-div">
-        {{this.property.name}}
+        {{propertyName}}
       </div>
 
 
@@ -29,11 +29,13 @@
           Chats
         </div>
       </div>
-      <div class="row justify-content-md-center section staff">
-        <div class="overlay" (click)="goStaff()">
-          Staff
+      <ng-container *ngIf="loggedInUser.userType === 'business'">
+        <div class="row justify-content-md-center section staff">
+          <div class="overlay" (click)="goStaff()">
+            Staff
+          </div>
         </div>
-      </div>
+      </ng-container>
       <div class="row justify-content-md-center section forms">
         <div class="overlay" (click)="goForms()">
           Forms
@@ -46,11 +48,13 @@
           News
         </div>
       </div>
-      <div class="row justify-content-md-center section units">
-        <div class="overlay" (click)="goUnits()">
-          Units
+      <ng-container *ngIf="loggedInUser.userType === 'business'">
+        <div class="row justify-content-md-center section units">
+          <div class="overlay" (click)="goUnits()">
+            Units
+          </div>
         </div>
-      </div>
+      </ng-container>
       <div class="row justify-content-md-center section settings">
         <div class="overlay" (click)="goSettings()">
           Settings
