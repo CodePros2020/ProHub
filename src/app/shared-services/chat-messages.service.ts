@@ -27,6 +27,7 @@ export class ChatMessagesService {
   }
 
   create(value: any): any {
+    console.log('what is value in create chat message? ', value);
     return this.chatMessageRefCreate.push(value)
       .catch(err => {
         console.log('error in sending chat: ', err);

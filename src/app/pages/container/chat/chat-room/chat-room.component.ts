@@ -34,13 +34,14 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   message = '';
   chats = [];
   matcher = new MyErrorStateMatcher();
+  chatsToBeUpdatedToChatSeen = [];
+  chatsWithImagesToBeUpdatedToChatSeen = [];
 
   constructor(private formBuilder: FormBuilder,
               private dialog: MatDialog,
               private chatService: ChatService,
               private authService: AuthService,
               public datePipe: DatePipe) {
-    // this.chatModel = new ChatModel();
     this.loggedInUserPhoneNumber = this.authService.GetUserInSession().phoneNumber;
     this.createChatFormGroup();
   }
@@ -51,7 +52,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('chat message in on changes', this.chatMessageId);
+    // console.log('chat message in on changes', this.chatMessageId);
     this.retrieveChats();
   }
 
@@ -64,21 +65,37 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           ))
       ).subscribe(data => {
         this.chats = [];
+        this.chatsToBeUpdatedToChatSeen = [];
+        this.chatsWithImagesToBeUpdatedToChatSeen = [];
         data.forEach(res => {
           this.chatModel = new ChatModel();
-          this.chatModel.chatId = res.chatId;
+          this.chatModel.chatId = res.key;
           this.chatModel.chatMessageId = res.chatMessageId;
           this.chatModel.chatSeen = res.chatSeen;
           this.chatModel.fullName = res.fullName;
           this.chatModel.message = res.message;
           this.chatModel.phoneNumber = res.phoneNumber;
-          this.chatModel.photoUrl = res.photoUrl;
           this.chatModel.timeStamp = res.timeStamp;
           this.chatModel.imageUrl = res.imageUrl;
           this.chats.push(this.chatModel);
+
+          if (this.chatModel.phoneNumber !== this.loggedInUserPhoneNumber) {
+            if (this.chatModel.message !== undefined) {
+              this.chatsToBeUpdatedToChatSeen.push(this.chatModel);
+            }
+
+            if (this.chatModel.imageUrl !== undefined) {
+              this.chatsWithImagesToBeUpdatedToChatSeen.push(this.chatModel);
+            }
+          }
+
         });
+
         console.log('list of chats', this.chats);
+        console.log('chats to be updated: ', this.chatsToBeUpdatedToChatSeen);
+        console.log('chats with images to be updated: ', this.chatsWithImagesToBeUpdatedToChatSeen);
         setTimeout(() => this.scrollTop = this.chatContent.nativeElement.scrollHeight, 500);
+        this.updateChatSeen();
       });
     }
   }
@@ -95,15 +112,13 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   sendChat() {
     this.chatModel = new ChatModel();
-    this.chatModel.chatMessageId = '6475545687_6478319441';
+    this.chatModel.chatMessageId = this.chatMessageId;
     this.chatModel.chatSeen = false;
     this.chatModel.fullName = this.authService.GetUserInSession().firstName + ' ' + this.authService.GetUserInSession().lastName;
     this.chatModel.message = this.formControls.message.value;
     this.chatModel.phoneNumber = this.loggedInUserPhoneNumber;
-    this.chatModel.photoUrl = '';
     this.chatModel.timeStamp = new Date().toString();
     this.chatService.create(this.chatModel);
-    // this.retrieveChats();
     this.createChatFormGroup();
   }
 
@@ -123,12 +138,41 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         this.chatModel.chatSeen = false;
         this.chatModel.fullName = this.authService.GetUserInSession().firstName + ' ' + this.authService.GetUserInSession().lastName;
         this.chatModel.phoneNumber = this.loggedInUserPhoneNumber;
-        this.chatModel.photoUrl = '';
         this.chatModel.timeStamp = new Date().toString();
         this.chatModel.imageUrl = res;
         this.chatService.create(this.chatModel);
-        // this.retrieveChats();
         this.createChatFormGroup();
+      }
+    });
+  }
+
+  updateChatSeen() {
+
+    this.chatsToBeUpdatedToChatSeen.forEach(res => {
+      console.log('chat message id', this.chatMessageId);
+      console.log('res chat msg id', res.chatMessageId);
+      if (this.chatMessageId === res.chatMessageId) {
+        this.chatModel = new ChatModel();
+        this.chatModel.chatMessageId = res.chatMessageId;
+        this.chatModel.chatSeen = true;
+        this.chatModel.fullName = res.fullName;
+        this.chatModel.message = res.message;
+        this.chatModel.phoneNumber = res.phoneNumber;
+        this.chatModel.timeStamp = res.timeStamp;
+        this.chatService.updateChatSeen(res.chatMessageId, res.chatId, this.chatModel);
+      }
+    });
+
+    this.chatsWithImagesToBeUpdatedToChatSeen.forEach(res2 => {
+      if (this.chatMessageId === res2.chatMessageId) {
+        this.chatModel = new ChatModel();
+        this.chatModel.chatMessageId = res2.chatMessageId;
+        this.chatModel.chatSeen = true;
+        this.chatModel.fullName = res2.fullName;
+        this.chatModel.imageUrl = res2.imageURL;
+        this.chatModel.phoneNumber = res2.phoneNumber;
+        this.chatModel.timeStamp = res2.timeStamp;
+        this.chatService.updateChatSeen(res2.chatMessageId, res2.chatId, res2);
       }
     });
   }

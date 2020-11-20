@@ -4,8 +4,21 @@
       <div class="row" *ngFor="let chat of chats">
         <div class="chat-message">
           <div class="right-bubble" [ngClass]="{'right-bubble': chat.phoneNumber === loggedInUserPhoneNumber, 'left-bubble': chat.phoneNumber !== loggedInUserPhoneNumber}">
-            <span class="msg-name" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber">{{chat.fullName}}</span>
-            <span class="msg-name" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber">{{chat.fullName}}</span>
+            <div class="msg-name d-flex justify-content-between" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber">
+              <span>{{chat.timeStamp | date : 'short' }}</span>
+              <span>{{chat.fullName}}</span>
+            </div>
+            <div class="msg-name d-flex justify-content-between" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber">
+              <span>{{chat.fullName}}</span>
+              <span>{{chat.timeStamp | date : 'short' }}</span>
+            </div>
+
+
+
+<!--            <span class="msg-name" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber">{{chat.timeStamp | date : 'short' }}{{chat.fullName}}</span>-->
+<!--            <span class="msg-name" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber">{{chat.fullName}}</span>-->
+
+
             <ng-container *ngIf="chat.message !== undefined">
               <p class="msg" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber" text-wrap>{{chat.message}}</p>
               <p class="msg" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber" text-wrap>{{chat.message}}</p>

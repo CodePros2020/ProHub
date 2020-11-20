@@ -49,7 +49,6 @@ export class ChatListComponent implements OnInit {
         this.chatMessageModel.senderName = res.senderName;
         this.chatMessageModel.senderNumber = res.senderNumber;
         this.chatMessageModel.senderPhotoUrl = res.senderPhotoUrl;
-        this.chatMessageModel.timestamp = res.timestamp;
         this.chatList.push(this.chatMessageModel);
       });
       console.log('list of chatMessages', this.chatList);

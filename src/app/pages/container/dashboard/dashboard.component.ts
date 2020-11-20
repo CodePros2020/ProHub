@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
 
   loggedInUserName: string;
   loggedInUser: any;
+  propertyName = '';
   property: PropertyModel;
   constructor(
     public router: Router,
@@ -23,9 +24,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.property = this.propertyService.GetPropertyInSession();
+
+    console.log('property in session in dashboard', this.property);
     this.loggedInUser = this.authService.GetUserInSession();
     this.loggedInUserName = this.loggedInUser !== undefined ? this.loggedInUser.firstName + ' ' + this.loggedInUser.lastName : '';
+    this.getPropertyName();
   }
   goChats() {
     this.router.navigate(['container/chat']);
@@ -52,6 +55,19 @@ export class DashboardComponent implements OnInit {
 
   goPropertyList() {
     this.router.navigate(['container/property-list']);
+  }
+
+  getPropertyName() {
+    if (this.loggedInUser.userType === 'business') {
+      this.property = this.propertyService.GetPropertyInSession();
+      if (this.property !== undefined) {
+        this.propertyName = this.property.name;
+      } else {
+        this.router.navigate(['container/property-list']);
+      }
+    } else {
+      this.propertyName = 'Tenant';
+    }
   }
 
 }

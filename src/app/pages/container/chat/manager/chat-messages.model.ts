@@ -5,5 +5,4 @@ export class ChatMessagesModel {
   senderName: string;
   senderNumber: string;
   senderPhotoUrl: string;
-  timestamp: string;
 }
