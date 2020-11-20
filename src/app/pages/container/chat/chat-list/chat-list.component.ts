@@ -13,6 +13,7 @@ import {ChatMessagesService} from '../../../../shared-services/chat-messages.ser
 export class ChatListComponent implements OnInit {
 
   @Output() chatMessageId: EventEmitter<any> = new EventEmitter<any>();
+  @Output() chatMessageName: EventEmitter<any> = new EventEmitter<any>();
 
   loggedInFullName;
   chatMessageModel: ChatMessagesModel;
@@ -55,8 +56,9 @@ export class ChatListComponent implements OnInit {
     });
   }
 
-  getChatMessageId(id) {
+  getChatMessageId(id, name) {
     this.chatMessageId.emit(id);
+    this.chatMessageName.emit(name);
   }
 
 }

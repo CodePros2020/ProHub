@@ -11,8 +11,19 @@
   height: calc(100vh - 202px);
 }
 
+.chat-info-content {
+  background-color: #2f4550;
+  color: white;
+  padding: 5px;
+
+  mat-icon {
+    cursor: pointer;
+  }
+
+}
+
 .chat-room-content {
-  height: calc(88vh - 202px);
+  height: calc(85vh - 202px);
   overflow-y: auto;
   overflow-x: hidden;
   padding-top: 1rem;

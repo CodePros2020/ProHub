@@ -10,6 +10,7 @@ export class ChatComponent implements OnInit {
 
   chatSearchForm: FormGroup;
   chatMessageId;
+  chatMessageName;
 
   constructor(private formBuilder: FormBuilder) {
     this.createChatSearchFormGroup();
@@ -31,5 +32,9 @@ export class ChatComponent implements OnInit {
   getChatMessageID(event) {
     this.chatMessageId = event;
     console.log('chat message id in chat component: ', this.chatMessageId);
+  }
+
+  getChatMessageName(event) {
+    this.chatMessageName = event;
   }
 }

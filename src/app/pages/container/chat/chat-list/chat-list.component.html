@@ -12,7 +12,7 @@
     <div class="col">
       <div class="row" *ngFor="let list of chatList">
         <app-chat-list-card [chatMessageModel]="list"
-                            (click)="getChatMessageId(list.chatMessageId)"
+                            (click)="getChatMessageId(list.chatMessageId, list.senderName)"
                             class="card-container"></app-chat-list-card>
       </div>
     </div>
