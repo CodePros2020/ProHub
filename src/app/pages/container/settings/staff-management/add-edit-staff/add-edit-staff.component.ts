@@ -8,6 +8,7 @@ import {PendingChangesDialogComponent} from '../../../../../shared-components/pe
 import {FileService} from '../../../../../shared-services/file.service';
 import {UploadImageDialogComponent} from '../upload-image-dialog/upload-image-dialog.component';
 import {StaffService} from '../../../../../shared-services/staff.service';
+import {AuthService} from '../../../../../shared-services/auth.service';
 
 @Component({
   selector: 'app-add-edit-staff',
@@ -30,7 +31,7 @@ export class AddEditStaffComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddEditStaffComponent>, public formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA)private data: any, public dialog: MatDialog,
-              public staffService: StaffService
+              public staffService: StaffService, public authService: AuthService
               ) {
     this.staff = new StaffModel();
     this.newStaff = new StaffModel();
@@ -128,6 +129,7 @@ export class AddEditStaffComponent implements OnInit {
       this.staffService.updateStaff(this.newStaff.staffId, this.newStaff );
     } else {
       this.staffService.addStaff(this.newStaff);
+      this.authService.SignUp(this.newStaff.email, 'password');
     }
     this.newStaff = new StaffModel();
     this.dialogRef.close(true);

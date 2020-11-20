@@ -5,6 +5,6 @@ export interface User {
   photoURL: string;
   emailVerified: boolean;
   phoneNumber: string;
-  userType: string;
+  // userType: string;
 }
 
