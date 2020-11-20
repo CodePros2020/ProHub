@@ -61,27 +61,30 @@ export class FirebaseService {
 //     console.log('All users, ', this.tenantsArr);
 //     return this.tenantsArr;
 // }
-  getUsers(){
-
-    this.db.list('/users').snapshotChanges().pipe(
-      map((changes) =>
-        changes.map((c) => ({ key: c.payload.key, ...c.payload.val() as  RegistrationModel })))
-    ).subscribe(data => {
-        this.tenantsArr = [];
-        data.forEach((res) => {
-          console.log('User res', res);
-          this.user = new RegistrationModel();
-          if (res.key === res.uid) {
-            this.user = res;
-            if (this.user.userType === 'personal' ) {
-              this.tenantsArr.push(this.user);
-            }
-          }
-        });
-    });
-   // console.log('All users, ', this.tenantsArr);
-    return this.tenantsArr;
+  getUsers() {
+   return this.db.list('/users').snapshotChanges();
   }
+  // getUsers(){
+  //
+  //   this.db.list('/users').snapshotChanges().pipe(
+  //     map((changes) =>
+  //       changes.map((c) => ({ key: c.payload.key, ...c.payload.val() as  RegistrationModel })))
+  //   ).subscribe(data => {
+  //       this.tenantsArr = [];
+  //       data.forEach((res) => {
+  //         console.log('User res', res);
+  //         this.user = new RegistrationModel();
+  //         if (res.key === res.uid) {
+  //           this.user = res;
+  //           if (this.user.userType === 'personal' ) {
+  //             this.tenantsArr.push(this.user);
+  //           }
+  //         }
+  //       });
+  //   });
+  //  // console.log('All users, ', this.tenantsArr);
+  //   return this.tenantsArr;
+  // }
 
   async getUserPassword(username) {
     const snapshot = await this.db.database.ref('users/' + username)

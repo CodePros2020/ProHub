@@ -20,14 +20,13 @@
       <div class="row">
 
         <div class="col-md d-flex justify-content-between">
-          <div class="col-10">
             <mat-form-field appearance="outline" style="width: 60%">
               <mat-icon matPrefix>search</mat-icon>
               <input matInput placeholder="Search Unit.." formControlName="unitSearch" (keyup)="searchUnit($event)" type="text" >
 <!--              <mat-autocomplete #auto="matAutocomplete">-->
 <!--                <mat-option *ngFor="let unit of units" [value]="unit.untiName">{{ unit.unitName }}</mat-option>-->
 <!--              </mat-autocomplete>-->
-            </mat-form-field></div>
+            </mat-form-field>
           <button class=" add-staff-btn" mat-raised-button (click)="openAddUnitDialog()"><mat-icon>add</mat-icon> ADD</button>
         </div>
       </div>

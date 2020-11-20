@@ -10,6 +10,7 @@ import {RegistrationModel} from '../../../../registration/manager/registration.m
 import {Overlay} from '@angular/cdk/overlay';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {LoaderComponent} from '../../../../../shared-components/loader/loader.component';
+import {map} from 'rxjs/operators';
 
 
 
@@ -77,8 +78,9 @@ export class AddEditUnitComponent implements OnInit {
     this.unitForm = this.formBuilder.group({
       unitNumber: ['', Validators.required],
       tenantId: ['', Validators.required],
-      tenantName: ['', Validators.required]
+      tenantName: ['']
     });
+    this.formControls.tenantName.disable();
   }
 
   updateUnitForm() {
@@ -105,33 +107,39 @@ export class AddEditUnitComponent implements OnInit {
   }
 
   saveUnit() {
-    this.showOverlay();
-    if (this.unitForm.valid) {
-      this.newUnit.tenantName = this.formControls.tenantName.value;
-      this.getAllTenants(this.formControls.tenantId.value);
-      if (this.isTenant) {
-        this.newUnit.tenantId = this.formControls.tenantId.value;
-        this.newUnit.unitName = this.formControls.unitNumber.value;
 
-        if (this.data.update === true) {
+    if (this.unitForm.valid) {
+      this.showOverlay();
+      this.getAllTenants(this.formControls.tenantId.value);
+      this.hideOverLay();
+      // if (this.isTenant) {
+      //   this.newUnit.tenantId = this.formControls.tenantId.value;
+      //   this.newUnit.unitName = this.formControls.unitNumber.value;
+
+      if (this.data.update === true) {
+          this.newUnit.tenantId = this.formControls.tenantId.value;
+          this.newUnit.unitName = this.formControls.unitNumber.value;
           this.newUnit.unitId = this.unit.unitId;
           this.newUnit.propId = this.unit.propId;
-          this.checkUnitDuplicity();
+          // this.checkUnitDuplicity();
         } else {
-          this.newUnit.propId = this.propId;
-          this.checkUnitDuplicity();
+          if (this.isTenant) {
+            this.newUnit.tenantId = this.formControls.tenantId.value;
+            this.newUnit.unitName = this.formControls.unitNumber.value;
+            this.newUnit.propId = this.propId;
+            this.checkUnitDuplicity();
+          }
+          // else{
+          //   this.openMessageDialog(
+          //     'E R R O R',
+          //     'Tenant phone number does not exist.'
+          //   );
+
         }
-      } else {
-        this.openMessageDialog(
-          'E R R O R',
-          'Tenant phone number does not exist.'
-        );
       }
     }
-  }
 
-
-  checkUnitDuplicity(){
+checkUnitDuplicity(){
     for (const i in this.unitsArr) {
       if (this.unitsArr[i].unitName === this.newUnit.unitName) {
         console.log('The unit in list,', this.unitsArr[i].unitName);
@@ -160,27 +168,58 @@ export class AddEditUnitComponent implements OnInit {
 
   }
   /**  Error Message pop up */
-  openMessageDialog(titleMsg, msg) {
+openMessageDialog(titleMsg, msg) {
     this.dialog.open(GenericMessageDialogComponent, {
       data: { title: titleMsg, message: msg },
     });
   }
-  getAllTenants(id) {
-    this.tenants = this.firebaseService.getUsers();
-    this.hideOverLay();
-    console.log('Tenants are, ', this.tenants);
-    for (const t in this.tenants) {
-      if (this.tenants[t].userType.toUpperCase() === 'PERSONAL') {
-        if (this.tenants[t].phoneNumber === id) {
-          console.log('Tenants numbers ', this.tenants[t].phoneNumber);
-          this.isTenant = true;
-          break;
-        } else {
-          this.isTenant = false;
+getAllTenants(id) {
+    this.firebaseService.getUsers().pipe(
+      map((changes) =>
+        changes.map((c) => ({ key: c.payload.key, ...c.payload.val() as  RegistrationModel })))
+    ).subscribe(data => {
+      this.tenants = [];
+      data.forEach((res) => {
+        console.log('User res', res);
+        this.user = new RegistrationModel();
+        if (res.key === res.uid) {
+          this.user = res;
+          if (this.user.userType === 'personal' ) {
+            console.log('User in array', this.user);
+            if (this.user.phoneNumber === id) {
+              this.tenants.push(this.user);
+              const name = this.user.firstName + ' ' + this.user.lastName;
+              this.formControls.tenantName.setValue(name);
+              this.newUnit.tenantName = this.formControls.tenantName.value;
+              this.isTenant = true;
+              console.log('isTenant ', this.isTenant);
+            }
+          }
         }
-      }
-    }
+      });
+    });
   }
+  // getUsers(){
+  //
+  //   this.firebaseService.getUsers().pipe(
+  //     map((changes) =>
+  //       changes.map((c) => ({ key: c.payload.key, ...c.payload.val() as  RegistrationModel })))
+  //   ).subscribe(data => {
+  //     this.tenants = [];
+  //     data.forEach((res) => {
+  //       console.log('User res', res);
+  //       this.user = new RegistrationModel();
+  //       if (res.key === res.uid) {
+  //         this.user = res;
+  //         if (this.user.userType === 'personal' ) {
+  //           this.tenants.push(this.user);
+  //         }
+  //       }
+  //     });
+  //   });
+  //   // console.log('All users, ', this.tenantsArr);
+  //    return this.tenants;
+  // }
 
 
 
