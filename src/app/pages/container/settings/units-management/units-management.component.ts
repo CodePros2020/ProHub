@@ -50,7 +50,9 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     public router: Router,
     public propertyService: PropertyService,
     public unitsService: UnitsService,
-    public overlay: Overlay
+    public overlay: Overlay,
+    public authService: AuthService,
+    public chatMessagesService: ChatMessagesService
   ) {
     this.searchUnitFormGroup();
     this.getLandlordDetails();
@@ -173,6 +175,7 @@ openEditUnitDialog(unit) {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
   createChatMessageInstances(tenantNumber, tenantName, tenantPhotoUrl) {
     this.chatMessage = new ChatMessagesModel();
     this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
@@ -180,7 +183,7 @@ openEditUnitDialog(unit) {
     this.chatMessage.senderName = tenantName;
     this.chatMessage.senderNumber = tenantNumber;
     this.chatMessage.senderPhotoUrl = tenantPhotoUrl;
-    this.chatMessageService.create(this.chatMessage);
+    this.chatMessagesService.create(this.chatMessage);
 
     this.chatMessage = new ChatMessagesModel();
     this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
@@ -188,7 +191,7 @@ openEditUnitDialog(unit) {
     this.chatMessage.senderName = this.landlordName;
     this.chatMessage.senderNumber = this.landlordPhoneNumber;
     this.chatMessage.senderPhotoUrl = this.landlordPhotoUrl;
-    this.chatMessageService.create(this.chatMessage);
+    this.chatMessagesService.create(this.chatMessage);
   }
 
   getLandlordDetails() {
