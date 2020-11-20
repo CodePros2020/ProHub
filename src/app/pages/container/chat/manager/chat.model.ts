@@ -5,7 +5,6 @@ export class ChatModel {
   fullName: string;
   message: string;
   phoneNumber: string;
-  photoUrl: string;
   timeStamp: string;
   imageUrl: string;
 }

@@ -17,6 +17,10 @@ import { LoaderComponent } from '../../../../shared-components/loader/loader.com
 import { Overlay } from '@angular/cdk/overlay';
 import { Observable } from 'rxjs';
 import { GenericMessageDialogComponent } from '../../../../shared-components/genericmessagedialog/genericmessagedialog.component';
+import {ChatMessagesService} from '../../../../shared-services/chat-messages.service';
+import {AuthService} from '../../../../shared-services/auth.service';
+import {ChatMessagesModel} from '../../chat/manager/chat-messages.model';
+
 
 @Component({
   selector: 'app-units-management',
@@ -24,9 +28,13 @@ import { GenericMessageDialogComponent } from '../../../../shared-components/gen
   styleUrls: ['./units-management.component.scss'],
 })
 export class UnitsManagementComponent implements OnInit, AfterViewInit {
+  landlordPhoneNumber;
+  landlordName;
+  landlordPhotoUrl;
   private unitExist = false;
   property: PropertyModel;
   unit: UnitModel;
+  chatMessage: ChatMessagesModel;
   units = [];
   unitsProp = [];
   displayedColumns: string[] = ['unitName', 'tenantId', 'tenantName', 'action'];
@@ -45,6 +53,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     public overlay: Overlay
   ) {
     this.searchUnitFormGroup();
+    this.getLandlordDetails();
     this.property = this.propertyService.GetPropertyInSession();
     this.units = [];
   }
@@ -163,6 +172,34 @@ openEditUnitDialog(unit) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  createChatMessageInstances(tenantNumber, tenantName, tenantPhotoUrl) {
+    this.chatMessage = new ChatMessagesModel();
+    this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
+    this.chatMessage.receiverNumber = this.landlordPhoneNumber;
+    this.chatMessage.senderName = tenantName;
+    this.chatMessage.senderNumber = tenantNumber;
+    this.chatMessage.senderPhotoUrl = tenantPhotoUrl;
+    this.chatMessageService.create(this.chatMessage);
+
+    this.chatMessage = new ChatMessagesModel();
+    this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
+    this.chatMessage.receiverNumber = tenantNumber;
+    this.chatMessage.senderName = this.landlordName;
+    this.chatMessage.senderNumber = this.landlordPhoneNumber;
+    this.chatMessage.senderPhotoUrl = this.landlordPhotoUrl;
+    this.chatMessageService.create(this.chatMessage);
+  }
+
+  getLandlordDetails() {
+    this.landlordPhoneNumber = this.authService.GetUserInSession().phoneNumber;
+    this.landlordName = this.authService.GetUserInSession().firstName + ' ' +
+      this.authService.GetUserInSession().lastName;
+
+    if (this.authService.GetUserInSession().photoURL !== undefined) {
+      this.landlordPhotoUrl = this.authService.GetUserInSession().photoURL;
+    } else {
+      this.landlordPhotoUrl = '';
     }
   }
 }

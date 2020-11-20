@@ -11,7 +11,9 @@
   <div class="row chat-list">
     <div class="col">
       <div class="row" *ngFor="let list of chatList">
-        <app-chat-list-card [chatMessageModel]="list" (click)="getChatMessageId(list.chatMessageId)" class="card-container"></app-chat-list-card>
+        <app-chat-list-card [chatMessageModel]="list"
+                            (click)="getChatMessageId(list.chatMessageId)"
+                            class="card-container"></app-chat-list-card>
       </div>
     </div>
   </div>
