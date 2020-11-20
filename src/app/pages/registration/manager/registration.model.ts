@@ -11,4 +11,5 @@ export class RegistrationModel {
   city: string;
   postalCode: string;
   province: string;
+  role: string;
 }

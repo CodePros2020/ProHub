@@ -39,8 +39,8 @@ export class NewsroomComponent implements OnInit {
 
   public openAddNewsDialog(){
     const dialogFilter = this.dialog.open(AddEditNewsDialogComponent, {
-      height: '680px',
-      width: '1200px',
+      height: '90%',
+      width: '70%',
       data: {news: null, propId: this.propertyId, phoneNumber: this.phoneNumber},
       disableClose: false
     });
@@ -48,8 +48,8 @@ export class NewsroomComponent implements OnInit {
 
   public openEditDialog(newsObject: NewsModel){
     const dialogFilter = this.dialog.open(AddEditNewsDialogComponent, {
-      height: '680px',
-      width: '1200px',
+      height: '90%',
+      width: '70%',
       data: {news: newsObject},
       disableClose: false
     });

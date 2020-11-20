@@ -2,6 +2,6 @@ export class UnitModel {
   unitId: string;
   propId: string;
   tenantId: string;
-  unitName: string;
+  unitName: number;
   tenantName: string;
 }

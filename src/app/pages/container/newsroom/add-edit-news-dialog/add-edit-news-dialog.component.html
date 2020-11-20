@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Add/Edit News</h2>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button mat-dialog-close color="primary" (click)="SaveNews()">Save</button>
+  <button mat-button mat-dialog-close class="edit-btn">Cancel</button>
+  <button mat-button mat-dialog-close class="hide-btn" (click)="SaveNews()">Save</button>
 </mat-dialog-actions>
 <mat-dialog-content>
   <form [formGroup]="newsForm" class="justify-content-center form-style">

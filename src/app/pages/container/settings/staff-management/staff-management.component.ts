@@ -119,7 +119,7 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
   filteredOptions() {
     this.staffList = this.formControls.staffSearch.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value))
+      map((value) => this._filter(value))
     );
   }
 
@@ -127,7 +127,6 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
     const filterValue = value.toLowerCase();
     return this.dataSource.data.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
-
 
   openAddStaffDialog() {
     const dialogRef = this.dialog.open(AddEditStaffComponent, {
@@ -137,12 +136,6 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
       disableClose: true,
       data: {update: false, propId: this.propertyId}
     });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //
-    //     this.getStaff();
-    //   }
-    // });
   }
 
   deleteStaff(element: StaffModel) {
@@ -153,9 +146,7 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.staffService.deleteStaff(element.staffId).then(() => {
-          this.getStaff();
-        });
+        this.staffService.deleteStaff(element.staffId);
       }
     });
   }
@@ -168,11 +159,13 @@ export class StaffManagementComponent implements OnInit, AfterViewInit {
       disableClose: true,
       data: {update: true, staffData: staff, propId: this.propertyId}
     });
-    // dialogFilter.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     this.getStaff();
-    //   }
-    // });
+  }
+  searchStaff(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }
 
