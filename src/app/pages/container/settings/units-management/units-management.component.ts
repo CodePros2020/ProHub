@@ -1,22 +1,22 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {MatSort} from '@angular/material/sort';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
-import {AddEditUnitComponent} from './add-edit-unit/add-edit-unit.component';
-import {PropertyService} from '../../../../shared-services/property.service';
-import {PropertyModel} from '../../property-list/manager/property.model';
-import {GenericDeleteDialogComponent} from '../../../../shared-components/generic-delete-dialog/generic-delete-dialog.component';
-import {UnitModel} from './manager/Unit.model';
-import {UnitsService} from '../../../../shared-services/units.service';
-import {map, startWith} from 'rxjs/operators';
-import {ComponentPortal} from '@angular/cdk/portal';
-import {LoaderComponent} from '../../../../shared-components/loader/loader.component';
-import {Overlay} from '@angular/cdk/overlay';
-import {Observable} from 'rxjs';
-import {GenericMessageDialogComponent} from '../../../../shared-components/genericmessagedialog/genericmessagedialog.component';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { AddEditUnitComponent } from './add-edit-unit/add-edit-unit.component';
+import { PropertyService } from '../../../../shared-services/property.service';
+import { PropertyModel } from '../../property-list/manager/property.model';
+import { GenericDeleteDialogComponent } from '../../../../shared-components/generic-delete-dialog/generic-delete-dialog.component';
+import { UnitModel } from './manager/Unit.model';
+import { UnitsService } from '../../../../shared-services/units.service';
+import { map, startWith } from 'rxjs/operators';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { LoaderComponent } from '../../../../shared-components/loader/loader.component';
+import { Overlay } from '@angular/cdk/overlay';
+import { Observable } from 'rxjs';
+import { GenericMessageDialogComponent } from '../../../../shared-components/genericmessagedialog/genericmessagedialog.component';
 import {ChatMessagesService} from '../../../../shared-services/chat-messages.service';
 import {AuthService} from '../../../../shared-services/auth.service';
 import {ChatMessagesModel} from '../../chat/manager/chat-messages.model';
@@ -25,7 +25,7 @@ import {ChatMessagesModel} from '../../chat/manager/chat-messages.model';
 @Component({
   selector: 'app-units-management',
   templateUrl: './units-management.component.html',
-  styleUrls: ['./units-management.component.scss']
+  styleUrls: ['./units-management.component.scss'],
 })
 export class UnitsManagementComponent implements OnInit, AfterViewInit {
   landlordPhoneNumber;
@@ -36,6 +36,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
   unit: UnitModel;
   chatMessage: ChatMessagesModel;
   units = [];
+  unitsProp = [];
   displayedColumns: string[] = ['unitName', 'tenantId', 'tenantName', 'action'];
   dataSource;
   public unitsList: Observable<UnitModel[]>;
@@ -43,16 +44,16 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
-  constructor(public dialog: MatDialog,
-              private formBuilder: FormBuilder,
-              public router: Router,
-              public propertyService: PropertyService,
-              public unitsService: UnitsService,
-              public chatMessageService: ChatMessagesService,
-              public authService: AuthService,
-              public overlay: Overlay,
-              ) {
+  constructor(
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    public router: Router,
+    public propertyService: PropertyService,
+    public unitsService: UnitsService,
+    public overlay: Overlay,
+    public authService: AuthService,
+    public chatMessagesService: ChatMessagesService
+  ) {
     this.searchUnitFormGroup();
     this.getLandlordDetails();
     this.property = this.propertyService.GetPropertyInSession();
@@ -63,18 +64,20 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
   }
 
   overlayRef = this.overlay.create({
-    positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
-    hasBackdrop: true
+    positionStrategy: this.overlay
+      .position()
+      .global()
+      .centerHorizontally()
+      .centerVertically(),
+    hasBackdrop: true,
   });
 
   ngOnInit(): void {
     this.unit = new UnitModel();
     this.getUnits();
     this.filteredOptions();
-
   }
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
   showOverlay() {
     this.overlayRef.attach(new ComponentPortal(LoaderComponent));
   }
@@ -84,122 +87,95 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
   }
   searchUnitFormGroup() {
     this.unitListForm = this.formBuilder.group({
-      unitSearch: ['']
+      unitSearch: [''],
     });
   }
 
   deleteUnit(element: UnitModel) {
     const dialogRef = this.dialog.open(GenericDeleteDialogComponent, {
       width: '500px',
-      data: { currentDialog: element.unitName}
+      data: { currentDialog: element.unitName },
     });
 
-    dialogRef.afterClosed().subscribe(res => {
+    dialogRef.afterClosed().subscribe((res) => {
       if (res) {
         this.unitsService.deleteUnit(element.unitId);
-        this.getUnits();
       }
     });
   }
   getUnits() {
-    // this.units = [];
     this.showOverlay();
-    this.unitsService.getAllUnits().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({key: c.payload.key, ...c.payload.val()})
-        ))
-    ).subscribe(data => {
-      this.units = [];
-      data.forEach(res => {
-        if (res.propId === this.property.propId) {
-          this.unit = new UnitModel();
-          this.unit.unitId = res.unitId;
-          this.unit.unitName = res.unitName;
-          this.unit.tenantId = res.tenantId;
-          this.unit.propId = res.propId;
-          this.unit.tenantName = res.tenantName;
-          this.units.push(this.unit);
-        }
-      });
-      console.log('Units List: ', this.units);
-      this.dataSource = new MatTableDataSource(this.units);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this. hideOverLay();
-    });
+    this.unitsService
+      .getAllUnits()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({ key: c.payload.key, ...c.payload.val() }))
+        )
+      )
+      .subscribe((data) => {
+        this.units = [];
+        data.forEach((res) => {
+          if (res.propId === this.property.propId) {
+            this.unit = new UnitModel();
+            this.unit.unitId = res.unitId;
+            this.unit.unitName = res.unitName;
+            this.unit.tenantId = res.tenantId;
+            this.unit.propId = res.propId;
+            this.unit.tenantName = res.tenantName;
+            this.units.push(this.unit);
+          }
+        });
+       // this.units = this.unitsService.getAllUnits();
+    // for (const i in this.units) {
+    //   if (this.property.propId === this.units[i].propId) {
+    //     this.unitsProp.push(this.units[i]);
+    //   }
+    // }
+        console.log('Units List: ', this.units);
+        this.dataSource = new MatTableDataSource(this.units);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.hideOverLay();
+       });
   }
 
-  filteredOptions() {
+filteredOptions() {
     this.unitsList = this.formControls.unitSearch.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value))
+      map((value) => this._filter(value))
     );
   }
 
   private _filter(value): UnitModel[] {
     const filterValue = value.toLowerCase();
-    return this.dataSource.data.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.dataSource.data.filter(
+      (option) => option.name.toLowerCase().indexOf(filterValue) === 0
+    );
   }
-  openAddUnitDialog() {
+openAddUnitDialog() {
     const dialogFilter = this.dialog.open(AddEditUnitComponent, {
       height: '80%',
       width: '50%',
       autoFocus: false,
-      data: {update: false, propId: this.property.propId}
+      data: { update: false, propId: this.property.propId, unitsList: this.units },
     });
-
-    dialogFilter.afterClosed().subscribe(result => {
-      if (result) {
-        for (const i in this.units) {
-          if (this.units[i].unitName === result.unitName) {
-            console.log('The unit in list,' , this.units[i].unitName);
-            this.unitExist = true;
-            break;
-          } else {
-            this.unitExist = false;
-          }
-        }
-        if (!this.unitExist) {
-          this.units = [];
-          this.units.push(result);
-          this.unitsService.addUnit(result);
-          // this.createChatMessageInstances(result.tenantId, result.tenantName, '');
-          this.openMessageDialog('S U C C E S S', 'Unit added successfully!');
-          this.getUnits();
-        } else {
-          this.openMessageDialog('E R R O R', 'Unit with this name already exist.');
-        }
-      }
-    });
-}
-
-  /**  Error Message pop up */
-  openMessageDialog(titleMsg, msg) {
-    this.dialog.open(GenericMessageDialogComponent,
-      {
-        data: {title: titleMsg, message: msg}
-      });
   }
-
-  openEditUnitDialog(unit) {
+openEditUnitDialog(unit) {
     const dialogFilter = this.dialog.open(AddEditUnitComponent, {
       height: '80%',
       width: '50%',
       autoFocus: false,
-      data: {update: true, unitData : unit}
-    });
-    dialogFilter.afterClosed().subscribe(result => {
-      if (result) {
-        this.units.push(result);
-        this.unitsService.updateUnit(result.unitId, result).then( res => {
-          console.log('Updated Unit ', res);
-          this.getUnits();
-        });
-      }
+      data: { update: true, unitData: unit, unitsList: this.units },
     });
   }
 
+  searchUnit(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
   createChatMessageInstances(tenantNumber, tenantName, tenantPhotoUrl) {
     this.chatMessage = new ChatMessagesModel();
     this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
@@ -207,7 +183,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     this.chatMessage.senderName = tenantName;
     this.chatMessage.senderNumber = tenantNumber;
     this.chatMessage.senderPhotoUrl = tenantPhotoUrl;
-    this.chatMessageService.create(this.chatMessage);
+    this.chatMessagesService.create(this.chatMessage);
 
     this.chatMessage = new ChatMessagesModel();
     this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
@@ -215,7 +191,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     this.chatMessage.senderName = this.landlordName;
     this.chatMessage.senderNumber = this.landlordPhoneNumber;
     this.chatMessage.senderPhotoUrl = this.landlordPhotoUrl;
-    this.chatMessageService.create(this.chatMessage);
+    this.chatMessagesService.create(this.chatMessage);
   }
 
   getLandlordDetails() {
@@ -231,13 +207,12 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
   }
 }
 
-
 export interface UNIT {
-unitId: string;
-propId: string;
-tenantId: string;
+  unitId: string;
+  propId: string;
+  tenantId: string;
   tenantName: string;
- unitName: string;
+  unitName: string;
 }
 const UNITS_LIST: UNIT[] = [
   {
@@ -253,6 +228,5 @@ const UNITS_LIST: UNIT[] = [
     tenantId: '2020',
     tenantName: 'John Doe',
     unitName: 'Suite',
-  }
-
+  },
 ];

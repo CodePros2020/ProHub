@@ -4,7 +4,6 @@ import {AngularFireDatabase} from '@angular/fire/database';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {UnitModel} from '../pages/container/settings/units-management/manager/Unit.model';
-import {map} from 'rxjs/operators';
 import {PropertyService} from './property.service';
 
 @Injectable({
@@ -26,8 +25,25 @@ export class UnitsService {
   }
 
   getAllUnits(): Observable<any> {
+    // this.allUnits = [];
     this.units = this.db.list('units').snapshotChanges();
     return this.units;
+    // this.db.list('/units').snapshotChanges().subscribe(res => {
+    //   res.forEach(doc => {
+    //     this.allUnits.push(doc.payload.val());
+    //   });
+    // });
+    // return this.allUnits;
+
+
+    // this.allUnits = [];
+    // this.db.list('/units').snapshotChanges().subscribe(res => {
+    //   res.forEach(doc => {
+    //     this.allUnits.push(doc.payload.val());
+    //   });
+    // });
+    // // @ts-ignore
+    // return this.allUnits;
   }
 
   deleteUnit(unitId: string): Promise<void> {

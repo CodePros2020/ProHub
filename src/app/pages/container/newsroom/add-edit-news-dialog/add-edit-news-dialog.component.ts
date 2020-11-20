@@ -73,8 +73,8 @@ export class AddEditNewsDialogComponent implements OnInit {
 
   public openAddAttachDialog(){
     const dialogFilter = this.dialog.open(AddAttachmentDialogComponent, {
-      height: '30%',
-      width: '30%',
+      height: '40%',
+      width: '50%',
       autoFocus: false,
     });
     dialogFilter.afterClosed().subscribe(result => {
@@ -86,8 +86,8 @@ export class AddEditNewsDialogComponent implements OnInit {
 
   public openAddImageDialog(){
     const dialogFilter = this.dialog.open(AddImageDialogComponent, {
-      height: '30%',
-      width: '30%',
+      height: '40%',
+      width: '50%',
       autoFocus: false,
     });
     dialogFilter.afterClosed().subscribe(result => {
