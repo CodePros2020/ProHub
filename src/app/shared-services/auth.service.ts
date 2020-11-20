@@ -92,6 +92,10 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('sessionUser'));
   }
 
+  SetUserInSession(user) {
+    localStorage.setItem('sessionUser', JSON.stringify(user));
+  }
+
   // Sign up with email/password
   SignUp(email, password) {
     return this.firebaseAuth
