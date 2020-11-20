@@ -24,6 +24,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class ChatRoomComponent implements OnInit, OnChanges {
 
   @Input() chatMessageId;
+  @Input() chatMessageName;
 
   @ViewChild('chatContent') chatContent: ElementRef;
   scrollTop: number = null;
@@ -80,6 +81,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           this.chats.push(this.chatModel);
 
           if (this.chatModel.phoneNumber !== this.loggedInUserPhoneNumber) {
+
             if (this.chatModel.message !== undefined) {
               this.chatsToBeUpdatedToChatSeen.push(this.chatModel);
             }
@@ -88,7 +90,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               this.chatsWithImagesToBeUpdatedToChatSeen.push(this.chatModel);
             }
           }
-
         });
 
         console.log('list of chats', this.chats);
