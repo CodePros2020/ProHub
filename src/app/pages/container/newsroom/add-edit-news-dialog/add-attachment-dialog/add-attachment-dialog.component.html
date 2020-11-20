@@ -1,1 +1,31 @@
-<p>add-attachment-dialog works!</p>
+<div class="image-upload-container">
+
+  <div class="row title-bg">
+    <div class="col justify-content-between">
+      <span class="title">Upload Attachment</span>
+      <mat-icon class="close" (click)="close()">close</mat-icon>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="row">
+      <div class="col btn-div div-flex justify-content-between">
+        <button class="btn-select-image" mat-raised-button (click)="openAddFilesDialog()">
+          <mat-icon>add_photo_alternate</mat-icon>
+          Choose File
+          <input #fileSelectInputDialog hidden type="file" (change)="upload($event)" accept="." />
+        </button>
+        <div *ngIf="isUploaded">
+          <p>You have selected the file, please upload.</p>
+        </div>
+        <button class="btn-send-image" mat-raised-button (click)="sendFile()">Upload File</button>
+      </div>
+    </div>
+  </div>
+</div>
