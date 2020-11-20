@@ -28,6 +28,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
   property: PropertyModel;
   unit: UnitModel;
   units = [];
+  unitsProp = [];
   displayedColumns: string[] = ['unitName', 'tenantId', 'tenantName', 'action'];
   dataSource;
   public unitsList: Observable<UnitModel[]>;
@@ -88,7 +89,6 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
         this.unitsService.deleteUnit(element.unitId);
-        this.getUnits();
       }
     });
   }
@@ -114,15 +114,21 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
             this.units.push(this.unit);
           }
         });
+       // this.units = this.unitsService.getAllUnits();
+    // for (const i in this.units) {
+    //   if (this.property.propId === this.units[i].propId) {
+    //     this.unitsProp.push(this.units[i]);
+    //   }
+    // }
         console.log('Units List: ', this.units);
         this.dataSource = new MatTableDataSource(this.units);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.hideOverLay();
-      });
+       });
   }
 
-  filteredOptions() {
+filteredOptions() {
     this.unitsList = this.formControls.unitSearch.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value))
@@ -135,64 +141,29 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
       (option) => option.name.toLowerCase().indexOf(filterValue) === 0
     );
   }
-  openAddUnitDialog() {
+openAddUnitDialog() {
     const dialogFilter = this.dialog.open(AddEditUnitComponent, {
       height: '80%',
       width: '50%',
       autoFocus: false,
-      data: { update: false, propId: this.property.propId },
-    });
-
-    dialogFilter.afterClosed().subscribe((result) => {
-      if (result) {
-        for (const i in this.units) {
-          if (this.units[i].unitName === result.unitName) {
-            console.log('The unit in list,', this.units[i].unitName);
-            this.unitExist = true;
-            break;
-          } else {
-            this.unitExist = false;
-          }
-        }
-        if (!this.unitExist) {
-          this.units = [];
-          this.units.push(result);
-          this.unitsService.addUnit(result);
-          this.openMessageDialog('S U C C E S S', 'Unit added successfully!');
-          this.getUnits();
-        } else {
-          this.openMessageDialog(
-            'E R R O R',
-            'Unit with this name already exist.'
-          );
-        }
-      }
+      data: { update: false, propId: this.property.propId, unitsList: this.units },
     });
   }
-
-  /**  Error Message pop up */
-  openMessageDialog(titleMsg, msg) {
-    this.dialog.open(GenericMessageDialogComponent, {
-      data: { title: titleMsg, message: msg },
-    });
-  }
-
-  openEditUnitDialog(unit) {
+openEditUnitDialog(unit) {
     const dialogFilter = this.dialog.open(AddEditUnitComponent, {
       height: '80%',
       width: '50%',
       autoFocus: false,
-      data: { update: true, unitData: unit },
+      data: { update: true, unitData: unit, unitsList: this.units },
     });
-    dialogFilter.afterClosed().subscribe((result) => {
-      if (result) {
-        this.units.push(result);
-        this.unitsService.updateUnit(result.unitId, result).then((res) => {
-          console.log('Updated Unit ', res);
-          this.getUnits();
-        });
-      }
-    });
+  }
+
+  searchUnit(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }
 

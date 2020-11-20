@@ -3,7 +3,7 @@
   <div class="dialog-content">
     <mat-toolbar>
       <app-prohub-logo style="margin-left: 30px" size="small"></app-prohub-logo>
-      <span id="title-message text-center">ADD/EDIT Unit</span>
+      <span id="title-message text-center">ADD/EDIT UNIT</span>
       <a id="close-btn" (click)="close()">
         <mat-icon matSuffix>close</mat-icon>
       </a>
@@ -12,9 +12,15 @@
       <div class="row justify-content-center">
         <div class="col-8">
           <mat-form-field class="col-md-12" appearance="outline">
-            <mat-label>Unit Name <span class="star">*</span></mat-label>
-            <input matInput placeholder="e.g Suite" formControlName="unitName">
-            <mat-error *ngIf="this.formControls.unitName.invalid">Please enter unit name</mat-error>
+            <mat-label>Unit Number <span class="star">*</span></mat-label>
+            <input matInput class="quantity" placeholder="e.g Suite" formControlName="unitNumber" type="number">
+<!--            <mat-label>Unit Number <span class="star">*</span></mat-label>-->
+<!--            <div class="col-12 def-number-input number-input safari_only" style="padding: 0 !important; ">-->
+<!--              <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>-->
+<!--              <input matInput class="quantity" min="0" name="quantity" value="1" type="number" formControlName="unitNumber">-->
+<!--              <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>-->
+<!--            </div>-->
+            <mat-error *ngIf="this.formControls.unitNumber.invalid">Please enter correct unit number</mat-error>
           </mat-form-field>
         </div>
         <div class="col-8">
