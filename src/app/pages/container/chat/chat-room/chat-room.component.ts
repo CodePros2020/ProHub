@@ -190,7 +190,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   generatePdf(){
 
-    let xxx = [];
     this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
       map(chatList =>
         chatList.map(c =>
@@ -212,7 +211,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           // BODY
           // HEADER
           {
-            text: 'Sadia Rashid',
+            text: 'Chat History with Sadia Rashid',
             style: 'h3'
           },
           chatMessage
@@ -249,57 +248,40 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   formatChatMessage(chat:ChatModel){
-    // return [
-    //   {
-    //     text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
-    //       + chat.fullName + ":"
-    //     + (chat.message ? chat.message : chat.imageUrl),
-    //     alignment: 'left',
-    //   },
-    //   {
-    //     text: "\n",
-    //   }
-    // ]
-
-    console.log(chat.message)
-    if(chat.message){
-      return [
-        {
-          text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
-            + chat.fullName + ":" + chat.message,
-          alignment: 'left',
-        },
-        {
-          text: "\n",
-        }
-      ]
-    } else {
-      return [
-        // {
-        //   text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
-        //     + chat.fullName + ":" + chat.imageUrl,
-        //   alignment: 'left',
-        // },
-        // https://firebasestorage.googleapis.com/v0/b/prohub-410f4.appspot.com/o/chat%2Fyq020zpvqc?alt=media&token=3bef9cd7-d81a-47e4-9b29-9f2a9cd3f131
-        // https://firebasestorage.googleapis.com/v0/b/prohub-410f4.appspot.com/o/chat%2Fyq020zpvqc?alt=media&token=3bef9cd7-d81a-47e4-9b29-9f2a9cd3f131
-        {
-          image: chat.imageUrl,
-          link: chat.imageUrl
-        },
-        {
-          text: "\n",
-        }
-      ]
-    }
-
+    return [
+      {
+        text: [
+          // message header
+          {
+            text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
+              + chat.fullName + ": ",
+            alignment: 'left',
+          },
+          // message/image url
+          chat.message ? {text: chat.message} : {
+            text: "[Image]",
+            link: chat.imageUrl,
+            decoration: "underline",
+            style: { color: "blue" }
+          },
+        ],
+      },
+      {
+        text: "\n",
+      }
+    ]
   }
 
   formatDateTime(dateString) {
     let date: Date = new Date(dateString);
-    const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let formatted_date = date.getMonth() + "/" + date.getDate() +  "/" + date.getFullYear()
-    let formatted_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-    return formatted_date + " " + formatted_time;
+    return date.toLocaleDateString("en-GB", { // you can skip the first argument
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
   }
 
 }
