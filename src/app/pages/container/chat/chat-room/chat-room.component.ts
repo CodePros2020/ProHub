@@ -14,6 +14,8 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {ChatMessagesService} from "../../../../shared-services/chat-messages.service";
 import {ChatMessagesModel} from "../manager/chat-messages.model";
 import {AngularFireList} from "@angular/fire/database/interfaces";
+import {PropertyService} from "../../../../shared-services/property.service";
+import {PropertyModel} from "../../property-list/manager/property.model";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -52,6 +54,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               private chatService: ChatService,
               private chatMessageService: ChatMessagesService,
               private authService: AuthService,
+              private propertyService: PropertyService,
               public datePipe: DatePipe) {
     this.loggedInUserPhoneNumber = this.authService.GetUserInSession().phoneNumber;
     this.createChatFormGroup();
@@ -189,6 +192,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   generatePdf(){
+    // let prop: PropertyModel =  await this.propertyService.GetPropertyInSession();
 
     this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
       map(chatList =>
@@ -208,10 +212,26 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             text: 'PROHUB - Chat History',
             style: 'header'
           },
+          // {
+          //   content:[
+          //     {
+          //       text: "Property Name: " + prop.name,
+          //     },
+          //     {
+          //       text: "Unit Name: ",
+          //     },
+          //     {
+          //       text: "Address: " + prop.streetLine1,
+          //     },
+          //     {
+          //       text: "Landlord:",
+          //     }
+          //   ]
+          // },
           // BODY
           // HEADER
           {
-            text: 'Chat History with Sadia Rashid',
+            text: 'Chat with ' + this.chatMessageName,
             style: 'h3'
           },
           chatMessage
@@ -226,7 +246,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           h3: {
             fontSize: 16,
             bold: true,
-            margin: [0, 20, 0, 10],
+            margin: [0, 20, 10, 20],
             decoration: 'underline'
           },
           name: {
@@ -284,4 +304,29 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     });
   }
 
+  getBase64ImageFromURL(url) {
+    return new Promise((resolve, reject) => {
+      let img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+
+      img.onload = () => {
+        let canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        let dataURL = canvas.toDataURL("image/png");
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
+    });
+  }
 }
