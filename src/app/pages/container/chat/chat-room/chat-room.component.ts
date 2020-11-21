@@ -188,109 +188,118 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     });
   }
 
-
   generatePdf(){
 
-    let documentDefinition = {
-      info: {
-        title: 'PROHUB - Chat History',
-        author: 'CodePros',
-        subject: 'Chat history'
-      },
-      content: this.generateContent(),
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          margin: [0, 20, 0, 10],
-          decoration: 'underline'
-        },
-        h3: {
-          fontSize: 16,
-          bold: true,
-          margin: [0, 20, 0, 10],
-          decoration: 'underline'
-        },
-        name: {
-          fontSize: 16,
-          bold: true
-        },
-        sign: {
-          margin: [0, 50, 0, 10],
-          alignment: 'right',
-          italics: true
-        },
-      }
-    };
-    console.log(documentDefinition);
-    pdfMake.createPdf(documentDefinition).download();
-  }
-
-  generateContent() {
-    return [
-      // HEADER
-      {
-        text: 'PROHUB - Chat History',
-        style: 'header'
-      },
-      //
-      {
-        columns : [
-          {
-            text: "columns",
-            alignment: 'right',
-          },
-          {
-            text: "columns",
-            alignment: 'right',
-          }
-        ]
-      },
-      // BODY
-      // HEADER
-      {
-        text: 'Sadia Rashid',
-        style: 'h3'
-      },
-      this.generateChatMessageObjects()
-    ]
-  }
-  generateTemplate(){
-    return [{ "text": "!?!?!?" },{"text": ">>>>>>>"}]
-  }
-
-  generateChatMessageObjects(){
-
     let xxx = [];
-
     this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
-        map(chatList =>
+      map(chatList =>
         chatList.map(c =>
-//          ({key: c.payload.key, ...c.payload.val()})
-          c.payload.val()
+          this.formatChatMessage(c.payload.val())
         ))
-    ).forEach(cm =>{
-      cm.forEach(x=>{
-        let p =  [
-            {
-              text: x.fullName,
-              alignment: 'left',
-            },
-            {
-              text: x.timeStamp,
-              alignment: 'right',
-            },
-            {
-              text: x.message,
-              alignment: 'left',
-            },
-          ]
-        xxx.push(p)
-      })
+    ).subscribe(chatMessage=>{
+      let documentDefinition = {
+        info: {
+          title: 'PROHUB - Chat History',
+          author: 'CodePros',
+          subject: 'Chat history'
+        },
+        content: [
+          // HEADER
+          {
+            text: 'PROHUB - Chat History',
+            style: 'header'
+          },
+          // BODY
+          // HEADER
+          {
+            text: 'Sadia Rashid',
+            style: 'h3'
+          },
+          chatMessage
+        ],
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            margin: [0, 20, 0, 10],
+            decoration: 'underline'
+          },
+          h3: {
+            fontSize: 16,
+            bold: true,
+            margin: [0, 20, 0, 10],
+            decoration: 'underline'
+          },
+          name: {
+            fontSize: 16,
+            bold: true
+          },
+          sign: {
+            margin: [0, 50, 0, 10],
+            alignment: 'right',
+            italics: true
+          },
+        }
+      };
+      console.log(documentDefinition);
+      pdfMake.createPdf(documentDefinition).download();
 
     })
 
-    return [{ "text": "!?!?!?" },{"text": ">>>>>>>"}]
+  }
+
+  formatChatMessage(chat:ChatModel){
+    // return [
+    //   {
+    //     text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
+    //       + chat.fullName + ":"
+    //     + (chat.message ? chat.message : chat.imageUrl),
+    //     alignment: 'left',
+    //   },
+    //   {
+    //     text: "\n",
+    //   }
+    // ]
+
+    console.log(chat.message)
+    if(chat.message){
+      return [
+        {
+          text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
+            + chat.fullName + ":" + chat.message,
+          alignment: 'left',
+        },
+        {
+          text: "\n",
+        }
+      ]
+    } else {
+      return [
+        // {
+        //   text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
+        //     + chat.fullName + ":" + chat.imageUrl,
+        //   alignment: 'left',
+        // },
+        // https://firebasestorage.googleapis.com/v0/b/prohub-410f4.appspot.com/o/chat%2Fyq020zpvqc?alt=media&token=3bef9cd7-d81a-47e4-9b29-9f2a9cd3f131
+        // https://firebasestorage.googleapis.com/v0/b/prohub-410f4.appspot.com/o/chat%2Fyq020zpvqc?alt=media&token=3bef9cd7-d81a-47e4-9b29-9f2a9cd3f131
+        {
+          image: chat.imageUrl,
+          link: chat.imageUrl
+        },
+        {
+          text: "\n",
+        }
+      ]
+    }
+
+  }
+
+  formatDateTime(dateString) {
+    let date: Date = new Date(dateString);
+    const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let formatted_date = date.getMonth() + "/" + date.getDate() +  "/" + date.getFullYear()
+    let formatted_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+    return formatted_date + " " + formatted_time;
   }
 
 }
