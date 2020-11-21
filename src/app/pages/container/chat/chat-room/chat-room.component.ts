@@ -9,6 +9,15 @@ import {AuthService} from '../../../../shared-services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ImageUploadDialogComponent} from './image-upload-dialog/image-upload-dialog.component';
 
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {ChatMessagesService} from "../../../../shared-services/chat-messages.service";
+import {ChatMessagesModel} from "../manager/chat-messages.model";
+import {AngularFireList} from "@angular/fire/database/interfaces";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+
+
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -41,6 +50,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   constructor(private formBuilder: FormBuilder,
               private dialog: MatDialog,
               private chatService: ChatService,
+              private chatMessageService: ChatMessagesService,
               private authService: AuthService,
               public datePipe: DatePipe) {
     this.loggedInUserPhoneNumber = this.authService.GetUserInSession().phoneNumber;
@@ -177,4 +187,110 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       }
     });
   }
+
+
+  generatePdf(){
+
+    let documentDefinition = {
+      info: {
+        title: 'PROHUB - Chat History',
+        author: 'CodePros',
+        subject: 'Chat history'
+      },
+      content: this.generateContent(),
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 20, 0, 10],
+          decoration: 'underline'
+        },
+        h3: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 20, 0, 10],
+          decoration: 'underline'
+        },
+        name: {
+          fontSize: 16,
+          bold: true
+        },
+        sign: {
+          margin: [0, 50, 0, 10],
+          alignment: 'right',
+          italics: true
+        },
+      }
+    };
+    console.log(documentDefinition);
+    pdfMake.createPdf(documentDefinition).download();
+  }
+
+  generateContent() {
+    return [
+      // HEADER
+      {
+        text: 'PROHUB - Chat History',
+        style: 'header'
+      },
+      //
+      {
+        columns : [
+          {
+            text: "columns",
+            alignment: 'right',
+          },
+          {
+            text: "columns",
+            alignment: 'right',
+          }
+        ]
+      },
+      // BODY
+      // HEADER
+      {
+        text: 'Sadia Rashid',
+        style: 'h3'
+      },
+      this.generateChatMessageObjects()
+    ]
+  }
+  generateTemplate(){
+    return [{ "text": "!?!?!?" },{"text": ">>>>>>>"}]
+  }
+
+  generateChatMessageObjects(){
+
+    let xxx = [];
+
+    this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
+        map(chatList =>
+        chatList.map(c =>
+//          ({key: c.payload.key, ...c.payload.val()})
+          c.payload.val()
+        ))
+    ).forEach(cm =>{
+      cm.forEach(x=>{
+        let p =  [
+            {
+              text: x.fullName,
+              alignment: 'left',
+            },
+            {
+              text: x.timeStamp,
+              alignment: 'right',
+            },
+            {
+              text: x.message,
+              alignment: 'left',
+            },
+          ]
+        xxx.push(p)
+      })
+
+    })
+
+    return [{ "text": "!?!?!?" },{"text": ">>>>>>>"}]
+  }
+
 }

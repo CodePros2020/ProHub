@@ -2,7 +2,7 @@
   <ng-container *ngIf="chatMessageId !== undefined">
     <div class="chat-info-content d-flex justify-content-between">
       <span style="font-size: large">{{chatMessageName}}</span>
-      <mat-icon>assignment_returned</mat-icon>
+      <mat-icon (click)="generatePdf()">assignment_returned</mat-icon>
     </div>
     <div #chatContent [scrollTop]="scrollTop" class="chat-room-content">
       <div class="row" *ngFor="let chat of chats">
