@@ -192,7 +192,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   generatePdf(){
-    // let prop: PropertyModel =  await this.propertyService.GetPropertyInSession();
+
 
     this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
       map(chatList =>
@@ -200,6 +200,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           this.formatChatMessage(c.payload.val())
         ))
     ).subscribe(chatMessage=>{
+      let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
+
       let documentDefinition = {
         info: {
           title: 'PROHUB - Chat History',
@@ -212,22 +214,49 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             text: 'PROHUB - Chat History',
             style: 'header'
           },
-          // {
-          //   content:[
-          //     {
-          //       text: "Property Name: " + prop.name,
-          //     },
-          //     {
-          //       text: "Unit Name: ",
-          //     },
-          //     {
-          //       text: "Address: " + prop.streetLine1,
-          //     },
-          //     {
-          //       text: "Landlord:",
-          //     }
-          //   ]
-          // },
+          [
+            // PROPERTY NAME
+            {
+              text: [
+                { text: "Property Name: ", style: { bold: true, fontSize: 14}},
+                { text: prop.name, style: { bold: false, fontSize: 14} }
+              ],
+              style: {marginBottom: 10 }
+            },
+            // ADDRESS
+            {
+              text: [
+                { text: "Address: ",
+                  style: { bold: true, fontSize: 14, marginBottom: 5 },
+                },
+                { text: `${prop.streetLine1}, ` +
+                    (prop.streetLine2 ? `${prop.streetLine2}, ` : "") +
+                    `${prop.city}, ${prop.province}, ${prop.postalCode}`,
+                  style: { bold: false, fontSize: 14, marginBottom: 5 },
+                },
+              ],
+              style: {marginBottom: 10 }
+              },
+            // UNIT NAME
+            {
+              text: [
+                {text: "Unit Name: ", style: { bold: true, fontSize: 14  }},
+                {text: "", style: { bold: false, fontSize: 14}}
+              ],
+              style: {marginBottom: 10 }
+            },
+            {
+              text: [
+                {text: "Tenant Name: ", style: { bold: true, fontSize: 14  }},
+                {text: this.chatMessageName, style: { bold: false, fontSize: 14}}
+              ],
+              style: {marginBottom: 10 }
+            },
+            {
+              text: "Landlord:",
+              style: { bold: true, fontSize: 14 },
+            },
+          ],
           // BODY
           // HEADER
           {
@@ -238,7 +267,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         ],
         styles: {
           header: {
-            fontSize: 18,
+            fontSize: 20,
             bold: true,
             margin: [0, 20, 0, 10],
             decoration: 'underline'
