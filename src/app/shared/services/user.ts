@@ -7,4 +7,3 @@ export interface User {
   phoneNumber: string;
   // userType: string;
 }
-

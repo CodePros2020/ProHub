@@ -1,5 +1,9 @@
 <div class="chat-room-container">
   <ng-container *ngIf="chatMessageId !== undefined">
+    <div class="chat-info-content d-flex justify-content-between">
+      <span style="font-size: large">{{chatMessageName}}</span>
+      <mat-icon>assignment_returned</mat-icon>
+    </div>
     <div #chatContent [scrollTop]="scrollTop" class="chat-room-content">
       <div class="row" *ngFor="let chat of chats">
         <div class="chat-message">
@@ -12,12 +16,6 @@
               <span>{{chat.fullName}}</span>
               <span>{{chat.timeStamp | date : 'short' }}</span>
             </div>
-
-
-
-<!--            <span class="msg-name" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber">{{chat.timeStamp | date : 'short' }}{{chat.fullName}}</span>-->
-<!--            <span class="msg-name" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber">{{chat.fullName}}</span>-->
-
 
             <ng-container *ngIf="chat.message !== undefined">
               <p class="msg" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber" text-wrap>{{chat.message}}</p>
@@ -58,7 +56,7 @@
   <ng-container *ngIf="chatMessageId === undefined">
     <div class="row default-container">
       <div class="col-sm-12 my-auto text-center" style="font-weight: bolder; font-size: x-large">
-        Please choose a message from the list.
+        <img src="assets/logo-dark.png" alt="Logo of ProHub" width="200">
       </div>
     </div>
   </ng-container>
