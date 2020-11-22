@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../shared-components/error-dialog/error-dialog.component';
 import { FirebaseService } from './firebase.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,6 @@ export class AuthService {
     public dialog: MatDialog, // NgZone service to remove outside scope warning
     private http: HttpClient
   ) {
-
     /* Saving user data in localstorage when
     logged in and setting up null when logged out */
     this.firebaseAuth.authState.subscribe((user) => {
@@ -50,10 +49,13 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         console.log('User Received =>', result.user);
-        this.firebaseService.getUser(result.user.uid).subscribe(res => {
+        this.firebaseService.getUser(result.user.uid).subscribe((res) => {
           localStorage.setItem('sessionUser', JSON.stringify(res));
           this.loggedInUser = res;
-          if (result.user.emailVerified === true && this.loggedInUser.phoneNumber === undefined) {
+          if (
+            result.user.emailVerified === true &&
+            this.loggedInUser.phoneNumber === undefined
+          ) {
             this.SetUserData(result.user);
             this.router.navigate(['register']);
           } else if (result.user.emailVerified === false) {
@@ -70,9 +72,12 @@ export class AuthService {
                   '. Please verify email to login.',
               },
             });
-          } else if (result.user.emailVerified === true && this.loggedInUser.phoneNumber !== undefined) {
+          } else if (
+            result.user.emailVerified === true &&
+            this.loggedInUser.phoneNumber !== undefined
+          ) {
             localStorage.setItem('user', JSON.stringify(this.loggedInUser));
-            if ((this.loggedInUser.userType.toUpperCase() === 'BUSINESS')) {
+            if (this.loggedInUser.userType.toUpperCase() === 'BUSINESS') {
               this.router.navigate(['container/property-list']);
             } else {
               this.router.navigate(['container/dashboard']);
@@ -114,7 +119,6 @@ export class AuthService {
   // Send email verification when new user sign up
   SendVerificationMail() {
     return this.firebaseAuth.currentUser.then((u) =>
-
       u.sendEmailVerification().then(() => {
         this.SetUserData(u);
         const dialog = this.dialog.open(VerifyEmailAddressComponent, {
@@ -154,8 +158,7 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      phoneNumber: user.phoneNumber || null
-      // userType: user.userType
+      phoneNumber: user.phoneNumber || null,
     };
     return userRef.set(userData);
     // return userRef.set(userData, {

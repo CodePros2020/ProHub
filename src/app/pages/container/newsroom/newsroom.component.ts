@@ -15,6 +15,7 @@ import {AuthService} from '../../../shared-services/auth.service';
 })
 export class NewsroomComponent implements OnInit {
   panelOpenState = false;
+  allNewsList: NewsModel[];
   newsList: NewsModel[];
   news: NewsModel;
   propertyId: string;
@@ -34,6 +35,7 @@ export class NewsroomComponent implements OnInit {
       })))
     ).subscribe(data => {
       this.newsList = data.reverse().filter(a => !a.hideFlag).filter(a => a.propId === this.propertyId);
+      this.allNewsList = this.newsList;
     });
   }
 
@@ -62,5 +64,11 @@ export class NewsroomComponent implements OnInit {
       data: {news: newsObject},
       disableClose: false
     });
+  }
+
+  public searchNews(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.newsList = this.allNewsList.filter
+      (a => (a.newsTitle.toLowerCase().includes(filterValue) || a.content.toLowerCase().includes(filterValue)));
   }
 }
