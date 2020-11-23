@@ -4,7 +4,12 @@
       <div class="col">
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-icon matPrefix>search</mat-icon>
-          <input matInput placeholder="Search" formControlName="chatSearch" type="text">
+          <label>
+            <input matInput placeholder="Search" formControlName="chatSearch" type="text" [matAutocomplete]="auto" (keyup)="applyFilter($event)">
+          </label>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let chat of filteredOptions" [value]="chat.senderName">{{ chat.senderName }}</mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
     </div>

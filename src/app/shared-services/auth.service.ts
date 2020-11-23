@@ -150,8 +150,8 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      phoneNumber: user.phoneNumber || null,
-      userType: user.userType
+      phoneNumber: user.phoneNumber || null
+      // userType: user.userType
     };
     return userRef.set(userData);
     // return userRef.set(userData, {
