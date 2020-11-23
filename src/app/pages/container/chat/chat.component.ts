@@ -16,6 +16,7 @@ export class ChatComponent implements OnInit {
   chatList = [];
   chatMessageModel: ChatMessagesModel;
   filteredOptions = [];
+  chatMessageName;
 
   constructor(private formBuilder: FormBuilder,
               private chatMessageService: ChatMessagesService) {
@@ -40,6 +41,10 @@ export class ChatComponent implements OnInit {
   getChatMessageID(event) {
     this.chatMessageId = event;
     console.log('chat message id in chat component: ', this.chatMessageId);
+  }
+
+  getChatMessageName(event) {
+    this.chatMessageName = event;
   }
 
   retrieveChatList() {
