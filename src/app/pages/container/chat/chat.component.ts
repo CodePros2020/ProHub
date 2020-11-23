@@ -60,6 +60,7 @@ export class ChatComponent implements OnInit {
         this.chatMessageModel.senderPhotoUrl = res.senderPhotoUrl;
         this.chatList.push(this.chatMessageModel);
       });
+      this.filteredOptions = this.chatList;
       console.log('list of chatMessages from chat component', this.chatList);
     });
   }
@@ -74,7 +75,7 @@ export class ChatComponent implements OnInit {
         }
       );
     } else {
-      this.filteredOptions = [];
+      this.filteredOptions = this.chatList;
     }
   }
 }

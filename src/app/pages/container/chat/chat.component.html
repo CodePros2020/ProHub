@@ -5,18 +5,15 @@
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-icon matPrefix>search</mat-icon>
           <label>
-            <input matInput placeholder="Search" formControlName="chatSearch" type="text" [matAutocomplete]="auto" (keyup)="applyFilter($event)">
+            <input matInput placeholder="Search" formControlName="chatSearch" type="text" (keyup)="applyFilter($event)">
           </label>
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let chat of filteredOptions" [value]="chat.senderName">{{ chat.senderName }}</mat-option>
-          </mat-autocomplete>
         </mat-form-field>
       </div>
     </div>
 
     <div class="row main-chat">
       <div class="col d-flex flex-md-row">
-        <app-chat-list class="chat-list" (chatMessageId)="getChatMessageID($event)" ></app-chat-list>
+        <app-chat-list class="chat-list" [chatList]="filteredOptions" (chatMessageId)="getChatMessageID($event)" ></app-chat-list>
         <app-chat-room class="chat-room" [chatMessageId]="chatMessageId"></app-chat-room>
       </div>
     </div>
