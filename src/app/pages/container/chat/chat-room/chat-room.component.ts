@@ -193,7 +193,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     });
   }
 
-  async generatePdfNew(){
+  async exportChatHistory(){
 
     this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
       map(chats =>
