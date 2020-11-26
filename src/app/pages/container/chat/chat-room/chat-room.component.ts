@@ -201,13 +201,12 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           ({key: c.payload.key, ...c.payload.val()})
         ))
     ).subscribe(async data=>{
-      const test = data.map(async (c:ChatModel) => {
-        console.log(c)
+      const chatMessageProcessor = data.map(async (c:ChatModel) => {
         let imageData = null;
+        // export image when included
         if(c.imageUrl != undefined) {
           imageData = await this.getBase64ImageFromURL(c.imageUrl);
         }
-        console.log(imageData);
         return [
           // message header
           {
@@ -215,10 +214,10 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               + c.fullName + ": ",
             alignment: 'l eft',
           },
+          // Image/Text Message
           imageData ? {
             image: imageData,
             width: 350,
-//            link: c.imageUrl,
           } : {
             text: c.message,
             alignment: 'left',
@@ -226,14 +225,17 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         ]
       })
 
-      Promise.all(test).then(async arrayOfResponses => {
+      Promise.all(chatMessageProcessor).then(async arrayOfResponses => {
 
-        let x = await this.getBase64ImageFromURL("https://1.bp.blogspot.com/-YIfQT6q8ZM4/Vzyq5z1B8HI/AAAAAAAAAAc/UmWSSMLKtKgtH7CACElUp12zXkrPK5UoACLcB/s1600/image00.png");
-        console.log(x);
+        // logo to be printed
+        let logoImage = await this.getBase64ImageFromURL(
+          "https://1.bp.blogspot.com/-YIfQT6q8ZM4/Vzyq5z1B8HI/AAAAAAAAAAc/UmWSSMLKtKgtH7CACElUp12zXkrPK5UoACLcB/s1600/image00.png"
+        );
 
         setTimeout(()=>{
+          // get property information
           let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
-
+          // define document
           let documentDefinition = {
             info: {
               title: 'PROHUB - Chat History',
@@ -242,7 +244,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             },
             content: [
               // {
-              //   image: x
+              //   image: logoImage
               // },
               // HEADER
               {
@@ -298,6 +300,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
                 text: 'Chat with ' + this.chatMessageName,
                 style: 'h3'
               },
+              // print chat messages
               arrayOfResponses
             ],
             styles: {
@@ -324,20 +327,17 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               },
             }
           };
-          console.log("=======================");
 
-          console.log(documentDefinition);
+          // generate pdf and download
           pdfMake.createPdf(documentDefinition).download();
 
         }, 5000)
       })
 
-
     })
   }
 
-
-  //
+  // format date for chat export history
   formatDateTime(dateString) {
     let date: Date = new Date(dateString);
     return date.toLocaleDateString("en-GB", { // you can skip the first argument
@@ -349,7 +349,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       second: "2-digit"
     });
   }
-  //
+
+  // download image data from url
   getBase64ImageFromURL(url) {
     return new Promise((resolve, reject) => {
       let img = new Image();
@@ -358,8 +359,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         let canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
-        // canvas.width = 250;
-        // canvas.height = img.height * 250 / img.width;
         let ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
         let dataURL = canvas.toDataURL("image/png");
@@ -372,4 +371,5 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       img.src = url;
     });
   }
+
 }
