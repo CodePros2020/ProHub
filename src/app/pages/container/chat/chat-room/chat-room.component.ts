@@ -201,57 +201,35 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           ({key: c.payload.key, ...c.payload.val()})
         ))
     ).subscribe(async data=>{
-      console.log("!!!!!????");
-      console.log(data);
-
       const test = data.map(async (c:ChatModel) => {
         console.log(c)
-        if(c.imageUrl != undefined){
-          let imageData = await this.getBase64ImageFromURL(c.imageUrl);
-          console.log(imageData);
-          return [
-            {
-              text: [
-                // message header
-                {
-                  text: "(" + this.formatDateTime(c.timeStamp) + ") - "
-                    + c.fullName + ": ",
-                  alignment: 'l eft',
-                },
-                {
-                  image: imageData,
-                  link: c.imageUrl,
-                },
-              ],
-            }
-            ]
-        } else {
-          return [
-            {
-              text: [
-                // message header
-                {
-                  text: "(" + this.formatDateTime(c.timeStamp) + ") - "
-                    + c.fullName + ": ",
-                  alignment: 'left',
-                },
-                {
-                  text: c.message,
-                  alignment: 'left',
-                }
-
-              ],
-            },
-            {
-              text: "\n",
-            }
-          ]
+        let imageData = null;
+        if(c.imageUrl != undefined) {
+          imageData = await this.getBase64ImageFromURL(c.imageUrl);
         }
-      });
+        console.log(imageData);
+        return [
+          // message header
+          {
+            text: "(" + this.formatDateTime(c.timeStamp) + ") - "
+              + c.fullName + ": ",
+            alignment: 'l eft',
+          },
+          imageData ? {
+            image: imageData,
+            width: 350,
+//            link: c.imageUrl,
+          } : {
+            text: c.message,
+            alignment: 'left',
+          }
+        ]
+      })
 
-      Promise.all(test).then(arrayOfResponses => {
-        console.log(arrayOfResponses);
-        console.log("???????????????????????");
+      Promise.all(test).then(async arrayOfResponses => {
+
+        let x = await this.getBase64ImageFromURL("https://1.bp.blogspot.com/-YIfQT6q8ZM4/Vzyq5z1B8HI/AAAAAAAAAAc/UmWSSMLKtKgtH7CACElUp12zXkrPK5UoACLcB/s1600/image00.png");
+        console.log(x);
 
         setTimeout(()=>{
           let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
@@ -263,6 +241,9 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               subject: 'Chat history'
             },
             content: [
+              // {
+              //   image: x
+              // },
               // HEADER
               {
                 text: 'PROHUB - Chat History',
@@ -356,160 +337,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
 
-
-
-
-  // EXPORT CHAT HISTORY
-  generatePdf(){
-    this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
-      map(chatList =>
-        chatList.map(c =>
-          this.formatChatMessage(c.payload.val())
-        ))
-    ).subscribe(chatMessage=>{
-
-      setTimeout(()=>{
-        console.log(chatMessage);
-        let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
-
-        let documentDefinition = {
-          info: {
-            title: 'PROHUB - Chat History',
-            author: 'CodePros',
-            subject: 'Chat history'
-          },
-          content: [
-            // HEADER
-            {
-              text: 'PROHUB - Chat History',
-              style: 'header'
-            },
-            [
-              // PROPERTY NAME
-              {
-                text: [
-                  { text: "Property Name: ", style: { bold: true, fontSize: 14}},
-                  { text: prop.name, style: { bold: false, fontSize: 14} }
-                ],
-                style: {marginBottom: 10 }
-              },
-              // ADDRESS
-              {
-                text: [
-                  { text: "Address: ",
-                    style: { bold: true, fontSize: 14, marginBottom: 5 },
-                  },
-                  { text: `${prop.streetLine1}, ` +
-                      (prop.streetLine2 ? `${prop.streetLine2}, ` : "") +
-                      `${prop.city}, ${prop.province}, ${prop.postalCode}`,
-                    style: { bold: false, fontSize: 14, marginBottom: 5 },
-                  },
-                ],
-                style: {marginBottom: 10 }
-                },
-              // UNIT NAME
-              {
-                text: [
-                  {text: "Unit Name: ", style: { bold: true, fontSize: 14  }},
-                  {text: "", style: { bold: false, fontSize: 14}}
-                ],
-                style: {marginBottom: 10 }
-              },
-              {
-                text: [
-                  {text: "Tenant Name: ", style: { bold: true, fontSize: 14  }},
-                  {text: this.chatMessageName, style: { bold: false, fontSize: 14}}
-                ],
-                style: {marginBottom: 10 }
-              },
-              {
-                text: "Landlord:",
-                style: { bold: true, fontSize: 14 },
-              },
-            ],
-            // BODY
-            // HEADER
-            {
-              text: 'Chat with ' + this.chatMessageName,
-              style: 'h3'
-            },
-            chatMessage
-          ],
-          styles: {
-            header: {
-              fontSize: 20,
-              bold: true,
-              margin: [0, 20, 0, 10],
-              decoration: 'underline'
-            },
-            h3: {
-              fontSize: 16,
-              bold: true,
-              margin: [0, 20, 10, 20],
-              decoration: 'underline'
-            },
-            name: {
-              fontSize: 16,
-              bold: true
-            },
-            sign: {
-              margin: [0, 50, 0, 10],
-              alignment: 'right',
-              italics: true
-            },
-          }
-        };
-        console.log(documentDefinition);
-        pdfMake.createPdf(documentDefinition).download();
-
-      }, 10000)
-
-    })
-
-  }
-
-  async formatChatMessage(chat:ChatModel){
-    if(chat.message) {
-      return [
-        {
-          text: [
-            // message header
-            {
-              text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
-                + chat.fullName + ": ",
-              alignment: 'left',
-            },
-            {text: chat.message}
-          ],
-        },
-        {
-          text: "\n",
-        }
-      ]
-    } else {
-      let res = await this.getBase64ImageFromURL(chat.imageUrl);
-        console.log(res);
-        return [
-          {
-            text: [
-              // message header
-              {
-                text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
-                  + chat.fullName + ": ",
-                alignment: 'left',
-              },
-              {
-                image: res,
-                link: chat.imageUrl,
-              },
-            ],
-          },
-          {
-            text: "\n",
-          }
-        ]
-    }
-  }
   //
   formatDateTime(dateString) {
     let date: Date = new Date(dateString);
@@ -531,6 +358,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         let canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
+        // canvas.width = 250;
+        // canvas.height = img.height * 250 / img.width;
         let ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
         let dataURL = canvas.toDataURL("image/png");
