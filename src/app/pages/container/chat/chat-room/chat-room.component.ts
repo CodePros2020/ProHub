@@ -16,6 +16,7 @@ import {ChatMessagesModel} from "../manager/chat-messages.model";
 import {AngularFireList} from "@angular/fire/database/interfaces";
 import {PropertyService} from "../../../../shared-services/property.service";
 import {PropertyModel} from "../../property-list/manager/property.model";
+import {FileService} from "../../../../shared-services/file.service";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -55,6 +56,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               private chatMessageService: ChatMessagesService,
               private authService: AuthService,
               private propertyService: PropertyService,
+              private fileService: FileService,
               public datePipe: DatePipe) {
     this.loggedInUserPhoneNumber = this.authService.GetUserInSession().phoneNumber;
     this.createChatFormGroup();
@@ -191,136 +193,324 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     });
   }
 
+  async generatePdfNew(){
+
+    this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
+      map(chats =>
+        chats.map(c =>
+          ({key: c.payload.key, ...c.payload.val()})
+        ))
+    ).subscribe(async data=>{
+      console.log("!!!!!????");
+      console.log(data);
+
+      const test = data.map(async (c:ChatModel) => {
+        console.log(c)
+        if(c.imageUrl != undefined){
+          let imageData = await this.getBase64ImageFromURL(c.imageUrl);
+          console.log(imageData);
+          return [
+            {
+              text: [
+                // message header
+                {
+                  text: "(" + this.formatDateTime(c.timeStamp) + ") - "
+                    + c.fullName + ": ",
+                  alignment: 'l eft',
+                },
+                {
+                  image: imageData,
+                  link: c.imageUrl,
+                },
+              ],
+            }
+            ]
+        } else {
+          return [
+            {
+              text: [
+                // message header
+                {
+                  text: "(" + this.formatDateTime(c.timeStamp) + ") - "
+                    + c.fullName + ": ",
+                  alignment: 'left',
+                },
+                {
+                  text: c.message,
+                  alignment: 'left',
+                }
+
+              ],
+            },
+            {
+              text: "\n",
+            }
+          ]
+        }
+      });
+
+      Promise.all(test).then(arrayOfResponses => {
+        console.log(arrayOfResponses);
+        console.log("???????????????????????");
+
+        setTimeout(()=>{
+          let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
+
+          let documentDefinition = {
+            info: {
+              title: 'PROHUB - Chat History',
+              author: 'CodePros',
+              subject: 'Chat history'
+            },
+            content: [
+              // HEADER
+              {
+                text: 'PROHUB - Chat History',
+                style: 'header'
+              },
+              [
+                // PROPERTY NAME
+                {
+                  text: [
+                    { text: "Property Name: ", style: { bold: true, fontSize: 14}},
+                    { text: prop.name, style: { bold: false, fontSize: 14} }
+                  ],
+                  style: {marginBottom: 10 }
+                },
+                // ADDRESS
+                {
+                  text: [
+                    { text: "Address: ",
+                      style: { bold: true, fontSize: 14, marginBottom: 5 },
+                    },
+                    { text: `${prop.streetLine1}, ` +
+                        (prop.streetLine2 ? `${prop.streetLine2}, ` : "") +
+                        `${prop.city}, ${prop.province}, ${prop.postalCode}`,
+                      style: { bold: false, fontSize: 14, marginBottom: 5 },
+                    },
+                  ],
+                  style: {marginBottom: 10 }
+                },
+                // UNIT NAME
+                {
+                  text: [
+                    {text: "Unit Name: ", style: { bold: true, fontSize: 14  }},
+                    {text: "", style: { bold: false, fontSize: 14}}
+                  ],
+                  style: {marginBottom: 10 }
+                },
+                {
+                  text: [
+                    {text: "Tenant Name: ", style: { bold: true, fontSize: 14  }},
+                    {text: this.chatMessageName, style: { bold: false, fontSize: 14}}
+                  ],
+                  style: {marginBottom: 10 }
+                },
+                {
+                  text: "Landlord:",
+                  style: { bold: true, fontSize: 14 },
+                },
+              ],
+              // BODY
+              // HEADER
+              {
+                text: 'Chat with ' + this.chatMessageName,
+                style: 'h3'
+              },
+              arrayOfResponses
+            ],
+            styles: {
+              header: {
+                fontSize: 20,
+                bold: true,
+                margin: [0, 20, 0, 10],
+                decoration: 'underline'
+              },
+              h3: {
+                fontSize: 16,
+                bold: true,
+                margin: [0, 20, 10, 20],
+                decoration: 'underline'
+              },
+              name: {
+                fontSize: 16,
+                bold: true
+              },
+              sign: {
+                margin: [0, 50, 0, 10],
+                alignment: 'right',
+                italics: true
+              },
+            }
+          };
+          console.log("=======================");
+
+          console.log(documentDefinition);
+          pdfMake.createPdf(documentDefinition).download();
+
+        }, 5000)
+      })
+
+
+    })
+  }
+
+
+
+
+
+  // EXPORT CHAT HISTORY
   generatePdf(){
-
-
     this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
       map(chatList =>
         chatList.map(c =>
           this.formatChatMessage(c.payload.val())
         ))
     ).subscribe(chatMessage=>{
-      let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
 
-      let documentDefinition = {
-        info: {
-          title: 'PROHUB - Chat History',
-          author: 'CodePros',
-          subject: 'Chat history'
-        },
-        content: [
-          // HEADER
-          {
-            text: 'PROHUB - Chat History',
-            style: 'header'
+      setTimeout(()=>{
+        console.log(chatMessage);
+        let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
+
+        let documentDefinition = {
+          info: {
+            title: 'PROHUB - Chat History',
+            author: 'CodePros',
+            subject: 'Chat history'
           },
-          [
-            // PROPERTY NAME
+          content: [
+            // HEADER
             {
-              text: [
-                { text: "Property Name: ", style: { bold: true, fontSize: 14}},
-                { text: prop.name, style: { bold: false, fontSize: 14} }
-              ],
-              style: {marginBottom: 10 }
+              text: 'PROHUB - Chat History',
+              style: 'header'
             },
-            // ADDRESS
-            {
-              text: [
-                { text: "Address: ",
-                  style: { bold: true, fontSize: 14, marginBottom: 5 },
-                },
-                { text: `${prop.streetLine1}, ` +
-                    (prop.streetLine2 ? `${prop.streetLine2}, ` : "") +
-                    `${prop.city}, ${prop.province}, ${prop.postalCode}`,
-                  style: { bold: false, fontSize: 14, marginBottom: 5 },
-                },
-              ],
-              style: {marginBottom: 10 }
+            [
+              // PROPERTY NAME
+              {
+                text: [
+                  { text: "Property Name: ", style: { bold: true, fontSize: 14}},
+                  { text: prop.name, style: { bold: false, fontSize: 14} }
+                ],
+                style: {marginBottom: 10 }
               },
-            // UNIT NAME
+              // ADDRESS
+              {
+                text: [
+                  { text: "Address: ",
+                    style: { bold: true, fontSize: 14, marginBottom: 5 },
+                  },
+                  { text: `${prop.streetLine1}, ` +
+                      (prop.streetLine2 ? `${prop.streetLine2}, ` : "") +
+                      `${prop.city}, ${prop.province}, ${prop.postalCode}`,
+                    style: { bold: false, fontSize: 14, marginBottom: 5 },
+                  },
+                ],
+                style: {marginBottom: 10 }
+                },
+              // UNIT NAME
+              {
+                text: [
+                  {text: "Unit Name: ", style: { bold: true, fontSize: 14  }},
+                  {text: "", style: { bold: false, fontSize: 14}}
+                ],
+                style: {marginBottom: 10 }
+              },
+              {
+                text: [
+                  {text: "Tenant Name: ", style: { bold: true, fontSize: 14  }},
+                  {text: this.chatMessageName, style: { bold: false, fontSize: 14}}
+                ],
+                style: {marginBottom: 10 }
+              },
+              {
+                text: "Landlord:",
+                style: { bold: true, fontSize: 14 },
+              },
+            ],
+            // BODY
+            // HEADER
             {
-              text: [
-                {text: "Unit Name: ", style: { bold: true, fontSize: 14  }},
-                {text: "", style: { bold: false, fontSize: 14}}
-              ],
-              style: {marginBottom: 10 }
+              text: 'Chat with ' + this.chatMessageName,
+              style: 'h3'
             },
-            {
-              text: [
-                {text: "Tenant Name: ", style: { bold: true, fontSize: 14  }},
-                {text: this.chatMessageName, style: { bold: false, fontSize: 14}}
-              ],
-              style: {marginBottom: 10 }
-            },
-            {
-              text: "Landlord:",
-              style: { bold: true, fontSize: 14 },
-            },
+            chatMessage
           ],
-          // BODY
-          // HEADER
-          {
-            text: 'Chat with ' + this.chatMessageName,
-            style: 'h3'
-          },
-          chatMessage
-        ],
-        styles: {
-          header: {
-            fontSize: 20,
-            bold: true,
-            margin: [0, 20, 0, 10],
-            decoration: 'underline'
-          },
-          h3: {
-            fontSize: 16,
-            bold: true,
-            margin: [0, 20, 10, 20],
-            decoration: 'underline'
-          },
-          name: {
-            fontSize: 16,
-            bold: true
-          },
-          sign: {
-            margin: [0, 50, 0, 10],
-            alignment: 'right',
-            italics: true
-          },
-        }
-      };
-      console.log(documentDefinition);
-      pdfMake.createPdf(documentDefinition).download();
+          styles: {
+            header: {
+              fontSize: 20,
+              bold: true,
+              margin: [0, 20, 0, 10],
+              decoration: 'underline'
+            },
+            h3: {
+              fontSize: 16,
+              bold: true,
+              margin: [0, 20, 10, 20],
+              decoration: 'underline'
+            },
+            name: {
+              fontSize: 16,
+              bold: true
+            },
+            sign: {
+              margin: [0, 50, 0, 10],
+              alignment: 'right',
+              italics: true
+            },
+          }
+        };
+        console.log(documentDefinition);
+        pdfMake.createPdf(documentDefinition).download();
+
+      }, 10000)
 
     })
 
   }
 
-  formatChatMessage(chat:ChatModel){
-    return [
-      {
-        text: [
-          // message header
+  async formatChatMessage(chat:ChatModel){
+    if(chat.message) {
+      return [
+        {
+          text: [
+            // message header
+            {
+              text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
+                + chat.fullName + ": ",
+              alignment: 'left',
+            },
+            {text: chat.message}
+          ],
+        },
+        {
+          text: "\n",
+        }
+      ]
+    } else {
+      let res = await this.getBase64ImageFromURL(chat.imageUrl);
+        console.log(res);
+        return [
           {
-            text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
-              + chat.fullName + ": ",
-            alignment: 'left',
+            text: [
+              // message header
+              {
+                text: "(" + this.formatDateTime(chat.timeStamp) + ") - "
+                  + chat.fullName + ": ",
+                alignment: 'left',
+              },
+              {
+                image: res,
+                link: chat.imageUrl,
+              },
+            ],
           },
-          // message/image url
-          chat.message ? {text: chat.message} : {
-            text: "[Image]",
-            link: chat.imageUrl,
-            decoration: "underline",
-            style: { color: "blue" }
-          },
-        ],
-      },
-      {
-        text: "\n",
-      }
-    ]
+          {
+            text: "\n",
+          }
+        ]
+    }
   }
-
+  //
   formatDateTime(dateString) {
     let date: Date = new Date(dateString);
     return date.toLocaleDateString("en-GB", { // you can skip the first argument
@@ -332,29 +522,24 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       second: "2-digit"
     });
   }
-
+  //
   getBase64ImageFromURL(url) {
     return new Promise((resolve, reject) => {
       let img = new Image();
       img.setAttribute("crossOrigin", "anonymous");
-
       img.onload = () => {
         let canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
-
         let ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
-
         let dataURL = canvas.toDataURL("image/png");
-
+        // let dataURL = canvas.toDataURL("image/jpeg");
         resolve(dataURL);
       };
-
       img.onerror = error => {
         reject(error);
       };
-
       img.src = url;
     });
   }
