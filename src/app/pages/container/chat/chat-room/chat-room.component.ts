@@ -243,80 +243,99 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
         // define document
         let documentDefinition = {
+          header: {
+            margin: [18,18,18,30],
+            columns: [
+              {
+                text: "ProHub Chat History"
+              }
+            ]
+          },
           footer: function (currentPage, pageCount) {
-            return                    { text: "Page " + currentPage.toString() + ' of ' + pageCount, alignment: 'right', style: 'normalText', margin: [0, 20, 20, 0] }
-
+            return {
+              text: "Page " + currentPage.toString() + ' of ' + pageCount, alignment: 'right', style: 'normalText', margin: [0, 20, 20, 20] }
           },
           content: [
             // HEADER
-            {
-              text: 'PROHUB - Chat History',
-              style: 'header'
-            },
+            // {
+            //   text: 'PROHUB - Chat History',
+            //   style: 'header'
+            // },
             [
               // PROPERTY NAME
               {
+                margin: [0,20,0,20],
                 text: [
-                  { text: "Property Name: ", style: { bold: true, fontSize: 14}},
-                  { text: prop.name, style: { bold: false, fontSize: 14} }
+                  {
+                    text: prop.name,
+                    // style: { bold: false, fontSize: 14} }
+                    style: 'header'
+                  }
                 ],
-                style: {marginBottom: 10 }
               },
               // ADDRESS
               {
                 text: [
-                  { text: "Address: ",
-                    style: { bold: true, fontSize: 14, marginBottom: 5 },
+                  {
+                    margin: [0, 10, 0, 10],
+                    text: [
+                      { text: `${prop.streetLine1}\n`},
+                      prop.streetLine2 ? { text: `${prop.streetLine2}\n`} : {},
+                      { text: `${prop.city}, ${prop.province}, ${prop.postalCode}`},
+                    ],
+                    style: { bold: false, fontSize: 18, marginBottom: 5 }
                   },
-                  { text: `${prop.streetLine1}, ` +
-                      (prop.streetLine2 ? `${prop.streetLine2}, ` : "") +
-                      `${prop.city}, ${prop.province}, ${prop.postalCode}`,
-                    style: { bold: false, fontSize: 14, marginBottom: 5 },
-                  },
                 ],
-                style: {marginBottom: 10 }
               },
-              // UNIT NAME
+              // TENANT
+              // PROPERTY NAME
               {
-                text: [
-                  {text: "Unit Name: ", style: { bold: true, fontSize: 14  }},
-                  {text: "", style: { bold: false, fontSize: 14}}
-                ],
-                style: {marginBottom: 10 }
-              },
+                margin: [0,20,0,20],
+                text: `Tenant: Sadia Rashid\n`,
+                style: 'header',
+              }, // placeholder
               {
-                text: [
-                  {text: "Tenant Name: ", style: { bold: true, fontSize: 14  }},
-                  {text: this.chatMessageName, style: { bold: false, fontSize: 14}}
-                ],
-                style: {marginBottom: 10 }
-              },
-              {
-                text: "Landlord:",
-                style: { bold: true, fontSize: 14 },
-              },
+                margin: [0,0,0,20],
+                text: `Lessor: Kei Mizubuchi\n`,
+                style: 'header',
+              }, // placeholder
+              // {
+              //   text: [
+              //     {
+              //       margin: [0, 20, 0, 10],
+              //       text: [
+              //         {
+              //           margin: [0, 10, 0, 10],
+              //           text: `Phone number: 012-345-6789`},// placeholder
+              //       ],
+              //       style: { bold: false, fontSize: 18, marginBottom: 5 }
+              //     },
+              //   ],
+              //   margin: [0, 10, 0, 10],
+              // },
             ],
             // BODY
             // HEADER
             {
-              text: 'Chat History with ' + this.chatModel.fullName,
+              // text: 'Chat History with ' + this.chatModel.fullName,
+              text: 'Chat History with Sadia Rashid',
               style: 'h3'
             },
             // print chat messages
-            arrayOfResponses
+            arrayOfResponses.length != 0 ? arrayOfResponses: {}
           ],
           styles: {
             header: {
-              fontSize: 20,
+              fontSize: 15,
               bold: true,
-              margin: [0, 20, 0, 10],
-              decoration: 'underline'
+              margin: [0, 30, 0, 30],
+              // decoration: 'underline'
             },
             h3: {
               fontSize: 16,
               bold: true,
               margin: [0, 20, 10, 20],
-              decoration: 'underline'
+              // decoration: 'underline'
             },
             name: {
               fontSize: 16,
@@ -334,7 +353,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           // Filename format: YYYYMMDD-PropertyName-TenantName
           (new Date).toISOString().slice(0,10).replace(/-/g,"")
           + '_' + prop.name
-          + '_' + this.chatModel.fullName.replace(/ /, '_')
+          // + '_' + this.chatModel.fullName.replace(/ /, '_')
+          + '_' + "placeholder"
         );
       })
 
