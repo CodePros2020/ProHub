@@ -26,6 +26,7 @@ export class ContainerComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   SignOut(){
     this.authService.SignOut();
   }

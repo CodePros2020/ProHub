@@ -30,6 +30,10 @@ export class PropertyService {
     return this.propertiesRef;
   }
 
+  getPropertyById(id) {
+    return this.db.object('/properties/' + id).valueChanges();
+  }
+
   delete(key: string): Promise<void> {
     return this.propertiesRef.remove(key);
   }

@@ -10,11 +10,13 @@
       </mat-form-field>
     </div>
     <!-- Button -->
-    <div class="col-xl-2 icon" style="margin-top:0 !important;">
-      <button mat-fab class="hide-btn" aria-label="add-icon-button" (click)="openAddNewsDialog()">
-        <mat-icon inline="true" style="font-size: 24px;">post_add</mat-icon>
-      </button>
-    </div>
+    <ng-container *ngIf="userType === 'business'">
+      <div class="col-xl-2 icon" style="margin-top:0 !important;">
+        <button mat-fab class="hide-btn" aria-label="add-icon-button" (click)="openAddNewsDialog()">
+          <mat-icon inline="true" style="font-size: 24px;">post_add</mat-icon>
+        </button>
+      </div>
+    </ng-container>
   </div>
 
   <!-- news container -->
@@ -43,10 +45,12 @@
             <br>
             <p>{{news.content}}</p>
           </div>
-          <div>
-            <button class="mr-2 edit-btn" inline="true" mat-flat-button color="primary" (click)="openEditDialog(news)">Edit</button>
-            <button inline="true " class="hide-btn" mat-flat-button color="warn" (click)="openHideDialog(news)">Hide</button>
-          </div>
+          <ng-container *ngIf="userType === 'business'">
+            <div>
+              <button class="mr-2 edit-btn" inline="true" mat-flat-button color="primary" (click)="openEditDialog(news)">Edit</button>
+              <button inline="true " class="hide-btn" mat-flat-button color="warn" (click)="openHideDialog(news)">Hide</button>
+            </div>
+          </ng-container>
         </div>
       </mat-expansion-panel>
     </div>
