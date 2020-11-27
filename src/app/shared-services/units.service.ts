@@ -9,10 +9,13 @@ import {PropertyService} from './property.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class UnitsService {
+
   units: Observable<any[]>;
   allUnits = [];
   unit: UnitModel;
+
   constructor(private firestore: AngularFirestore,
               private db: AngularFireDatabase,
               public router: Router ,
@@ -20,30 +23,9 @@ export class UnitsService {
     this.unit = new UnitModel();
   }
 
-  getUnit(unitId){
-    return this.db.object('/units/' + unitId).valueChanges();
-  }
-
   getAllUnits(): Observable<any> {
-    // this.allUnits = [];
     this.units = this.db.list('units').snapshotChanges();
     return this.units;
-    // this.db.list('/units').snapshotChanges().subscribe(res => {
-    //   res.forEach(doc => {
-    //     this.allUnits.push(doc.payload.val());
-    //   });
-    // });
-    // return this.allUnits;
-
-
-    // this.allUnits = [];
-    // this.db.list('/units').snapshotChanges().subscribe(res => {
-    //   res.forEach(doc => {
-    //     this.allUnits.push(doc.payload.val());
-    //   });
-    // });
-    // // @ts-ignore
-    // return this.allUnits;
   }
 
   deleteUnit(unitId: string): Promise<void> {
@@ -53,12 +35,10 @@ export class UnitsService {
   updateUnit(unitId: string, unit: UnitModel): Promise<void> {
     return this.db.list('units').update(unitId, unit);
   }
+
   addUnit(unit: UnitModel) {
     const unitId = this.db.createPushId();
     unit.unitId = unitId;
-    return this.db.database.ref('units').child(unitId).set(unit).then( () => {
-        this.router.navigate(['container/units']);
-      }
-    );
+    return this.db.database.ref('units').child(unitId).set(unit);
   }
 }

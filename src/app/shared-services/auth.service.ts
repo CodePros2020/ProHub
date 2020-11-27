@@ -83,9 +83,6 @@ export class AuthService {
               this.router.navigate(['container/dashboard']);
             }
           }
-          // } else if () {
-          //
-          // }
         });
       })
       .catch((error) => {

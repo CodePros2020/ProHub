@@ -18,8 +18,8 @@ mat-toolbar {
     }
   }
 
-  #title-message {
-    text-align: center;
+  .title-message {
+    //text-align: center;
     font: 16px Roboto;
     letter-spacing: 7.2px;
     color: #2B2B2B;
@@ -29,7 +29,7 @@ mat-toolbar {
   #close-btn {
     display: flex;
     align-items: center;
-    margin-right: 41px;
+    margin-right: 7px;
     color: #666666;
     text-decoration: none;
     cursor: pointer;

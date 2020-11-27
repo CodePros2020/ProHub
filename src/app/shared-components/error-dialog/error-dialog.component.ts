@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Router} from "@angular/router";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-error-dialog',
@@ -10,14 +9,15 @@ import {Router} from "@angular/router";
 export class ErrorDialogComponent implements OnInit {
 
   msg: string;
-  constructor(public dialogRef: MatDialogRef<ErrorDialogComponent>, public router: Router,
-              @Inject(MAT_DIALOG_DATA)private data: any) {
+  constructor(public dialogRef: MatDialogRef<ErrorDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) private data: any) {
 
   }
 
   ngOnInit(): void {
     this.msg = this.data.msg;
   }
+
   close() {
     this.dialogRef.close(false);
   }
