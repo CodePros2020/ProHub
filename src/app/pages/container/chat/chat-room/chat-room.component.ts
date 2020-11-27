@@ -207,42 +207,42 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         if(c.imageUrl != undefined) {
           imageData = await this.getBase64ImageFromURL(c.imageUrl);
         }
-        return [
-          // message header
-          {
-            text: "(" + this.formatDateTime(c.timeStamp) + ") - "
-              + c.fullName + ": ",
-            alignment: 'l eft',
-          },
-          // Image/Text Message
-          imageData ? {
-            image: imageData,
-            width: 350,
-          } : {
-            text: c.message,
-            alignment: 'left',
-          }
-        ]
+        if(imageData){
+          return [
+            // message header
+            {
+              text: this.formatDateTime(c.timeStamp) + " - "
+                + c.fullName + " sent: ",
+              alignment: 'left',
+              margin: [ 0, 0, 0, 10 ]
+            },
+            {
+              image: imageData,
+              width: 250,
+              margin: [ 0, 0, 0, 15 ]
+            }
+          ]
+
+        } else {
+          return [
+            // message header
+            {
+              text: this.formatDateTime(c.timeStamp) + " - "
+                + c.fullName + ": " + c.message,
+              alignment: 'left',
+              margin: [ 0, 0, 0, 10 ]
+            }
+          ]
+
+        }
       })
 
       Promise.all(chatMessageProcessor).then(async arrayOfResponses => {
-        // logo to be printed
-        let logoImage = await this.getBase64ImageFromURL(
-          "https://1.bp.blogspot.com/-YIfQT6q8ZM4/Vzyq5z1B8HI/AAAAAAAAAAc/UmWSSMLKtKgtH7CACElUp12zXkrPK5UoACLcB/s1600/image00.png"
-        );
         // get property information
         let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
         // define document
         let documentDefinition = {
-          info: {
-            title: 'PROHUB - Chat History',
-            author: 'CodePros',
-            subject: 'Chat history'
-          },
           content: [
-            // {
-            //   image: logoImage
-            // },
             // HEADER
             {
               text: 'PROHUB - Chat History',
@@ -294,7 +294,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             // BODY
             // HEADER
             {
-              text: 'Chat with ' + this.chatMessageName,
+              text: 'Chat History with ' + this.chatMessageName,
               style: 'h3'
             },
             // print chat messages
@@ -331,18 +331,41 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     })
   }
 
+
   // format date for chat export history
   formatDateTime(dateString) {
     let date: Date = new Date(dateString);
-    return date.toLocaleDateString("en-GB", { // you can skip the first argument
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    });
+    let day = date.getDate();
+    let monthIndex = date.getMonth();
+    let year = date.getFullYear();
+    let minutes = ('0'+date.getMinutes()).slice(-2);
+    let hours = ('0'+date.getHours()).slice(-2);
+    let seconds = ('0'+date.getSeconds()).slice(-2);
+    let myFormattedDate = year+"-"+(monthIndex+1)+"-"+day+" "+ hours+":"+minutes+":"+seconds;
+    return myFormattedDate;
+
+    // return date.toLocaleDateString("en-GB", { // you can skip the first argument
+    //   year: "numeric",
+    //   month: "2-digit",
+    //   day: "2-digit",
+    //   hour: "2-digit",
+    //   minute: "2-digit",
+    //   second: "2-digit"
+    // });
   }
+
+  // // format date for chat export history
+  // formatDateTime(dateString) {
+  //   let date: Date = new Date(dateString);
+  //   return date.toLocaleDateString("en-GB", { // you can skip the first argument
+  //     year: "numeric",
+  //     month: "2-digit",
+  //     day: "2-digit",
+  //     hour: "2-digit",
+  //     minute: "2-digit",
+  //     second: "2-digit"
+  //   });
+  // }
 
   // download image data from url
   getBase64ImageFromURL(url) {
