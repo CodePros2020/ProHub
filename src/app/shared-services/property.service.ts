@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { FirebasePropertiesModel } from '../pages/container/property-list/manager/firebase-properties.model';
 import {AuthService} from './auth.service';
-import {PropertyModel} from '../pages/container/property-list/manager/property.model';
-
 
 @Injectable({
   providedIn: 'root'
@@ -45,16 +43,15 @@ export class PropertyService {
      return this.db.database.ref('properties').child(value.propId).set(value);
   }
 
-  getPropertyById(propID: string){
-    return this.db.object('/properties/' + propID).valueChanges();
-  }
   setProperty(property) {
     console.log('Setting prop', property);
     localStorage.setItem('property', JSON.stringify(property));
   }
+
   GetPropertyInSession() {
     return JSON.parse(localStorage.getItem('property'));
   }
+
   RemovePropertyInSession(){
     localStorage.removeItem('property');
   }
