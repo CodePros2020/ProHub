@@ -202,6 +202,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         ))
     ).subscribe(async data=>{
       const chatMessageProcessor = data.map(async (c:ChatModel) => {
+
         let imageData = null;
         // export image when included
         if(c.imageUrl != undefined) {
@@ -211,7 +212,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           return [
             // message header
             {
-              text: this.formatDateTime(c.timeStamp) + " - "
+              text: "[" + this.formatDateTime(c.timeStamp) + "] "
                 + c.fullName + " sent: ",
               alignment: 'left',
               margin: [ 0, 0, 0, 10 ]
@@ -219,7 +220,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             {
               image: imageData,
               width: 250,
-              margin: [ 0, 0, 0, 15 ]
+              margin: [ 0, 0, 0, 20 ]
             }
           ]
 
@@ -227,7 +228,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           return [
             // message header
             {
-              text: this.formatDateTime(c.timeStamp) + " - "
+              text: "[" + this.formatDateTime(c.timeStamp) + "] "
                 + c.fullName + ": " + c.message,
               alignment: 'left',
               margin: [ 0, 0, 0, 10 ]
@@ -294,7 +295,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             // BODY
             // HEADER
             {
-              text: 'Chat History with ' + this.chatMessageName,
+              text: 'Chat History with ' + this.chatModel.fullName,
               style: 'h3'
             },
             // print chat messages
@@ -325,7 +326,12 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           }
         };
         // generate pdf and download
-        pdfMake.createPdf(documentDefinition).download();
+        pdfMake.createPdf(documentDefinition).download(
+          // Filename format: YYYYMMDD-PropertyName-TenantName
+          (new Date).toISOString().slice(0,10).replace(/-/g,"")
+          + '_' + prop.name
+          + '_' + this.chatModel.fullName.replace(/ /, '_')
+        );
       })
 
     })
@@ -344,28 +350,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     let myFormattedDate = year+"-"+(monthIndex+1)+"-"+day+" "+ hours+":"+minutes+":"+seconds;
     return myFormattedDate;
 
-    // return date.toLocaleDateString("en-GB", { // you can skip the first argument
-    //   year: "numeric",
-    //   month: "2-digit",
-    //   day: "2-digit",
-    //   hour: "2-digit",
-    //   minute: "2-digit",
-    //   second: "2-digit"
-    // });
   }
-
-  // // format date for chat export history
-  // formatDateTime(dateString) {
-  //   let date: Date = new Date(dateString);
-  //   return date.toLocaleDateString("en-GB", { // you can skip the first argument
-  //     year: "numeric",
-  //     month: "2-digit",
-  //     day: "2-digit",
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //     second: "2-digit"
-  //   });
-  // }
 
   // download image data from url
   getBase64ImageFromURL(url) {
