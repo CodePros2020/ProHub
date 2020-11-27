@@ -14,6 +14,7 @@ import {VerifyEmailAddressComponent} from './pages/signup/verify-email-address/v
 import {StaffManagementComponent} from './pages/container/settings/staff-management/staff-management.component';
 import {UnitsManagementComponent} from './pages/container/settings/units-management/units-management.component';
 import {AngularFireAuthGuard, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
+import {ContainerGuardService} from './shared-services/container-guard.service';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -30,14 +31,14 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
     children: [
-      {path: 'chat', component: ChatComponent},
-      {path: 'dashboard', component: DashboardComponent},
-      {path: 'forms', component: FormsComponent},
-      {path: 'newsroom', component: NewsroomComponent},
-      {path: 'settings', component: SettingsComponent},
+      {path: 'chat', component: ChatComponent, canActivate: [ContainerGuardService]},
+      {path: 'dashboard', component: DashboardComponent, canActivate: [ContainerGuardService]},
+      {path: 'forms', component: FormsComponent, canActivate: [ContainerGuardService]},
+      {path: 'newsroom', component: NewsroomComponent, canActivate: [ContainerGuardService]},
+      {path: 'settings', component: SettingsComponent, canActivate: [ContainerGuardService]},
       {path: 'property-list', component: PropertyListComponent},
-      {path: 'staff', component: StaffManagementComponent},
-      {path: 'units', component: UnitsManagementComponent},
+      {path: 'staff', component: StaffManagementComponent, canActivate: [ContainerGuardService]},
+      {path: 'units', component: UnitsManagementComponent, canActivate: [ContainerGuardService]},
     ]
   }
 ];

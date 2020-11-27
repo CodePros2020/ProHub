@@ -96,17 +96,20 @@ export class AddEditUnitComponent implements OnInit {
       console.log('who is tenant? ', this.tenant);
 
       if (this.tenant !== undefined) {
-        this.hideOverLay();
-        this.formControls.tenantName.setValue(this.tenant.firstName + ' ' + this.tenant.lastName);
+
+        const isTenantNumExist = this.unitsArr.some(num => num.tenantId === tenantId);
+        console.log('does tenant num exist', isTenantNumExist);
+        if (!isTenantNumExist) {
+          this.hideOverLay();
+          this.formControls.tenantName.setValue(this.tenant.firstName + ' ' + this.tenant.lastName);
+        } else {
+          this.hideOverLay();
+          this.errorMessageDialog('Phone number is already registered to a unit.');
+          this.formControls.tenantId.reset();
+        }
       } else {
         this.hideOverLay();
-        this.dialog.open(ErrorDialogComponent, {
-          height: '40%',
-          width: '30%',
-          autoFocus: false,
-          data: { msg: 'Phone number is not a registered tenant.' },
-        });
-
+        this.errorMessageDialog('Phone number is not a registered tenant.');
         this.formControls.tenantId.reset();
       }
     });
@@ -169,6 +172,15 @@ export class AddEditUnitComponent implements OnInit {
   openMessageDialog(titleMsg, msg) {
     this.dialog.open(GenericMessageDialogComponent, {
       data: { title: titleMsg, message: msg },
+    });
+  }
+
+  errorMessageDialog(message) {
+    this.dialog.open(ErrorDialogComponent, {
+      height: '40%',
+      width: '30%',
+      autoFocus: false,
+      data: { msg: message },
     });
   }
 }
