@@ -27,7 +27,7 @@ import {ChatMessagesModel} from '../../chat/manager/chat-messages.model';
   templateUrl: './units-management.component.html',
   styleUrls: ['./units-management.component.scss'],
 })
-export class UnitsManagementComponent implements OnInit, AfterViewInit {
+export class UnitsManagementComponent implements OnInit {
   landlordPhoneNumber;
   landlordName;
   landlordPhotoUrl;
@@ -59,9 +59,6 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     this.property = this.propertyService.GetPropertyInSession();
     this.units = [];
   }
-  get formControls() {
-    return this.unitListForm.controls;
-  }
 
   overlayRef = this.overlay.create({
     positionStrategy: this.overlay
@@ -77,7 +74,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
     this.getUnits();
     this.filteredOptions();
   }
-  ngAfterViewInit() {}
+
   showOverlay() {
     this.overlayRef.attach(new ComponentPortal(LoaderComponent));
   }
@@ -85,11 +82,17 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
   hideOverLay() {
     this.overlayRef.detach();
   }
+
   searchUnitFormGroup() {
     this.unitListForm = this.formBuilder.group({
       unitSearch: [''],
     });
   }
+
+  get formControls() {
+    return this.unitListForm.controls;
+  }
+
 
   deleteUnit(element: UnitModel) {
     const dialogRef = this.dialog.open(GenericDeleteDialogComponent, {
@@ -103,6 +106,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
   getUnits() {
     this.showOverlay();
     this.unitsService
@@ -125,12 +129,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
             this.units.push(this.unit);
           }
         });
-       // this.units = this.unitsService.getAllUnits();
-    // for (const i in this.units) {
-    //   if (this.property.propId === this.units[i].propId) {
-    //     this.unitsProp.push(this.units[i]);
-    //   }
-    // }
+
         console.log('Units List: ', this.units);
         this.dataSource = new MatTableDataSource(this.units);
         this.dataSource.sort = this.sort;
@@ -139,7 +138,7 @@ export class UnitsManagementComponent implements OnInit, AfterViewInit {
        });
   }
 
-filteredOptions() {
+  filteredOptions() {
     this.unitsList = this.formControls.unitSearch.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value))
@@ -152,20 +151,30 @@ filteredOptions() {
       (option) => option.name.toLowerCase().indexOf(filterValue) === 0
     );
   }
-openAddUnitDialog() {
+
+  openAddUnitDialog() {
     const dialogFilter = this.dialog.open(AddEditUnitComponent, {
       height: '80%',
       width: '50%',
       autoFocus: false,
       data: { update: false, propId: this.property.propId, unitsList: this.units },
     });
+
+    dialogFilter.afterClosed().subscribe(res => {
+      if (res !== false) {
+        console.log('this is res unit', res.unitInfo);
+        console.log('this is res tenant', res.tenantInfo);
+        this.createChatMessageInstances(res.unitInfo.tenantId, res.unitInfo.tenantName, res.tenantInfo.photoURL);
+      }
+    });
   }
-openEditUnitDialog(unit) {
+
+  openEditUnitDialog(unit) {
     const dialogFilter = this.dialog.open(AddEditUnitComponent, {
       height: '80%',
       width: '50%',
       autoFocus: false,
-      data: { update: true, unitData: unit, unitsList: this.units },
+      data: { update: true, propId: this.property.propId, unitData: unit, unitsList: this.units },
     });
   }
 
@@ -176,13 +185,19 @@ openEditUnitDialog(unit) {
       this.dataSource.paginator.firstPage();
     }
   }
+
   createChatMessageInstances(tenantNumber, tenantName, tenantPhotoUrl) {
+    console.log('this is chat message instance create');
     this.chatMessage = new ChatMessagesModel();
     this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
     this.chatMessage.receiverNumber = this.landlordPhoneNumber;
     this.chatMessage.senderName = tenantName;
     this.chatMessage.senderNumber = tenantNumber;
-    this.chatMessage.senderPhotoUrl = tenantPhotoUrl;
+    if (tenantPhotoUrl !== undefined) {
+      this.chatMessage.senderPhotoUrl = tenantPhotoUrl;
+    } else {
+      this.chatMessage.senderPhotoUrl = '';
+    }
     this.chatMessagesService.create(this.chatMessage);
 
     this.chatMessage = new ChatMessagesModel();
@@ -190,7 +205,9 @@ openEditUnitDialog(unit) {
     this.chatMessage.receiverNumber = tenantNumber;
     this.chatMessage.senderName = this.landlordName;
     this.chatMessage.senderNumber = this.landlordPhoneNumber;
-    this.chatMessage.senderPhotoUrl = this.landlordPhotoUrl;
+    if (this.landlordPhotoUrl !== undefined) {
+      this.chatMessage.senderPhotoUrl = this.landlordPhotoUrl;
+    }
     this.chatMessagesService.create(this.chatMessage);
   }
 
@@ -206,27 +223,3 @@ openEditUnitDialog(unit) {
     }
   }
 }
-
-export interface UNIT {
-  unitId: string;
-  propId: string;
-  tenantId: string;
-  tenantName: string;
-  unitName: string;
-}
-const UNITS_LIST: UNIT[] = [
-  {
-    unitId: '1001',
-    propId: '101',
-    tenantId: '2002',
-    tenantName: 'Anna Smith',
-    unitName: 'Suite',
-  },
-  {
-    unitId: '1100',
-    propId: '101',
-    tenantId: '2020',
-    tenantName: 'John Doe',
-    unitName: 'Suite',
-  },
-];

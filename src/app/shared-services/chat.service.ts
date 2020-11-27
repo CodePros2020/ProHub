@@ -37,7 +37,6 @@ export class ChatService {
   }
 
   create(value: any): any {
-    // value.chatId = this.chatId;
     return this.chatRef.push(value)
       .catch(err => {
         console.log('error in sending chat: ', err);

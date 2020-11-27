@@ -161,6 +161,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
   setProperty(prop) {
     this.propertyService.setProperty(prop);
     this.router.navigate(['container/dashboard']);

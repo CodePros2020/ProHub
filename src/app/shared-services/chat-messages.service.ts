@@ -30,7 +30,7 @@ export class ChatMessagesService {
     console.log('what is value in create chat message? ', value);
     return this.chatMessageRefCreate.push(value)
       .catch(err => {
-        console.log('error in sending chat: ', err);
+        console.log('error in creating chat message list: ', err);
       });
   }
 
