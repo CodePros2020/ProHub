@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {AngularFireDatabase} from '@angular/fire/database';
+import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {UnitModel} from '../pages/container/settings/units-management/manager/Unit.model';
@@ -16,6 +16,8 @@ export class UnitsService {
   allUnits = [];
   unit: UnitModel;
 
+  unitRef: AngularFireList<UnitModel> = null;
+
   constructor(private firestore: AngularFirestore,
               private db: AngularFireDatabase,
               public router: Router ,
@@ -26,6 +28,12 @@ export class UnitsService {
   getAllUnits(): Observable<any> {
     this.units = this.db.list('units').snapshotChanges();
     return this.units;
+  }
+
+  getPropertyIdByUnit(phoneNumber) {
+    this.unitRef = this.db.list('units', ref =>
+      ref.orderByChild('tenantId').equalTo(phoneNumber));
+    return this.unitRef;
   }
 
   deleteUnit(unitId: string): Promise<void> {
