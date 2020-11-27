@@ -243,6 +243,10 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
         // define document
         let documentDefinition = {
+          footer: function (currentPage, pageCount) {
+            return                    { text: "Page " + currentPage.toString() + ' of ' + pageCount, alignment: 'right', style: 'normalText', margin: [0, 20, 20, 0] }
+
+          },
           content: [
             // HEADER
             {
