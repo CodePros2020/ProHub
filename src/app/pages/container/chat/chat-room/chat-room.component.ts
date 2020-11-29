@@ -68,11 +68,12 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    // console.log('chat message in on changes', this.chatMessageId);
     this.retrieveChats();
+    console.log('chat message in on changes', this.chatMessageId);
   }
 
   retrieveChats() {
+
     if (this.chatMessageId !== undefined) {
       this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
         map(chats =>
@@ -291,14 +292,14 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               // PROPERTY NAME
               {
                 margin: [0,20,0,20],
-                text: `Tenant: Sadia Rashid\n`,
+                text: `Tenant: ${this.chatMessageName}`,
                 style: 'header',
               }, // placeholder
               {
                 margin: [0,0,0,20],
-                text: `Lessor: Kei Mizubuchi\n`,
+                text: `Lessor: ${this.chatModel.fullName}`,
                 style: 'header',
-              }, // placeholder
+              },
               // {
               //   text: [
               //     {
@@ -318,7 +319,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             // HEADER
             {
               // text: 'Chat History with ' + this.chatModel.fullName,
-              text: 'Chat History with Sadia Rashid',
+              text: 'Chat History with ' + this.chatModel.fullName,
               style: 'h3'
             },
             // print chat messages
