@@ -240,21 +240,42 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       })
 
       Promise.all(chatMessageProcessor).then(async arrayOfResponses => {
+         // let logo = await this.getBase64ImageFromURL("../../../../../../assets/logo-medium.png");
+
         // get property information
         let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
         // define document
         let documentDefinition = {
-          header: {
-            margin: [18,18,18,30],
-            columns: [
-              {
-                text: "ProHub Chat History"
-              }
-            ]
-          },
+          header:  function (currentPage, pageCount) {
+            return {
+              margin: [18,18,18,30],
+              columns: [
+                // {
+                //   image: logo,
+                //   width:30,
+                //   alignment: "right"
+                // },
+                {
+                  text: "ProHub Chat History"
+                }
+              ],
+            }
+
+            // return {
+            //   margin: [18,18,18,30],
+            //   image: logo,
+            //   width:30,
+            //   alignment: "left"
+            // }
+
+            },
           footer: function (currentPage, pageCount) {
             return {
-              text: "Page " + currentPage.toString() + ' of ' + pageCount, alignment: 'right', style: 'normalText', margin: [0, 20, 20, 20] }
+              text: "Page " + currentPage.toString() + ' of ' + pageCount,
+              alignment: 'right',
+              style: 'normalText',
+              margin: [0, 20, 20, 20]
+            }
           },
           content: [
             // HEADER
@@ -318,8 +339,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             // BODY
             // HEADER
             {
-              // text: 'Chat History with ' + this.chatModel.fullName,
-              text: 'Chat History with ' + this.chatModel.fullName,
+              text: 'Chat History with ' + this.chatMessageName,
               style: 'h3'
             },
             // print chat messages
