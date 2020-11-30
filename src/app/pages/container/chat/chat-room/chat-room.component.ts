@@ -278,11 +278,10 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             }
           },
           content: [
-            // HEADER
-            // {
-            //   text: 'PROHUB - Chat History',
-            //   style: 'header'
-            // },
+            {
+              text: 'PROHUB - Chat History',
+              style: 'header'
+            },
             [
               // PROPERTY NAME
               {
@@ -290,8 +289,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
                 text: [
                   {
                     text: prop.name,
-                    // style: { bold: false, fontSize: 14} }
-                    style: 'header'
+                    style: 'h3'
                   }
                 ],
               },
@@ -314,12 +312,12 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               {
                 margin: [0,20,0,20],
                 text: `Tenant: ${this.chatMessageName}`,
-                style: 'header',
+                style: 'h3',
               }, // placeholder
               {
                 margin: [0,0,0,20],
                 text: `Lessor: ${this.chatModel.fullName}`,
-                style: 'header',
+                style: 'h3',
               },
               // {
               //   text: [
@@ -347,7 +345,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           ],
           styles: {
             header: {
-              fontSize: 15,
+              fontSize: 18,
               bold: true,
               margin: [0, 30, 0, 30],
               // decoration: 'underline'
