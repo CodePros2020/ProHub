@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   loggedInUser: any;
   propertyName = '';
   property: PropertyModel;
+  tenantProperty: any;
   constructor(
     public router: Router,
     public authService: AuthService,
@@ -65,32 +66,20 @@ export class DashboardComponent implements OnInit {
 
   getPropertyName() {
     this.property = this.propertyService.GetPropertyInSession();
-    console.log('what is the property', this.property);
+    if (this.property === null ||  this.property === undefined){
+      this.propertyName = 'No Property';
+    }
     if (this.property !== undefined && this.property !== null) {
       this.propertyName = this.property.name;
     } else {
-      if (this.loggedInUser.userType === 'business') {
+      if (this.loggedInUser.userType.toUpperCase() === 'BUSINESS') {
         this.router.navigate(['container/property-list']);
       } else {
-        this.propertyName = 'No Property';
+        this.unitService.getPropertyIdByUnit(this.loggedInUser.phoneNumber);
+        this.propertyName = this.property.name === undefined ?   'No Property' : this.property.name;
       }
     }
 
-    // if (this.loggedInUser.userType === 'business') {
-    //
-    // } else {
-    //   this.propertyName = 'Tenant';
-    // }
-    // if (this.loggedInUser.userType === 'business') {
-    //   this.property = this.propertyService.GetPropertyInSession();
-    //   if (this.property !== undefined) {
-    //     this.propertyName = this.property.name;
-    //   } else {
-    //     this.router.navigate(['container/property-list']);
-    //   }
-    // } else {
-    //   this.propertyName = 'Tenant';
-    // }
   }
 
   checkPropertyForPersonalUser() {
@@ -102,13 +91,12 @@ export class DashboardComponent implements OnInit {
             ({key: c.payload.key, ...c.payload.val()})
           ))
       ).subscribe(data => {
-        console.log('what is unit data', data);
         if (data.length !== 0) {
           const prop = data.find(r => r.tenantId === this.loggedInUser.phoneNumber);
-          console.log('what is prop', prop);
           const tenantProp = this.propertyService.getPropertyById(prop.propId).subscribe(res => {
-            console.log('what is tenant prop', res);
+            this.tenantProperty = res;
             this.propertyService.setProperty(res);
+            this.propertyName = this.tenantProperty === undefined ?  'No Property' : this.tenantProperty.name;
           });
         }
       });

@@ -63,6 +63,7 @@ import {StaffService} from './shared-services/staff.service';
 import {UnitsService} from './shared-services/units.service';
 import {ChatMessagesService} from './shared-services/chat-messages.service';
 import {SafePipeline} from './pages/container/newsroom/manager/SafePipe.model';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -132,7 +133,8 @@ import {SafePipeline} from './pages/container/newsroom/manager/SafePipe.model';
     PropertyService,
     StaffService,
     UnitsService,
-    ChatMessagesService
+    ChatMessagesService,
+    CookieService
   ],
   bootstrap: [AppComponent],
 })
