@@ -278,35 +278,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
             }
           },
           content: [
-            {
-              text: 'PROHUB - Chat History',
-              style: 'header'
-            },
             [
-              // PROPERTY NAME
-              {
-                margin: [0,20,0,20],
-                text: [
-                  {
-                    text: prop.name,
-                    style: 'h3'
-                  }
-                ],
-              },
-              // ADDRESS
-              {
-                text: [
-                  {
-                    margin: [0, 10, 0, 10],
-                    text: [
-                      { text: `${prop.streetLine1}\n`},
-                      prop.streetLine2 ? { text: `${prop.streetLine2}\n`} : {},
-                      { text: `${prop.city}, ${prop.province}, ${prop.postalCode}`},
-                    ],
-                    style: { bold: false, fontSize: 18, marginBottom: 5 }
-                  },
-                ],
-              },
               // TENANT
               // PROPERTY NAME
               {
@@ -354,7 +326,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               fontSize: 16,
               bold: true,
               margin: [0, 20, 10, 20],
-              // decoration: 'underline'
+              decoration: 'underline'
             },
             name: {
               fontSize: 16,
