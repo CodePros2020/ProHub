@@ -24,21 +24,16 @@ export class AddEditUnitComponent implements OnInit {
   isUpdateMode = false;
   tenant;
   unit: UnitModel;
-  newUnit: UnitModel;
   unitForm: FormGroup;
   unitsArr = [];
-  tenants = [];
   user: RegistrationModel;
   propId: string;
-  private unitExist = false;
-  private isTenant = false;
 
   constructor(public dialogRef: MatDialogRef<AddEditUnitComponent>,
               public formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) private data: any,
               public dialog: MatDialog,
               public unitsService: UnitsService,
-              public firebaseService: FirebaseService,
               public usersTableService: UsersTableService,
               public overlay: Overlay) {
 
@@ -72,9 +67,15 @@ export class AddEditUnitComponent implements OnInit {
   getUnitForm() {
     this.unitForm = this.formBuilder.group({
       unitNumber: [this.unit.unitName, Validators.required],
-      tenantId: [this.unit.tenantId, Validators.required],
+      tenantId: [ this.unit.tenantId , Validators.required],
       tenantName: [{value: this.unit.tenantName, disabled: true}]
     });
+    if (this.data.update){
+      console.log('In edit mode');
+      this.formControls.tenantId.disable();
+    }
+
+
   }
 
   get formControls() {

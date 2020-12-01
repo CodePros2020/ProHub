@@ -162,8 +162,6 @@ export class UnitsManagementComponent implements OnInit {
 
     dialogFilter.afterClosed().subscribe(res => {
       if (res !== false) {
-        console.log('this is res unit', res.unitInfo);
-        console.log('this is res tenant', res.tenantInfo);
         this.createChatMessageInstances(res.unitInfo.tenantId, res.unitInfo.tenantName, res.tenantInfo.photoURL);
       }
     });
