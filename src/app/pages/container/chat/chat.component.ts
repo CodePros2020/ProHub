@@ -45,6 +45,7 @@ export class ChatComponent implements OnInit {
 
   getChatMessageName(event) {
     this.chatMessageName = event;
+    console.log('chat message message in chat component: ', this.chatMessageName);
   }
 
   retrieveChatList() {
