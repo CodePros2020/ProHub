@@ -122,7 +122,7 @@
               <div class="col-md-10">
                 <mat-form-field appearance="outline">
                   <mat-label>Postal Code</mat-label>
-                  <input formControlName="postalCode" matInput maxlength="64" placeholder="e.g H0H0H0" >
+                  <input formControlName="postalCode" matInput maxlength="6" placeholder="e.g H0H0H0" mask="A0A0A0">
                   <mat-error *ngIf="formControls.postalCode.invalid">Please enter postalCode.</mat-error>
                 </mat-form-field>
               </div>
