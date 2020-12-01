@@ -195,161 +195,152 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   async exportChatHistory(){
-
-    this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
-      map(chats =>
-        chats.map(c =>
-          ({key: c.payload.key, ...c.payload.val()})
-        ))
-    ).subscribe(async data=>{
-      const chatMessageProcessor = data.map(async (c:ChatModel) => {
-
-        let imageData = null;
-        // export image when included
-        if(c.imageUrl != undefined) {
-          imageData = await this.getBase64ImageFromURL(c.imageUrl);
-        }
-        if(imageData){
-          return [
-            // message header
-            {
-              text: "[" + this.formatDateTime(c.timeStamp) + "] "
-                + c.fullName + " sent: ",
-              alignment: 'left',
-              margin: [ 0, 0, 0, 10 ]
-            },
-            {
-              image: imageData,
-              width: 250,
-              margin: [ 0, 0, 0, 20 ]
+       const chatMessageProcessor = this.chats.map(async (c:ChatModel) => {
+            let imageData = null;
+            // export image when included
+            if(c.imageUrl != undefined) {
+              imageData = await this.getBase64ImageFromURL(c.imageUrl);
             }
-          ]
+            if(imageData){
+              return [
+                // message header
+                {
+                  text: "[" + this.formatDateTime(c.timeStamp) + "] "
+                    + c.fullName + " sent: ",
+                  alignment: 'left',
+                  margin: [ 0, 0, 0, 10 ]
+                },
+                {
+                  image: imageData,
+                  width: 250,
+                  margin: [ 0, 0, 0, 20 ]
+                }
+              ]
 
-        } else {
-          return [
-            // message header
-            {
-              text: "[" + this.formatDateTime(c.timeStamp) + "] "
-                + c.fullName + ": " + c.message,
-              alignment: 'left',
-              margin: [ 0, 0, 0, 10 ]
+            } else {
+              return [
+                // message header
+                {
+                  text: "[" + this.formatDateTime(c.timeStamp) + "] "
+                    + c.fullName + ": " + c.message,
+                  alignment: 'left',
+                  margin: [ 0, 0, 0, 10 ]
+                }
+              ]
+
             }
-          ]
+          })
 
-        }
-      })
+          Promise.all(chatMessageProcessor).then(async arrayOfResponses => {
+             // let logo = await this.getBase64ImageFromURL("../../../../../../assets/logo-medium.png");
 
-      Promise.all(chatMessageProcessor).then(async arrayOfResponses => {
-         // let logo = await this.getBase64ImageFromURL("../../../../../../assets/logo-medium.png");
+            // get property information
+            let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
+            // define document
+            let documentDefinition = {
+              header:  function (currentPage, pageCount) {
+                return {
+                  margin: [18,18,18,30],
+                  columns: [
+                    // {
+                    //   image: logo,
+                    //   width:30,
+                    //   alignment: "right"
+                    // },
+                    {
+                      text: "ProHub Chat History"
+                    }
+                  ],
+                }
 
-        // get property information
-        let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
-        // define document
-        let documentDefinition = {
-          header:  function (currentPage, pageCount) {
-            return {
-              margin: [18,18,18,30],
-              columns: [
-                // {
+                // return {
+                //   margin: [18,18,18,30],
                 //   image: logo,
                 //   width:30,
-                //   alignment: "right"
-                // },
-                {
-                  text: "ProHub Chat History"
+                //   alignment: "left"
+                // }
+
+                },
+              footer: function (currentPage, pageCount) {
+                return {
+                  text: "Page " + currentPage.toString() + ' of ' + pageCount,
+                  alignment: 'right',
+                  style: 'normalText',
+                  margin: [0, 20, 20, 20]
                 }
-              ],
-            }
-
-            // return {
-            //   margin: [18,18,18,30],
-            //   image: logo,
-            //   width:30,
-            //   alignment: "left"
-            // }
-
-            },
-          footer: function (currentPage, pageCount) {
-            return {
-              text: "Page " + currentPage.toString() + ' of ' + pageCount,
-              alignment: 'right',
-              style: 'normalText',
-              margin: [0, 20, 20, 20]
-            }
-          },
-          content: [
-            [
-              // TENANT
-              // PROPERTY NAME
-              {
-                margin: [0,20,0,20],
-                text: `Tenant: ${this.chatMessageName}`,
-                style: 'h3',
-              }, // placeholder
-              {
-                margin: [0,0,0,20],
-                text: `Lessor: ${this.chatModel.fullName}`,
-                style: 'h3',
               },
-              // {
-              //   text: [
-              //     {
-              //       margin: [0, 20, 0, 10],
-              //       text: [
-              //         {
-              //           margin: [0, 10, 0, 10],
-              //           text: `Phone number: 012-345-6789`},// placeholder
-              //       ],
-              //       style: { bold: false, fontSize: 18, marginBottom: 5 }
-              //     },
-              //   ],
-              //   margin: [0, 10, 0, 10],
-              // },
-            ],
-            // BODY
-            // HEADER
-            {
-              text: 'Chat History with ' + this.chatMessageName,
-              style: 'h3'
-            },
-            // print chat messages
-            arrayOfResponses.length != 0 ? arrayOfResponses: {}
-          ],
-          styles: {
-            header: {
-              fontSize: 18,
-              bold: true,
-              margin: [0, 30, 0, 30],
-              // decoration: 'underline'
-            },
-            h3: {
-              fontSize: 16,
-              bold: true,
-              margin: [0, 20, 10, 20],
-              decoration: 'underline'
-            },
-            name: {
-              fontSize: 16,
-              bold: true
-            },
-            sign: {
-              margin: [0, 50, 0, 10],
-              alignment: 'right',
-              italics: true
-            },
-          }
-        };
-        // generate pdf and download
-        pdfMake.createPdf(documentDefinition).download(
-          // Filename format: YYYYMMDD-PropertyName-TenantName
-          (new Date).toISOString().slice(0,10).replace(/-/g,"")
-          + '_' + prop.name
-          // + '_' + this.chatModel.fullName.replace(/ /, '_')
-          + '_' + "placeholder"
-        );
-      })
+              content: [
+                [
+                  // TENANT
+                  // PROPERTY NAME
+                  {
+                    margin: [0,20,0,20],
+                    text: `Tenant: ${this.chatMessageName}`,
+                    style: 'h3',
+                  }, // placeholder
+                  {
+                    margin: [0,0,0,20],
+                    text: `Lessor: ${this.chatModel.fullName}`,
+                    style: 'h3',
+                  },
+                  // {
+                  //   text: [
+                  //     {
+                  //       margin: [0, 20, 0, 10],
+                  //       text: [
+                  //         {
+                  //           margin: [0, 10, 0, 10],
+                  //           text: `Phone number: 012-345-6789`},// placeholder
+                  //       ],
+                  //       style: { bold: false, fontSize: 18, marginBottom: 5 }
+                  //     },
+                  //   ],
+                  //   margin: [0, 10, 0, 10],
+                  // },
+                ],
+                // BODY
+                // HEADER
+                {
+                  text: 'Chat History with ' + this.chatMessageName,
+                  style: 'h3'
+                },
+                // print chat messages
+                arrayOfResponses
+              ],
+              styles: {
+                header: {
+                  fontSize: 18,
+                  bold: true,
+                  margin: [0, 30, 0, 30],
+                  // decoration: 'underline'
+                },
+                h3: {
+                  fontSize: 16,
+                  bold: true,
+                  margin: [0, 20, 10, 20],
+                  decoration: 'underline'
+                },
+                name: {
+                  fontSize: 16,
+                  bold: true
+                },
+                sign: {
+                  margin: [0, 50, 0, 10],
+                  alignment: 'right',
+                  italics: true
+                },
+              }
+            };
+            // generate pdf and download
+            pdfMake.createPdf(documentDefinition).download(
+              // Filename format: YYYYMMDD-PropertyName-TenantName
+              (new Date).toISOString().slice(0,10).replace(/-/g,"")
+              + '_' + prop.name
+              // + '_' + this.chatModel.fullName.replace(/ /, '_')
+              + '_' + this.chatMessageName
+            );
+          })
 
-    })
   }
 
 
