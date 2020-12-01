@@ -13,7 +13,6 @@ import {PropertyService} from './property.service';
 export class UnitsService {
 
   units: Observable<any[]>;
-  allUnits = [];
   unit: UnitModel;
 
   unitRef: AngularFireList<UnitModel> = null;

@@ -10,6 +10,7 @@ import { ErrorDialogComponent } from '../shared-components/error-dialog/error-di
 import { FirebaseService } from './firebase.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class AuthService {
   userData: any; // Save logged in user data
   user: Observable<unknown>;
   loggedInUser: any;
+  private cookieValue: string;
 
   constructor(
     public afs: AngularFireDatabase,
@@ -26,7 +28,8 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone,
     public dialog: MatDialog, // NgZone service to remove outside scope warning
-    private http: HttpClient
+    private http: HttpClient,
+    private cookieService: CookieService
   ) {
     /* Saving user data in localstorage when
     logged in and setting up null when logged out */
@@ -90,6 +93,14 @@ export class AuthService {
       });
   }
 
+  SaveCookies(rememberMe){
+    if (rememberMe){
+      this.cookieService.set( 'RememberMe', JSON.parse(localStorage.getItem('sessionUser') ));
+    }
+  }
+  GetCookies(){
+    return this.cookieValue = this.cookieService.get('RememberMe');
+  }
   GetUserInSession() {
     return JSON.parse(localStorage.getItem('sessionUser'));
   }
