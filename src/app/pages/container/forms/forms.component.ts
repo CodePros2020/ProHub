@@ -23,6 +23,7 @@ export class FormsComponent implements AfterViewInit  {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  allForms: FormModel[];
   forms = [];
   form: FormModel;
   propId: string;
@@ -74,6 +75,7 @@ export class FormsComponent implements AfterViewInit  {
           // this.form.size = 1024;
           this.forms.push(this.form);
         });
+      this.allForms = this.forms;
       console.log('Forms retrieved: ', this.forms);
       this.dataSource = new MatTableDataSource(this.forms);
       this.dataSource.sort = this.sort;
@@ -136,6 +138,12 @@ export class FormsComponent implements AfterViewInit  {
     const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let formatted_date = months[date.getMonth()] + " " + date.getDate() +  ", " + date.getFullYear()
     return formatted_date;
+  }
+
+  public searchForm(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource = new MatTableDataSource(this.allForms.filter
+    (a => (a.formTitle.toLowerCase().includes(filterValue))));
   }
 
 }
