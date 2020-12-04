@@ -19,7 +19,6 @@ export class AuthService {
   userData: any; // Save logged in user data
   user: Observable<unknown>;
   loggedInUser: any;
-  private cookieValue: string;
 
   constructor(
     public afs: AngularFireDatabase,
@@ -47,11 +46,15 @@ export class AuthService {
   }
 
   // Sign in with email/password
-  SignIn(email, password) {
+  SignIn(email, password, rememberMe) {
     return this.firebaseAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        console.log('User Received =>', result.user);
+        if (rememberMe === true) {
+          console.log('Remember me Val ', rememberMe, 'Email' , result.user.email );
+          this.SaveCookies(rememberMe, result.user.email);
+        }
+        // console.log('User Received =>', result.user);
         this.firebaseService.getUser(result.user.uid).subscribe((res) => {
           localStorage.setItem('sessionUser', JSON.stringify(res));
           this.loggedInUser = res;
@@ -93,13 +96,13 @@ export class AuthService {
       });
   }
 
-  SaveCookies(rememberMe){
+  SaveCookies(rememberMe, email){
     if (rememberMe){
-      this.cookieService.set( 'RememberMe', JSON.parse(localStorage.getItem('sessionUser') ));
+      this.cookieService.set('RememberMeEmail', email);
     }
   }
   GetCookies(){
-    return this.cookieValue = this.cookieService.get('RememberMe');
+    return this.cookieService.get('RememberMeEmail');
   }
   GetUserInSession() {
     return JSON.parse(localStorage.getItem('sessionUser'));
@@ -179,6 +182,8 @@ export class AuthService {
       localStorage.removeItem('user');
       localStorage.removeItem('sessionUser');
       localStorage.removeItem('property');
+      this.cookieService.delete('RememberMeEmail');
+      this.cookieService.deleteAll();
       this.router.navigate(['login']);
     });
   }

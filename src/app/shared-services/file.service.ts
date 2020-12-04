@@ -103,7 +103,7 @@ export class FileService {
   //   const myBase64 = atob(doubleEncodedBase64String)
   // }
 
-  //}
+  // }
 
 
   uploadPhoto(event, ref: string) {
@@ -136,7 +136,7 @@ export class FileService {
           this.hideOverLay();
           this.isUploaded = true;
         } else {
-          this.showOverlay();
+          this.hideOverLay();
           this.isUploaded = false;
         }
       });
