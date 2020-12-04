@@ -1,6 +1,7 @@
 <div class="dashboard-container">
   <div class="header">
-    <div class="image-container">
+    <div >
+      <img src="{{this.loggedInUser.photoURL }}" class="image-container">
     </div>
     <div class="name-container">
       <div class="name-div">
@@ -15,7 +16,7 @@
     <div class="name-container">
 
     </div>
-    <div class="setting-container" *ngIf="this.loggedInUser.type==='BUSINESS'">
+    <div class="setting-container" *ngIf="this.loggedInUser.userType.toUpperCase()==='BUSINESS'">
       <button mat-button class="setting-btn" (click)="goPropertyList()" >
         <mat-icon class="setting-icon">swap_horiz</mat-icon>
         Switch Property

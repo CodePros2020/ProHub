@@ -49,6 +49,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.getLoginForm();
     this.cookieVal = this.authService.GetCookies();
+    console.log('Cookie Val', this.cookieVal);
+    if (this.cookieVal ){
+      this.formControls.userName.setValue(this.cookieVal);
+      this.formControls.rememberMe.setValue(true);
+      console.log('checking val');
+
+    }
   }
 
   getLoginForm() {
@@ -62,14 +69,9 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.SignIn(
       this.formControls.userName.value,
-      this.formControls.password.value
+      this.formControls.password.value,
+      this.formControls.rememberMe.value
     );
-    this.rememberMe = this.formControls.rememberMe.value;
-    if (this.rememberMe === true) {
-      console.log('Setting cookies', this.rememberMe);
-
-      this.authService.SaveCookies(this.rememberMe);
-    }
   }
 
   signupDialog() {
