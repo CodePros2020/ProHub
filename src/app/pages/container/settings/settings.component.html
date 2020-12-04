@@ -1,461 +1,139 @@
 <div class="settings-container">
-
+  <form [formGroup]="changeAccountForm">
     <div class="header">
-      <div class="image-container">
+      <div>
+        <div style="height: 50px"></div>
+        <div class="img-div input-group photo-size" >
+          <img class="image-container"  [src]="getImageLink()">
+          <mat-icon class="field-upload-btn" (click)="openPhotoDialog()" >add_a_photo</mat-icon>
+        </div>
       </div>
-
       <div class="row">
         <div class="col">
           <div class="name-container">{{this.loggedInUserName}}</div>
         </div>
+        <div style="height: 50px"></div>
         <div class="w-100"></div>
         <div class="col">
-          <div class="subheading-container">User Information</div>
+          <div class="subheading-container">User Type: {{this.loggedInUserType}}</div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col">
+          <div class="subheading-container">{{this.loggedInUserEmail}}</div>
         </div>
       </div>
-
     </div>
-
-  <div class="content-container">
-<!--    <div class="card" style="width: 18rem;">-->
-<!--      <img src="..." class="card-img-top" alt="...">-->
-<!--      <div class="card-body">-->
-<!--        <h5 class="card-title">Card with stretched link</h5>-->
-<!--        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-<!--        <a href="#" class="btn btn-primary stretched-link">Go somewhere</a>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="row no-gutters bg-light position-relative">-->
-<!--      <div class="col-md-2 mb-md-0 p-md-4">-->
-<!--        <img src="..." class="w-100" alt="...">-->
-<!--      </div>-->
-<!--      <div class="col-md-6 position-static p-4 pl-md-0">-->
-<!--        <h5 class="mt-0">Columns with stretched link</h5>-->
-<!--        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>-->
-<!--        <a href="#" class="stretched-link">Go somewhere</a>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <h4>B</h4>-->
-<!--      </div>-->
-<!--    </div>-->
-
-
-    <div id="accordion">
-      <div class="card">
-
-        <div id="headingOne">
-            <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-
-              <div class="selection-container" (click)="showFirst=!showFirst">
+    <div class="content-container">
+      <div class="card-body">
+        <div class="content">
+          <div>
+            <div style="text-align: center">
+              <div class="selection-heading">Update Account Details</div>
+            </div>
+            <div style="height: 30px"></div>
+            </div>
+            <form [formGroup]="changeAccountForm">
+              <div style="height: 10px"></div>
               <div class="row"  style="width: 950px">
-                <div class="col-2">
-                  <div class="icon-container">
-                    <mat-icon class="setting-icon">perm_identity</mat-icon>
-                  </div>
-
-                </div>
-                <div class="col-9" style="text-align: left">
-                    <div class="selection-heading">Account Details</div>
-                </div>
-                <div class="col-1">
-                  <div class="icon-container">
-                    <mat-icon class="setting-icon" *ngIf="showFirst">expand_more</mat-icon>
-                    <mat-icon class="setting-icon" *ngIf="!showFirst">expand_less</mat-icon>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </button>
-        </div>
-
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body">
-
-            <div class="content">
-                <div class="row"  style="padding-bottom: 10px">
-                  <div class="col-3">
-                    <div class="field-text">User Role:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-                      <div class="field-text">{{this.loggedInUserType}}</div>
-                  </div>
-                  <div class="col-2">
-                  </div>
-                </div>
-                <div class="row"  style="padding-bottom: 10px">
-                  <div class="col-3">
-                    <div class="field-text">Email:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-                    <div class="field-text">{{this.loggedInUserEmail}}</div>
-                  </div>
-                  <div class="col-2">
-                  </div>
-                </div>
-
-              <div class="row"  style="padding-bottom: 10px">
                 <div class="col-3">
                   <div class="field-text">Phone Number:</div>
                 </div>
                 <div class="col-7" style="text-align: left">
-                  <div class="field-text">{{this.loggedInUserPhoneNumber}}</div>
+                  <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
+                    <input formControlName="phoneNumber" matInput maxlength="15" mask="(000) 000-0000">
+                    <mat-error *ngIf="formControls.phoneNumber.invalid">Please enter a valid phone number.</mat-error>
+                  </mat-form-field>
                 </div>
                 <div class="col-2">
                 </div>
               </div>
-
-              <div class="row"  style="padding-bottom: 10px">
+              <div class="row"  style="width: 950px">
                 <div class="col-3">
                   <div class="field-text">Address:</div>
                 </div>
                 <div class="col-7" style="text-align: left">
-                  <div class="field-text">{{this.loggedInUserAddress}}</div>
+                  <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
+                    <input formControlName="address" matInput maxlength="64">
+                    <mat-error *ngIf="formControls.address.invalid">Please enter address.</mat-error>
+                  </mat-form-field>
                 </div>
                 <div class="col-2">
                 </div>
               </div>
-
-              <div class="row"  style="padding-bottom: 10px">
+              <div class="row"  style="width: 950px">
                 <div class="col-3">
                   <div class="field-text">City:</div>
                 </div>
                 <div class="col-7" style="text-align: left">
-                  <div class="field-text">{{this.loggedInUserCity}}</div>
+                  <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
+                    <input formControlName="city" matInput maxlength="64">
+                    <mat-error *ngIf="formControls.city.invalid">Please enter city.</mat-error>
+                  </mat-form-field>
                 </div>
                 <div class="col-2">
                 </div>
               </div>
-
-              <div class="row"  style="padding-bottom: 10px">
+              <div class="row"  style="width: 950px">
                 <div class="col-3">
                   <div class="field-text">Province:</div>
                 </div>
                 <div class="col-7" style="text-align: left">
-                  <div class="field-text">{{this.loggedInUserProvince}}</div>
+                  <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
+                    <mat-select formControlName="province">
+                      <mat-option *ngFor="let province of provinces | keyvalue: returnZero" value="{{province.key}}">
+                        {{province.value}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="this.formControls.province.invalid">Please choose province</mat-error>
+                  </mat-form-field>
                 </div>
                 <div class="col-2">
                 </div>
               </div>
-
-              <div class="row"  style="padding-bottom: 10px">
+              <div class="row"  style="width: 950px">
                 <div class="col-3">
                   <div class="field-text">Postal Code:</div>
                 </div>
                 <div class="col-7" style="text-align: left">
-                  <div class="field-text">{{this.loggedInUserPostalCode}}</div>
+                  <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
+                    <input formControlName="postalCode" matInput maxlength="64">
+                    <mat-error *ngIf="formControls.postalCode.invalid">Please enter postal code.</mat-error>
+                  </mat-form-field>
                 </div>
                 <div class="col-2">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div style="height: 10px"></div>
-
-      <!--        SECOND CARD   -->
-
-      <div class="card">
-
-        <div id="headingTwo">
-          <button class="btn" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-
-            <div class="selection-container" (click)="showFirst=!showFirst">
-              <div class="row"  style="width: 950px">
-                <div class="col-2">
-                  <div class="icon-container">
-                    <mat-icon class="setting-icon">settings</mat-icon>
-                  </div>
-
-                </div>
-                <div class="col-9" style="text-align: left">
-                    <div class="selection-heading">Update Account Details</div>
-                </div>
-                <div class="col-1">
-                  <div class="icon-container">
-                    <mat-icon class="setting-icon" *ngIf="showFirst">expand_more</mat-icon>
-                    <mat-icon class="setting-icon" *ngIf="!showFirst">expand_less</mat-icon>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </button>
-        </div>
-
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-          <div class="card-body">
-
-            <div class="content">
-              <form [formGroup]="changeAccountForm">
-
-                <div class="row"  style="width: 950px">
-                  <div class="col-3">
-                    <div class="field-text">Phone Number:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-                    <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
-                      <input formControlName="phoneNumber" matInput maxlength="15" mask="(000) 000-0000">
-                      <mat-error *ngIf="formControls.phoneNumber.invalid">Please enter a valid phone number.</mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-2">
-                  </div>
-                </div>
-
-
-                <div class="row"  style="width: 950px">
-                  <div class="col-3">
-                    <div class="field-text">Address:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-                    <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
-                      <input formControlName="address" matInput maxlength="64">
-                      <mat-error *ngIf="formControls.address.invalid">Please enter address.</mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-2">
-                  </div>
-                </div>
-
-                <div class="row"  style="width: 950px">
-                  <div class="col-3">
-                    <div class="field-text">City:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-                    <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
-                      <input formControlName="city" matInput maxlength="64">
-                      <mat-error *ngIf="formControls.city.invalid">Please enter city.</mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-2">
-                  </div>
-                </div>
-
-                <div class="row"  style="width: 950px">
-                  <div class="col-3">
-                    <div class="field-text">Province:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-                    <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
-                      <mat-select formControlName="province">
-                        <mat-option *ngFor="let province of provinces | keyvalue: returnZero" value="{{province.key}}">
-                          {{province.value}}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="this.formControls.province.invalid">Please choose province</mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-2">
-                  </div>
-                </div>
-
-
-
-                <div class="row"  style="width: 950px">
-                  <div class="col-3">
-                    <div class="field-text">Postal Code:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-                    <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
-                      <input formControlName="postalCode" matInput maxlength="64">
-                      <mat-error *ngIf="formControls.postalCode.invalid">Please enter postal code.</mat-error>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-2">
-                    <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem">
-                      <div class="text-center">
-                        <button class="save" mat-raised-button (click)="onClickSaveButton()">SAVE</button>
-                      </div>
+                  <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem">
+                    <div class="text-center">
+                      <button class="save" mat-raised-button (click)="onClickSaveButton()">SAVE</button>
                     </div>
                   </div>
                 </div>
-
-              </form>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div style="height: 10px"></div>
-
-
-      <!--        THIRD CARD   -->
-
-      <div class="card">
-
-        <div id="headingThree">
-          <button class="btn" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-
-            <div class="selection-container" (click)="showFirst=!showFirst">
+              </div>
+            </form>
+            <div style="height: 10px"></div>
+            <hr>
+            <div style="height: 20px"></div>
+            <div>
+              <div style="text-align: center">
+                <div class="selection-heading">Change Password</div>
+              </div>
+              <div style="height: 30px"></div>
               <div class="row"  style="width: 950px">
+                <div class="col-10">
+                  <div class="field-text-pass">Click the button to receive a link to change your password.</div>
+                </div>
                 <div class="col-2">
-                  <div class="icon-container">
-                    <mat-icon class="setting-icon">vpn_key</mat-icon>
-                  </div>
-
-                </div>
-                <div class="col-9" style="text-align: left">
-                    <div class="selection-heading">Change Password</div>
-                </div>
-                <div class="col-1">
-                  <div class="icon-container">
-                    <mat-icon class="setting-icon" *ngIf="showFirst">expand_more</mat-icon>
-                    <mat-icon class="setting-icon" *ngIf="!showFirst">expand_less</mat-icon>
+                  <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem">
+                    <div class="text-center">
+                      <button class="reset" mat-raised-button (click)="onClickResetButton()">RESET PASSWORD</button>
+                    </div>
+                    <div style="height: 10px"></div>
                   </div>
                 </div>
               </div>
             </div>
-          </button>
-        </div>
-
-        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-          <div class="card-body">
-
-            <div class="content">
-              <form [formGroup]="changeAccountForm">
-
-                <div class="row"  style="width: 950px">
-                  <div class="col-3">
-                    <div class="field-text">Current Password:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-
-                    <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
-                      <input formControlName="currentPassword" matInput maxlength="64" [type]="hideCurrent ? 'password' : 'text'"
-                             placeholder="">
-                      <button mat-icon-button matSuffix (click)="hideCurrent = !hideCurrent" [attr.aria-label]="'Hide password'"
-                              [attr.aria-pressed]="hideCurrent">
-                        <mat-icon>{{hideCurrent ? 'visibility_off' : 'visibility'}}</mat-icon>
-                      </button>
-                      <mat-error *ngIf="formControls.currentPassword.invalid">Please enter your current password.</mat-error>
-                    </mat-form-field>
-
-                  </div>
-                  <div class="col-2">
-                  </div>
-                </div>
-
-
-                <div class="row"  style="width: 950px">
-                  <div class="col-3">
-                    <div class="field-text">New Password:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-
-                    <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
-                      <input formControlName="newPassword" matInput maxlength="64" [type]="hideNew ? 'password' : 'text'"
-                             placeholder="">
-                      <button mat-icon-button matSuffix (click)="hideNew = !hideNew" [attr.aria-label]="'Hide password'"
-                              [attr.aria-pressed]="hideNew">
-                        <mat-icon>{{hideNew ? 'visibility_off' : 'visibility'}}</mat-icon>
-                      </button>
-                      <mat-error *ngIf="formControls.newPassword.invalid">Please enter a new password.</mat-error>
-                    </mat-form-field>
-
-                  </div>
-                  <div class="col-2">
-                  </div>
-                </div>
-
-
-
-                <div class="row"  style="width: 950px">
-                  <div class="col-3">
-                    <div class="field-text">Confirm Password:</div>
-                  </div>
-                  <div class="col-7" style="text-align: left">
-
-                    <mat-form-field appearance="outline" class="col-md-10" style="padding-bottom:0 ">
-                      <input formControlName="confirmPassword" matInput maxlength="64" [type]="hideConfirm ? 'password' : 'text'"
-                             placeholder="">
-                      <button mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm" [attr.aria-label]="'Hide password'"
-                              [attr.aria-pressed]="hideConfirm">
-                        <mat-icon>{{hideConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
-                      </button>
-                      <mat-error *ngIf="formControls.confirmPassword.invalid">Please confirm new password.</mat-error>
-                    </mat-form-field>
-
-                  </div>
-                  <div class="col-2">
-                    <div class="row justify-content-md-center buttons" style="margin-bottom: 1rem">
-                      <div class="text-center">
-                        <button class="save" mat-raised-button (click)="onClickSaveButton()">SAVE</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </form>
-            </div>
           </div>
         </div>
-
-      </div>
-
-
-<!--      <div class="card" >-->
-<!--          <button class="btn" (click)="goUnits()">-->
-<!--            <div class="selection-container">-->
-<!--              <div class="row"  style="width: 950px">-->
-<!--                <div class="col-2">-->
-<!--                  <div class="icon-container">-->
-<!--                    <mat-icon class="setting-icon">home</mat-icon>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="col-9" style="text-align: left">-->
-<!--                  <div class="row">-->
-<!--                    <div class="selection-heading">Unit</div>-->
-<!--                  </div>-->
-<!--                  <div class="row">-->
-<!--                    <div class="selection-subheading">View all units</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="col-1">-->
-<!--                  <div class="icon-container">-->
-<!--                    <mat-icon class="setting-icon">chevron_right</mat-icon>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </button>-->
-<!--      </div>-->
-
-
-<!--      <div style="height: 10px"></div>-->
-
-<!--      <div class="card" >-->
-<!--        <button class="btn" (click)="goStaff()">-->
-<!--          <div class="selection-container">-->
-<!--            <div class="row"  style="width: 950px">-->
-<!--              <div class="col-2">-->
-<!--                <div class="icon-container">-->
-<!--                  <mat-icon class="setting-icon">supervisor_account</mat-icon>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-9" style="text-align: left">-->
-<!--                <div class="row">-->
-<!--                  <div class="selection-heading">Staff</div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                  <div class="selection-subheading">Staff management</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-1">-->
-<!--                <div class="icon-container">-->
-<!--                  <mat-icon class="setting-icon">chevron_right</mat-icon>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </button>-->
-<!--      </div>-->
     </div>
-
-  </div>
-
+    <div style="height: 10px"></div>
+  </form>
 </div>
