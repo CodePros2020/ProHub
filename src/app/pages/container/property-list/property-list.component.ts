@@ -154,13 +154,14 @@ export class PropertyListComponent implements OnInit, AfterViewInit {
       if (res) {
         this.propertyService.delete(element.key).then(() => {
           this.propertyService.RemovePropertyInSession();
-          this.router.navigate(['container/property-list'])
+          // this.router.navigate(['container/property-list']);
 
           this.retrieveProperties();
         });
       }
     });
   }
+
   setProperty(prop) {
     this.propertyService.setProperty(prop);
     this.router.navigate(['container/dashboard']);

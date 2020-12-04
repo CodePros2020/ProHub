@@ -4,15 +4,21 @@
       <div class="col">
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-icon matPrefix>search</mat-icon>
-          <input matInput placeholder="Search" formControlName="chatSearch" type="text">
+          <label>
+            <input matInput placeholder="Search" formControlName="chatSearch" type="text" (keyup)="applyFilter($event)">
+          </label>
         </mat-form-field>
       </div>
     </div>
 
     <div class="row main-chat">
       <div class="col d-flex flex-md-row">
-        <app-chat-list class="chat-list" (chatMessageId)="getChatMessageID($event)" (chatMessageName)="getChatMessageName($event)"></app-chat-list>
-        <app-chat-room class="chat-room" [chatMessageId]="chatMessageId" [chatMessageName]="chatMessageName"></app-chat-room>
+        <app-chat-list class="chat-list" [chatList]="filteredOptions"
+                       (chatMessageId)="getChatMessageID($event)"
+                       (chatMessageName)="getChatMessageName($event)" ></app-chat-list>
+        <app-chat-room class="chat-room"
+                       [chatMessageId]="chatMessageId"
+                       [chatMessageName]="chatMessageName"></app-chat-room>
       </div>
     </div>
   </form>

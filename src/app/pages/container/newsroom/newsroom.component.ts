@@ -15,10 +15,12 @@ import {AuthService} from '../../../shared-services/auth.service';
 })
 export class NewsroomComponent implements OnInit {
   panelOpenState = false;
+  allNewsList: NewsModel[];
   newsList: NewsModel[];
   news: NewsModel;
   propertyId: string;
   phoneNumber: string;
+  userType;
 
   constructor(public dialog: MatDialog,
               public propertyService: PropertyService,
@@ -26,15 +28,23 @@ export class NewsroomComponent implements OnInit {
               private newsService: NewsService) { }
 
   ngOnInit(): void {
-    this.propertyId = this.propertyService.GetPropertyInSession().propId;
+
+    if (this.propertyService.GetPropertyInSession() !== null) {
+      this.propertyId = this.propertyService.GetPropertyInSession().propId;
+    }
     this.phoneNumber = this.authService.GetUserInSession().phoneNumber;
-    this.newsService.getAll().snapshotChanges().pipe(
-      map(changes => changes.map(c => ({
-        key: c.payload.key, ...c.payload.val()
-      })))
-    ).subscribe(data => {
-      this.newsList = data.reverse().filter(a => !a.hideFlag).filter(a => a.propId === this.propertyId);
-    });
+    this.userType = this.authService.GetUserInSession().userType;
+
+    if (this.propertyId !== null && this.propertyId !== undefined) {
+      this.newsService.getAll().snapshotChanges().pipe(
+        map(changes => changes.map(c => ({
+          key: c.payload.key, ...c.payload.val()
+        })))
+      ).subscribe(data => {
+        this.newsList = data.reverse().filter(a => !a.hideFlag).filter(a => a.propId === this.propertyId);
+        this.allNewsList = this.newsList;
+      });
+    }
   }
 
   public openAddNewsDialog(){
@@ -62,5 +72,11 @@ export class NewsroomComponent implements OnInit {
       data: {news: newsObject},
       disableClose: false
     });
+  }
+
+  public searchNews(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.newsList = this.allNewsList.filter
+      (a => (a.newsTitle.toLowerCase().includes(filterValue) || a.content.toLowerCase().includes(filterValue)));
   }
 }

@@ -15,7 +15,7 @@
     <div class="name-container">
 
     </div>
-    <div class="setting-container">
+    <div class="setting-container" *ngIf="this.loggedInUser.type==='BUSINESS'">
       <button mat-button class="setting-btn" (click)="goPropertyList()" >
         <mat-icon class="setting-icon">swap_horiz</mat-icon>
         Switch Property

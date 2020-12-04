@@ -14,17 +14,8 @@ import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-p
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(
-    public dialog: MatDialog,
-    private formBuilder: FormBuilder,
-    public firebaseService: FirebaseService,
-    public router: Router,
-    public authService: AuthService
-  ) {}
-
-  get formControls() {
-    return this.loginForm.controls;
-  }
+  rememberMe = false;
+  cookieVal: string;
 
   public loginForm: FormGroup;
   public hide = true;
@@ -34,6 +25,22 @@ export class LoginComponent implements OnInit {
   date: Date = new Date();
   year: number;
 
+
+  constructor(
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    public firebaseService: FirebaseService,
+    public router: Router,
+    public authService: AuthService,
+  ) {
+
+  }
+
+
+  get formControls() {
+    return this.loginForm.controls;
+  }
+
   getYear() {
     this.year = this.date.getFullYear();
     return this.year;
@@ -41,12 +48,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLoginForm();
+    this.cookieVal = this.authService.GetCookies();
   }
 
   getLoginForm() {
     this.loginForm = this.formBuilder.group({
       userName: ['', Validators.required],
       password: ['', Validators.required],
+      rememberMe: [false]
     });
   }
 
@@ -55,6 +64,12 @@ export class LoginComponent implements OnInit {
       this.formControls.userName.value,
       this.formControls.password.value
     );
+    this.rememberMe = this.formControls.rememberMe.value;
+    if (this.rememberMe === true) {
+      console.log('Setting cookies', this.rememberMe);
+
+      this.authService.SaveCookies(this.rememberMe);
+    }
   }
 
   signupDialog() {
@@ -79,3 +94,4 @@ export class LoginComponent implements OnInit {
     });
   }
 }
+

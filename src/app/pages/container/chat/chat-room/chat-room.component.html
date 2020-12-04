@@ -2,7 +2,7 @@
   <ng-container *ngIf="chatMessageId !== undefined">
     <div class="chat-info-content d-flex justify-content-between">
       <span style="font-size: large">{{chatMessageName}}</span>
-      <mat-icon>assignment_returned</mat-icon>
+      <mat-icon (click)="exportChatHistory()">assignment_returned</mat-icon>
     </div>
     <div #chatContent [scrollTop]="scrollTop" class="chat-room-content">
       <div class="row" *ngFor="let chat of chats">
@@ -32,11 +32,11 @@
       <form [formGroup]="chatForm">
         <div class="rows">
           <div class="col d-flex justify-content-between">
-            <div class="field">
+            <div class="field" >
               <mat-form-field appearance="outline" class="message-form-field">
-              <textarea formControlName="message" matInput matTextareaAutosize
-                        matAutosizeMinRows=1 matAutosizeMaxRows=2 (keyup.enter)="sendChat()"
-                        placeholder="Enter message here" [errorStateMatcher]="matcher"></textarea>
+              <textarea formControlName="message" matInput matTextareaAutosize class="txt-height"
+                        matAutosizeMinRows=1  (keyup.enter)="sendChat()"
+                        placeholder="Enter message here" [errorStateMatcher]="matcher" ></textarea>
               </mat-form-field>
             </div>
             <div class="buttons">

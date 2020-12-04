@@ -76,6 +76,36 @@ export class FileService {
     );
   }
 
+  // async downloadPhoto(param: string) {
+  //   this.afStorage.storage.refFromURL("https://firebasestorage.googleapis.com/v0/b/prohub-410f4.appspot.com/o/chat%2Fyycb08p9f2?alt=media&token=4bf30600-f6d7-4162-8510-72237f94507f")
+  //     .getDownloadURL().then(x=>{
+  //       fetch(x)
+  //         .then(response => response.blob())
+  //         .then(blob=>{
+  //           new Promise((resolve, reject) => {
+  //             const reader = new FileReader;
+  //             reader.onerror = reject;
+  //             reader.onload = () => {
+  //               resolve(reader.result);
+  //             };
+  //             reader.readAsDataURL(blob);
+  //           })
+  //         })
+  //         .then(doubleBase64EncodedFile=>{
+  //           console.log(doubleBase64EncodedFile);
+  //         })
+  //
+  //   })
+
+  //
+  //   const doubleBase64EncodedFile = await convertBlobToBase64(blob)
+  //   const doubleEncodedBase64String:string = (doubleBase64EncodedFile).split(',')[1]
+  //   const myBase64 = atob(doubleEncodedBase64String)
+  // }
+
+  //}
+
+
   uploadPhoto(event, ref: string) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();

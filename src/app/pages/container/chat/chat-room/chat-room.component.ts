@@ -9,6 +9,14 @@ import {AuthService} from '../../../../shared-services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ImageUploadDialogComponent} from './image-upload-dialog/image-upload-dialog.component';
 
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {ChatMessagesService} from "../../../../shared-services/chat-messages.service";
+import {PropertyService} from "../../../../shared-services/property.service";
+import {PropertyModel} from "../../property-list/manager/property.model";
+import {FileService} from "../../../../shared-services/file.service";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -41,7 +49,10 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   constructor(private formBuilder: FormBuilder,
               private dialog: MatDialog,
               private chatService: ChatService,
+              private chatMessageService: ChatMessagesService,
               private authService: AuthService,
+              private propertyService: PropertyService,
+              private fileService: FileService,
               public datePipe: DatePipe) {
     this.loggedInUserPhoneNumber = this.authService.GetUserInSession().phoneNumber;
     this.createChatFormGroup();
@@ -53,11 +64,12 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    // console.log('chat message in on changes', this.chatMessageId);
     this.retrieveChats();
+    console.log('chat message in on changes', this.chatMessageId);
   }
 
   retrieveChats() {
+
     if (this.chatMessageId !== undefined) {
       this.chatService.getAll(this.chatMessageId).snapshotChanges().pipe(
         map(chats =>
@@ -177,4 +189,195 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       }
     });
   }
+
+  async exportChatHistory(){
+    const chatMessageProcessor = this.chats.map(async (c:ChatModel) => {
+      let imageData = null;
+
+      // download image when included
+      if(c.imageUrl != undefined) {
+        imageData = await this.getBase64ImageFromURL(c.imageUrl);
+      }
+
+      if(imageData){
+        return [
+          // message header
+          {
+            text: "[" + this.formatDateTime(c.timeStamp) + "] "
+              + c.fullName + " sent: ",
+            alignment: 'left',
+            margin: [ 0, 0, 0, 10 ]
+          },
+          // image
+          {
+            image: imageData,
+            width: 250,
+            margin: [ 0, 0, 0, 20 ]
+          }
+        ]
+      } else {
+        return [
+          // message header
+          {
+            text: "[" + this.formatDateTime(c.timeStamp) + "] "
+              + c.fullName + ": " + c.message,
+            alignment: 'left',
+            margin: [ 0, 0, 0, 10 ]
+          }
+        ]
+
+      }
+    })
+
+    // run chatMessageProcessor to each message and make pdf
+    Promise.all(chatMessageProcessor).then(async arrayOfResponses => {
+      // let logo = await this.getBase64ImageFromURL("../../../../../../assets/logo-medium.png");
+
+      // get property information
+      let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
+
+      // define document
+      let documentDefinition = {
+        header:  function (currentPage, pageCount) {
+          return {
+            margin: [18,18,18,30],
+            columns: [
+              // {
+              //   image: logo,
+              //   width:30,
+              //   alignment: "right"
+              // },
+              // {
+              //   text: "ProHub - Chat History"
+              // }
+            ],
+          }
+        },
+        footer: function (currentPage, pageCount) {
+          return {
+            text: `Page ${currentPage.toString()} of ${pageCount}`,
+            alignment: 'right',
+            style: 'normalText',
+            margin: [0, 20, 20, 10]
+          }
+        },
+        content: [
+            {
+              margin: [0, 0, 0, 5],
+              text: [
+                { text: prop.name + "\n",
+                  style: {
+                    fontSize: 20,
+                    bold: true,
+                    margin: [0, 20, 10, 25],
+                    // decoration: 'underline'
+                  },
+                },
+                { text: `${prop.streetLine1}\n`},
+                prop.streetLine2 ? { text: `${prop.streetLine2}\n`} : {},
+                { text: `${prop.city}, ${prop.province}, ${prop.postalCode}`},
+              ],
+              alignment: 'center',
+            },
+            {
+              columns: [
+                // TENANT Name
+                {
+                  text: `Tenant: ${this.chatMessageName}`,
+                  style: 'h3',
+                },
+                {
+                  text: `Lessor: ${this.chatModel.fullName}`,
+                  style: 'h3',
+                },
+              ],
+              alignment: 'center',
+              margin: [0,0,0,5]
+            },
+
+          // BODY
+          // HEADER
+          {
+            text: 'CHAT HISTORY',
+            style: 'h3_chathistory'
+          },
+          // print chat messages
+          arrayOfResponses
+        ],
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            margin: [0, 30, 0, 30],
+            // decoration: 'underline'
+          },
+          h3_chathistory: {
+            fontSize: 18,
+            bold: true,
+            margin: [0, 20, 10, 20],
+             // decoration: 'underline'
+          },
+          h3: {
+            fontSize: 16,
+            bold: true,
+            margin: [0, 20, 10, 20],
+             decoration: 'underline'
+          },
+          name: {
+            fontSize: 16,
+            bold: true
+          },
+          sign: {
+            margin: [0, 50, 0, 10],
+            alignment: 'right',
+            italics: true
+          },
+        }
+      };
+      // generate pdf and download
+      pdfMake.createPdf(documentDefinition).download(
+        // Filename format: YYYYMMDD-PropertyName-TenantName
+        (new Date).toISOString().slice(0,10).replace(/-/g,"")
+        + '_' + prop.name
+        + '_' + this.chatMessageName.fullName
+      );
+    })
+  }
+
+  // format date for chat export history
+  formatDateTime(dateString) {
+    let date: Date = new Date(dateString);
+    let day = date.getDate();
+    let monthIndex = date.getMonth();
+    let year = date.getFullYear();
+    let minutes = ('0'+date.getMinutes()).slice(-2);
+    let hours = ('0'+date.getHours()).slice(-2);
+    let seconds = ('0'+date.getSeconds()).slice(-2);
+    let myFormattedDate = year+"-"+(monthIndex+1)+"-"+day+" "+ hours+":"+minutes+":"+seconds;
+    return myFormattedDate;
+
+  }
+
+  // download image data from url
+  getBase64ImageFromURL(url) {
+    return new Promise((resolve, reject) => {
+      let img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+      img.onload = () => {
+        let canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        let dataURL = canvas.toDataURL("image/png");
+        // let dataURL = canvas.toDataURL("image/jpeg");
+        resolve(dataURL);
+      };
+      img.onerror = error => {
+        reject(error);
+      };
+      img.src = url;
+    });
+  }
+
 }
