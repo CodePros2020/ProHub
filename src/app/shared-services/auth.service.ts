@@ -104,6 +104,14 @@ export class AuthService {
   GetCookies(){
     return this.cookieService.get('RememberMeEmail');
   }
+  DeleteCookies(){
+    const userEmail = this.GetCookies();
+    if (userEmail === this.userData.email) {
+      this.cookieService.delete('RememberMeEmail');
+    }
+
+    return this.cookieService.get('RememberMeEmail');
+  }
   GetUserInSession() {
     return JSON.parse(localStorage.getItem('sessionUser'));
   }
@@ -182,8 +190,7 @@ export class AuthService {
       localStorage.removeItem('user');
       localStorage.removeItem('sessionUser');
       localStorage.removeItem('property');
-      this.cookieService.delete('RememberMeEmail');
-      this.cookieService.deleteAll();
+      this.DeleteCookies();
       this.router.navigate(['login']);
     });
   }
