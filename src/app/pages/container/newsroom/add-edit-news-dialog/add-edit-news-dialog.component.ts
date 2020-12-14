@@ -128,7 +128,7 @@ export class AddEditNewsDialogComponent implements OnInit {
   }
 
   getImageLink() {
-    return this.newsForm.controls.imageUrl.value || '/assets/no-photo.png';
+    return this.newsForm.controls.imageUrl.value || '';
   }
 
   getFileLink() {
