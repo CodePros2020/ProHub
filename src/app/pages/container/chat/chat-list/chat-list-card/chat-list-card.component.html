@@ -7,7 +7,7 @@
         </div>
       </ng-container>
       <ng-container *ngIf="chatMessageModel.senderPhotoUrl === ''">
-        <div class="circle-base"></div>
+        <div class="circle-base" [ngStyle]="{'background-image': 'url(' + chatCardImg + ')'}"></div>
       </ng-container>
     </div>
     <div class="col chat-info">

@@ -16,6 +16,7 @@ export class ChatListCardComponent implements OnInit {
   chat: ChatModel;
   loggedInUserPhoneNumber;
   unread = false;
+  chatCardImg = './assets/account-icon.png';
 
   constructor(private chatService: ChatService,
               private authService: AuthService) {

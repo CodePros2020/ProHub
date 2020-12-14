@@ -17,6 +17,12 @@ export class DashboardComponent implements OnInit {
   loggedInUserName: string;
   loggedInUser: any;
   propertyName = '';
+  settingImg = './assets/dashboard/settings.jpg';
+  unitsImg = './assets/dashboard/units.jpg';
+  chatImg = './assets/dashboard/chats.jpg';
+  newsImg = './assets/dashboard/news.jpg';
+  staffImg = './assets/dashboard/staff.jpg';
+  formsImg = './assets/dashboard/forms.jpg';
   property: PropertyModel;
   tenantProperty: any;
   constructor(
