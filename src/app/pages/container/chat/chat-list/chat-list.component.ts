@@ -14,7 +14,7 @@ export class ChatListComponent implements OnInit {
   @Output() chatMessageName: EventEmitter<any> = new EventEmitter<any>();
 
   loggedInFullName;
-  chatImg = './assets/chatUserImg.jpg';
+  chatImg ;
   chatMessageModel: ChatMessagesModel;
   @Input() chatList = [];
 
@@ -30,6 +30,7 @@ export class ChatListComponent implements OnInit {
   getLoggedInFullName() {
     this.loggedInFullName = this.authService.GetUserInSession().firstName + ' ' +
       this.authService.GetUserInSession().lastName;
+    this.chatImg = this.authService.GetUserInSession().photoURL || './assets/chatUserImg.jpg';
   }
 
   getChatMessageId(id, name) {

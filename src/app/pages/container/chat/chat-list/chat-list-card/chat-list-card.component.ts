@@ -22,6 +22,7 @@ export class ChatListCardComponent implements OnInit {
               private authService: AuthService) {
     this.chat = new ChatModel();
     this.loggedInUserPhoneNumber = this.authService.GetUserInSession().phoneNumber;
+   // this.chatCardImg = this.authService.GetUserInSession().photoURL ||
 
   }
 
@@ -49,8 +50,8 @@ export class ChatListCardComponent implements OnInit {
   }
 
   getSubstringOfChatLastMessage(message) {
-    if (message.length > 30) {
-      return message.substring(0, 30) + '...';
+    if (message.length > 15) {
+      return message.substring(0, 15) + '...';
     } else {
       return message;
     }
