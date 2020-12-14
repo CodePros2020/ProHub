@@ -25,38 +25,38 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <div class="row justify-content-md-center section chats">
+      <div class="row justify-content-md-center section chats" [ngStyle]="{'background-image': 'url(' + chatImg + ')'}">
         <div class="overlay" (click)="goChats()">
           Chats
         </div>
       </div>
       <ng-container *ngIf="loggedInUser.userType === 'business'">
-        <div class="row justify-content-md-center section staff">
+        <div class="row justify-content-md-center section staff" [ngStyle]="{'background-image': 'url(' + staffImg + ')'}">
           <div class="overlay" (click)="goStaff()">
             Staff
           </div>
         </div>
       </ng-container>
-      <div class="row justify-content-md-center section forms">
+      <div class="row justify-content-md-center section forms" [ngStyle]="{'background-image': 'url(' + formsImg + ')'}">
         <div class="overlay" (click)="goForms()">
           Forms
         </div>
       </div>
     </div>
     <div class="col">
-      <div class="row justify-content-md-center section news">
+      <div class="row justify-content-md-center section news" [ngStyle]="{'background-image': 'url(' + newsImg + ')'}">
         <div class="overlay" (click)="goNews()">
           News
         </div>
       </div>
       <ng-container *ngIf="loggedInUser.userType === 'business'">
-        <div class="row justify-content-md-center section units">
+        <div class="row justify-content-md-center section units" [ngStyle]="{'background-image': 'url(' + unitsImg + ')'}">
           <div class="overlay" (click)="goUnits()">
             Units
           </div>
         </div>
       </ng-container>
-      <div class="row justify-content-md-center section settings">
+      <div class="row justify-content-md-center section settings" [ngStyle]="{'background-image': 'url(' + settingImg + ')'}">
         <div class="overlay" (click)="goSettings()">
           Settings
         </div>

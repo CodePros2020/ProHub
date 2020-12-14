@@ -10,8 +10,12 @@
     width: 100%;
     padding-bottom: 100%;
     border: 3px solid #b8dbd9;
-    background: #b8dbd9 url('/assets/account-icon.png') no-repeat center;
+    //background-image:  url('/assets/account-icon.png');
     background-size: cover;
+    background-color: #b8dbd9;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
   }
 
   .image-container {

@@ -14,6 +14,7 @@ export class ChatListComponent implements OnInit {
   @Output() chatMessageName: EventEmitter<any> = new EventEmitter<any>();
 
   loggedInFullName;
+  chatImg = './assets/chatUserImg.jpg';
   chatMessageModel: ChatMessagesModel;
   @Input() chatList = [];
 
