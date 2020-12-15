@@ -7,7 +7,7 @@ import {map} from 'rxjs/operators';
 import {HideNewsDialogComponent} from './hide-news-dialog/hide-news-dialog.component';
 import {PropertyService} from '../../../shared-services/property.service';
 import {AuthService} from '../../../shared-services/auth.service';
-// import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import {ChatModel} from "../chat/manager/chat.model";
 import {PropertyModel} from "../property-list/manager/property.model";
 import {ErrorStateMatcher} from "@angular/material/core";
@@ -38,7 +38,7 @@ export class NewsroomComponent implements OnInit {
   propertyId: string;
   phoneNumber: string;
   userType;
-  pdfSrc;
+  pdfSource =  "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
 
   constructor(public dialog: MatDialog,
               public propertyService: PropertyService,

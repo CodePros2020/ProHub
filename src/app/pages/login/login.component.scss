@@ -95,6 +95,10 @@ html{
   margin-bottom: 20px;
   width: 100%
 }
+.right-input {
+  display: flex;
+  justify-content: right;
+}
 
 .centre-input {
   display: flex;
@@ -111,11 +115,7 @@ html{
 }
 
 .checkbox-div {
-  display: flex;
-  margin-left: auto;
-  margin-right: 45px;
-  justify-content: right;
-  width: 260px;
+background-color: red;
 }
 
 .div-center {
