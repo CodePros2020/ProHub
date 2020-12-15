@@ -103,20 +103,16 @@ export class NewsroomComponent implements OnInit {
   }
 
   async exportNewsForm(news: NewsModel){
-    let imageData = null;
-    let newsDocumentBody = null;
-    let prop: PropertyModel =  this.propertyService.GetPropertyInSession();
-
-    if(news.imageUrl != undefined) {
-      imageData = await this.getBase64ImageFromURL(news.imageUrl);
-    }
-
-    // download image data
-    newsDocumentBody = [
+    const prop: PropertyModel =  this.propertyService.GetPropertyInSession();
+    const imageData = news.imageUrl ? await this.getBase64ImageFromURL(news.imageUrl) : null;
+    const newsDocumentBody = [
       // message header
       {
         text: prop.name,
         alignment: 'left',
+        bold: true,
+        fontSize: 14,
+        color: "#999999",
         margin: [ 0, 0, 0, 10 ]
       },
       {
@@ -131,13 +127,15 @@ export class NewsroomComponent implements OnInit {
         style: 'postedDate',
         margin: [ 0, 0, 0, 10 ]
       },
+      // optional attachment
+      news.fileUrl ?
       {
         text:  [
           {
             text: `Attachment: `,
           },
           {
-            text: 'Open the attached file',
+            text: 'Open Attached File',
             link: news.fileUrl,
             decoration:"underline",
           },
@@ -145,24 +143,24 @@ export class NewsroomComponent implements OnInit {
         alignment: 'left',
         style: 'postedDate',
         margin: [ 0, 0, 0, 10 ]
-      },
-      // image
+      } : {},
+      // optional image
+      imageData ?
       {
         image: imageData,
         width: 400,
         margin: [ 0, 0, 0, 20 ]
-      },
+      } : {},
       {
         text: news.content,
         alignment: 'left',
         style: 'body',
-        margin: [ 0, 0, 0, 10 ]
+        margin: [ 0, 10, 0, 10 ]
       },
     ];
 
     // define document
     let documentDefinition = {
-
       content: [
         newsDocumentBody
       ],
@@ -182,7 +180,7 @@ export class NewsroomComponent implements OnInit {
           // decoration: 'underline'
         },
         h1: {
-          fontSize: 22,
+          fontSize: 24,
           bold: true,
           margin: [0, 20, 10, 20],
         },
@@ -199,7 +197,7 @@ export class NewsroomComponent implements OnInit {
     pdfMake.createPdf(documentDefinition).download(
       // Filename format: YYYYMMDD-newsTitle
       (new Date).toISOString().slice(0,10).replace(/-/g,"")
-      + '_' + news.newsTitle
+      + '_' + news.newsTitle.replace(/[\\\/:\*\?\"\<\>\|]/gi, '_')
     );
   }
 
