@@ -146,6 +146,7 @@ export class AuthService {
           autoFocus: false,
           restoreFocus: false,
           panelClass: 'no-padding-container',
+          data: { userData: this.userData },
         });
       })
     );
