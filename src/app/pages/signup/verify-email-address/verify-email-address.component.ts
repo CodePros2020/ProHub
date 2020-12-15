@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {AuthService} from '../../../shared-services/auth.service';
 import {Router} from '@angular/router';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {RegistrationModel} from "../../registration/manager/registration.model";
 
 
 @Component({
@@ -11,7 +12,12 @@ import {MatDialogRef} from '@angular/material/dialog';
 })
 export class VerifyEmailAddressComponent implements OnInit {
 
-  constructor(public authService: AuthService, public router: Router, public dialogRef: MatDialogRef<VerifyEmailAddressComponent>) { }
+  user: RegistrationModel;
+  constructor(public dialogRef: MatDialogRef<VerifyEmailAddressComponent>,
+              @Inject(MAT_DIALOG_DATA) private data: any) {
+    this.user = new RegistrationModel();
+    this.user= this.data.userData;
+  }
 
   ngOnInit(): void {
   }
