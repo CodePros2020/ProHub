@@ -6,10 +6,13 @@
     </button>
   </div>
 
-  <div class="image-brand">
-    <img class="logo" src="assets/logo-white.png">
-    <span class="brand">ProHub</span>
-  </div>
+  <butoon mat-button [routerLink]="['dashboard']" style="cursor: pointer">
+    <div class="image-brand">
+      <img class="logo" src="assets/logo-white.png">
+      <span class="brand">ProHub</span>
+    </div>
+  </butoon>
+
 
   <div class="nav-link" fxShow="true" fxHide.lt-md="true">
     <ng-container *ngIf="!isInPropertyListComponent">
