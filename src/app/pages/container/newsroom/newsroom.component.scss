@@ -28,8 +28,15 @@
 }
 
 ::ng-deep .mat-expansion-panel-header-description{
-  flex-grow: 1 !important;
+  flex-grow: 1.50 !important;
 }
 ::ng-deep .mat-expansion-panel-header{
   height: 70px !important;
+}
+.pdf-viewer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(5px 5px 5px #222222);
+  box-shadow:  #7a7a7a;
 }

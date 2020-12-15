@@ -33,31 +33,29 @@
           </mat-panel-description>
 
         </mat-expansion-panel-header>
+        <ng-container *ngIf="userType === 'business'">
+          <div style="float: right">
+            <button mat-flat-button class="mr-2 edit-btn" inline="true"> <mat-icon (click)="exportNewsForm(news)">assignment_returned</mat-icon></button>
+            <button class="mr-2 edit-btn" inline="true" mat-flat-button color="primary" (click)="openEditDialog(news)">Edit</button>
+            <button inline="true " class="hide-btn" mat-flat-button color="warn" (click)="openHideDialog(news)">Hide</button>
+          </div>
+        </ng-container>
         <div class="justify-content-between" style="display: flex;">
           <div>
-<!--            <h4 class="mb-2 text-muted">{{news.createTime}}</h4>-->
-            <div class="justify-content-between" style="display: flex">
+            <div class="justify-content-between" style="display: flex;flex-direction: column">
               <div *ngIf="news.imageUrl !== undefined">
                 <img src="{{news.imageUrl}}" height="120px" width="auto">
               </div>
               <div *ngIf="news.fileUrl !== undefined">
-                <iframe [src]="news.fileUrl | safe" ></iframe>
-<!--                <pdf-viewer [src]="pdfSrc"-->
-<!--                            [render-text]="true"-->
-<!--                            style="display: block;"-->
-<!--                ></pdf-viewer>-->
+
+                <div class="container">
+                  <pdf-viewer [src]="news.fileUrl" [original-size]="false"></pdf-viewer>
+                </div>
               </div>
             </div>
             <br>
             <p>{{news.content}}</p>
           </div>
-          <ng-container *ngIf="userType === 'business'">
-            <div>
-              <button mat-flat-button class="mr-2 edit-btn" inline="true"> <mat-icon (click)="exportNewsForm(news)">assignment_returned</mat-icon></button>
-              <button class="mr-2 edit-btn" inline="true" mat-flat-button color="primary" (click)="openEditDialog(news)">Edit</button>
-              <button inline="true " class="hide-btn" mat-flat-button color="warn" (click)="openHideDialog(news)">Hide</button>
-            </div>
-          </ng-container>
         </div>
       </mat-expansion-panel>
     </div>
