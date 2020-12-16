@@ -7,8 +7,9 @@
 
   .circle-base {
     border-radius: 50%;
-    width: 100%;
-    padding-bottom: 100%;
+    width: 80%;
+    padding-bottom: 70%;
+    margin-left: 10px;
     border: 3px solid #b8dbd9;
     //background-image:  url('/assets/account-icon.png');
     background-size: cover;
@@ -20,8 +21,9 @@
 
   .image-container {
     display: inline-block;
-    width: 100%;
+    width: 80%;
     height: 100%;
+    margin-left: 10px;
     border-radius: 50%;
     border: 3px solid #b8dbd9;
     background-color: #ccc;
