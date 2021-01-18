@@ -1,0 +1,63 @@
+<div class="chat-room-container">
+  <ng-container *ngIf="chatMessageId !== undefined">
+    <div class="chat-info-content d-flex justify-content-between">
+      <span style="font-size: large">{{chatMessageName}}</span>
+      <mat-icon (click)="exportChatHistory()">assignment_returned</mat-icon>
+    </div>
+    <div #chatContent [scrollTop]="scrollTop" class="chat-room-content">
+      <div class="row" *ngFor="let chat of chats">
+        <div class="chat-message">
+          <div class="right-bubble" [ngClass]="{'right-bubble': chat.phoneNumber === loggedInUserPhoneNumber, 'left-bubble': chat.phoneNumber !== loggedInUserPhoneNumber}">
+            <div class="msg-name d-flex justify-content-between" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber">
+              <span>{{chat.timeStamp | date : 'short' }}</span>
+              <span>{{chat.fullName}}</span>
+            </div>
+            <div class="msg-name d-flex justify-content-between" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber">
+              <span>{{chat.fullName}}</span>
+              <span>{{chat.timeStamp | date : 'short' }}</span>
+            </div>
+
+            <ng-container *ngIf="chat.message !== undefined">
+              <p class="msg" *ngIf="chat.phoneNumber === loggedInUserPhoneNumber" text-wrap>{{chat.message}}</p>
+              <p class="msg" *ngIf="chat.phoneNumber !== loggedInUserPhoneNumber" text-wrap>{{chat.message}}</p>
+            </ng-container>
+            <ng-container *ngIf="chat.imageUrl !== undefined">
+              <img style="max-height: 100%; max-width: 100%" src="{{chat.imageUrl}}">
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="send-message-container">
+      <form [formGroup]="chatForm">
+        <div class="rows">
+          <div class="col d-flex justify-content-between">
+            <div class="field" >
+              <mat-form-field appearance="outline" class="message-form-field">
+              <textarea formControlName="message" matInput matTextareaAutosize class="txt-height"
+                        matAutosizeMinRows=1  (keyup.enter)="sendChat()"
+                        placeholder="Enter message here" [errorStateMatcher]="matcher" ></textarea>
+              </mat-form-field>
+            </div>
+            <div class="buttons">
+              <button type="submit" mat-button mat-icon-button (click)="openImageUploadDialog()">
+                <mat-icon>image</mat-icon>
+              </button>
+              <button (click)="sendChat()" type="submit" [disabled]="!chatForm.valid" mat-button mat-icon-button>
+                <mat-icon>send</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="chatMessageId === undefined">
+    <div class="row default-container">
+      <div class="col-sm-12 my-auto text-center" style="font-weight: bolder; font-size: x-large">
+        <img src="assets/logo-dark.png" alt="Logo of ProHub" width="200">
+      </div>
+    </div>
+  </ng-container>
+</div>

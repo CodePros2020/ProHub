@@ -1,0 +1,36 @@
+<mat-card class="chat-list-card-container" [style]="unread ? 'background: #b8dbd9' : 'background: none'">
+  <div class="row profile-image">
+    <div class="col-3">
+      <ng-container *ngIf="chatMessageModel.senderPhotoUrl !== ''">
+        <div>
+          <img class="image-container" src="{{chatMessageModel.senderPhotoUrl}}">
+        </div>
+      </ng-container>
+      <ng-container *ngIf="chatMessageModel.senderPhotoUrl === ''">
+        <div class="circle-base" [ngStyle]="{'background-image': 'url(' + chatCardImg + ')'}"></div>
+      </ng-container>
+    </div>
+    <div class="col chat-info">
+      <div class="top-row">
+        <div [class]="unread ? 'sender-name-unread' : 'sender-name'">{{chatMessageModel.senderName}}</div>
+        <div [class]="unread ? 'time-sent-unread' : 'time-sent'">{{chat.timeStamp | date : 'short' }}</div>
+      </div>
+      <div class="base-row">
+        <div class="left">
+          <div class="unit-number">&nbsp;</div>
+          <div [class]="unread ? 'last-message-unread' : 'last-message'">
+            <ng-container *ngIf="chat.message !== undefined">
+              {{getSubstringOfChatLastMessage(chat.message)}}
+            </ng-container>
+            <ng-container *ngIf="chat.imageUrl !== undefined">
+              Image sent
+            </ng-container>
+          </div>
+        </div>
+<!--        <div class="right">-->
+<!--          <div class="unread-messages-num">3</div>-->
+<!--        </div>-->
+      </div>
+    </div>
+  </div>
+</mat-card>

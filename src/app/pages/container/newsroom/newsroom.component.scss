@@ -1,0 +1,42 @@
+.news-img {
+  height: 300px;
+  width: auto;
+}
+
+.news-card {
+  width: 1024px;
+  height: auto;
+}
+
+.icon {
+  font-size: 36px;
+  margin-top: 18px;
+}
+
+.news-panel {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.edit-btn {
+  background-color: #B8DBD9;
+  color: #000;
+}
+.hide-btn {
+  background-color: #2f4550;
+  color: #fff;
+}
+
+::ng-deep .mat-expansion-panel-header-description{
+  flex-grow: 1.50 !important;
+}
+::ng-deep .mat-expansion-panel-header{
+  height: 70px !important;
+}
+.pdf-viewer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(5px 5px 5px #222222);
+  box-shadow:  #7a7a7a;
+}

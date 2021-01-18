@@ -1,0 +1,78 @@
+<div class="staff-list-container">
+
+
+  <form [formGroup]="unitListForm">
+    <div class="container-fluid">
+      <div class="titles justify-content-center" >
+
+        <div class="row" >
+          <div class="col title justify-content-center">
+            <span style="justify-content: center">Units Management</span>
+          </div>
+        </div>
+        <div class="row" >
+          <div class="col sub-title justify-content-center sub-title-div">
+            <span style="justify-content: center">{{this.property.name}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md d-flex justify-content-between">
+            <mat-form-field appearance="outline" style="width: 60%">
+              <mat-icon matPrefix>search</mat-icon>
+              <input matInput placeholder="Search Unit.." formControlName="unitSearch" (keyup)="searchUnit($event)" type="text" >
+<!--              <mat-autocomplete #auto="matAutocomplete">-->
+<!--                <mat-option *ngFor="let unit of units" [value]="unit.untiName">{{ unit.unitName }}</mat-option>-->
+<!--              </mat-autocomplete>-->
+            </mat-form-field>
+          <button class=" add-staff-btn" mat-raised-button (click)="openAddUnitDialog()"><mat-icon>add</mat-icon> ADD</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+            <!-- Unit name Column -->
+            <ng-container matColumnDef="unitName">
+              <mat-header-cell *matHeaderCellDef class="cell-txt" mat-sort-header> Unit Name </mat-header-cell>
+              <mat-cell *matCellDef="let unit"> {{unit.unitName}} </mat-cell>
+            </ng-container>
+
+            <!-- Tenant Id Column -->
+            <ng-container matColumnDef="tenantId">
+              <mat-header-cell *matHeaderCellDef class="cell-txt" mat-sort-header> Tenant Phone </mat-header-cell>
+              <mat-cell *matCellDef="let unit"> {{unit.tenantId}} </mat-cell>
+            </ng-container>
+            <!-- Tenant Name Column -->
+            <ng-container matColumnDef="tenantName">
+              <mat-header-cell *matHeaderCellDef class="cell-txt" mat-sort-header> Tenant Name </mat-header-cell>
+              <mat-cell *matCellDef="let unit"> {{unit.tenantName}} </mat-cell>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> &nbsp;&nbsp;&nbsp;&nbsp;Action </mat-header-cell>
+              <mat-cell *matCellDef="let unit" class="d-flex justify-content-between">
+                <mat-icon class="edit" (click)="openEditUnitDialog(unit)">edit</mat-icon>
+                <mat-icon class="delete" (click)="deleteUnit(unit)">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="tbl-header"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+
+
+
+    </div>
+  </form>
+  <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
+    All rights reserved.</h5></div>
+</div>
+

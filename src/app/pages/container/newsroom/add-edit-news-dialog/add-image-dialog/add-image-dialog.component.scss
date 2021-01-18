@@ -1,0 +1,59 @@
+.image-upload-container {
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .title {
+    font-size: large;
+    font-weight: bolder;
+  }
+
+  .progress {
+    margin-bottom: 0.75rem;
+  }
+
+  .close {
+    float: right;
+    cursor: pointer;
+  }
+
+  .mat-divider {
+    margin-top: 1rem;
+    border-top-width: 3px;
+  }
+
+  .btn-select-image {
+    background-color: #b8dbd9;
+    width: 20rem;
+    height: 3rem;
+    font-size: 1rem;
+  }
+
+  .btn-send-image {
+    background-color: #2f4550;
+    color: white;
+    width: 10rem;
+    height: 3rem;
+    margin-top: 3rem;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .image-container {
+    margin-top: 1rem;
+    text-align: center;
+  }
+}
+
+.btn-div{
+  margin-top: 20px;
+}
+.div-flex{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

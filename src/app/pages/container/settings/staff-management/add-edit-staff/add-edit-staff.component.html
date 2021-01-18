@@ -1,0 +1,130 @@
+
+<div class="dialog-wrapper">
+  <div class="dialog-content">
+
+
+    <mat-toolbar>
+      <app-prohub-logo style="margin-left: 30px" size="small"></app-prohub-logo>
+      <span id="title-message text-center">ADD/EDIT STAFF</span>
+      <a id="close-btn" (click)="close()">
+        <mat-icon matSuffix>close</mat-icon>
+      </a>
+    </mat-toolbar>
+    <form [formGroup]="staffForm" class="justify-content-center form-style">
+      <div class="row justify-content-center">
+        <div class="col-8 div-center"  *ngIf=" this.isEditMode === true; else elseBlock">
+          <div class="img-div input-group photo-size" >
+            <img class="image-container"  [src]="getImageLink()">
+            <mat-icon (click)="openPhotoDialog()" >add_a_photo</mat-icon>
+          </div>
+        </div>
+        <div class="col-8 div-center">
+          <label *ngIf="isSuccess" class="lbl-color">Image uploaded successfully!</label>
+        </div>
+        <ng-template #elseBlock>
+          <div class="col-8 input-group photo-size" style="display: flex; justify-content: center;margin-bottom: 20px" >
+          <mat-icon (click)="openPhotoDialog()" >add_a_photo</mat-icon>
+        </div>
+        </ng-template>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Full Name <span class="star">*</span></mat-label>
+          <input matInput placeholder="Full Name" formControlName="fullName">
+          <mat-error *ngIf="this.formControls.fullName.invalid">Please enter name</mat-error>
+        </mat-form-field>
+      </div>
+        <div class="col-8">
+          <mat-form-field appearance="outline" class="col-md-12">
+            <mat-label>Role <span class="star">*</span></mat-label>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let staff of staffList " value="{{staff.value}}">
+                {{staff.value}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="this.formControls.role.invalid">Please choose role</mat-error>
+          </mat-form-field>
+        </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Email <span class="star">*</span></mat-label>
+          <input matInput placeholder="e.g. example@email.com" formControlName="email">
+          <mat-error *ngIf="this.formControls.email.invalid">Please enter email</mat-error>
+        </mat-form-field>
+      </div>
+<!--        <div class="col-8">-->
+<!--          <mat-form-field class="col-md-12" appearance="outline">-->
+<!--            <mat-label>Password <span class="star">*</span></mat-label>-->
+<!--            <input matInput placeholder="e.g. example@email.com" formControlName="password">-->
+<!--            <mat-error *ngIf="this.formControls.email.invalid">Please enter email</mat-error>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="col-8">-->
+<!--          <mat-form-field class="col-md-12" appearance="outline">-->
+<!--            <mat-label>Confirm Password <span class="star">*</span></mat-label>-->
+<!--            <input matInput placeholder="e.g. example@email.com" formControlName="confirmPassword">-->
+<!--            <mat-error *ngIf="this.formControls.email.invalid">Please enter email</mat-error>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Phone <span class="star">*</span></mat-label>
+          <input matInput placeholder="e.g. (416)111-1111" formControlName="phone" mask="(000) 000-0000">
+          <mat-error *ngIf="this.formControls.phone.invalid">Please enter phone</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Address Line1 <span class="star">*</span></mat-label>
+          <input matInput placeholder="e.g. 123 Street" formControlName="addressLine1">
+          <mat-error *ngIf="this.formControls.addressLine1.invalid">Please enter address</mat-error>
+        </mat-form-field>
+      </div>
+        <div class="col-8">
+          <mat-form-field class="col-md-12" appearance="outline">
+            <mat-label>Address Line2</mat-label>
+            <input matInput placeholder="e.g. Suite 1001" formControlName="addressLine2">
+          </mat-form-field>
+        </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Postal Code <span class="star">*</span></mat-label>
+          <input matInput placeholder="e.g A0A0A0" mask="A0A0A0"formControlName="postalCode" maxlength="6">
+          <mat-error *ngIf="this.formControls.postalCode.invalid">Please enter postal code</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>City <span class="star">*</span></mat-label>
+          <input matInput placeholder="City" formControlName="city">
+          <mat-error *ngIf="this.formControls.city.invalid">Please enter city</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-8">
+        <mat-form-field appearance="outline" class="col-md-12">
+          <mat-label>Province <span class="star">*</span></mat-label>
+          <mat-select formControlName="province">
+            <mat-option *ngFor="let province of provinces | keyvalue: returnZero" value="{{province.key}}">
+              {{province.value}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formControls.province.invalid">Please choose province</mat-error>
+        </mat-form-field>
+      </div>
+        <div class="col-8">
+        <mat-form-field class="col-md-12" appearance="outline">
+          <mat-label>Country <span class="star">*</span></mat-label>
+          <input matInput placeholder="e.g. Canada" formControlName="country">
+          <mat-error *ngIf="this.formControls.country.invalid">Please enter country</mat-error>
+        </mat-form-field>
+      </div>
+
+    </div>
+    </form>
+  <div class="btn-div">
+    <button mat-button class="btn-cancel" (click)="close()">CANCEL </button>
+    <button mat-button class="btn-save" (click)="saveStaff()" >SAVE</button>
+  </div>
+
+  </div>
+</div>
+

@@ -1,0 +1,226 @@
+.settings-container {
+  width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  font-size: 1.2em;
+
+  .header {
+    display: flex;
+    height: 250px;
+    background-color: white;
+    align-items: center;
+    width: 1024px;
+    border-radius: 10px;
+  }
+
+  .image-container {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    margin-left: 100px;
+    margin-right: 50px;
+    background-color: #ccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    box-shadow: 0 0 10px #000000;
+  }
+
+  .name-container {
+    display: inline-block;
+    font-size: 2em;
+    padding-bottom: 10px;
+  }
+  .subheading-container {
+    margin: .5rem;
+    display: inline-block;
+    font-size: 1.2em;
+    color: #4e555b;
+  }
+
+  .content-container {
+    display: flex;
+    height: auto;
+    background-color: white;
+    width: 1024px;
+    padding: 20px;
+  }
+
+  .selection-container {
+    display: flex;
+    width: 950px;
+    height: 70px;
+    align-items: center;
+    border-radius: 10px;
+  }
+
+  .icon-container {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .img-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .field-upload-btn {
+    display: inline-block;
+    font-size: 2.5em;
+    padding-left: 170px;
+    color: #4e555b;
+    position: relative;
+    top: 50%;
+    cursor: pointer;
+    -webkit-transform: translateY(-80%);
+    -ms-transform: translateY(-80%);
+    transform: translateY(-80%);
+  }
+
+  .selection-heading {
+    display: inline-block;
+    font-size: 1.5em;
+  }
+
+  .selection-subheading {
+    display: inline-block;
+    font-size: 1em;
+    padding-left: 20px;
+    color: #4e555b;
+  }
+
+  .field-text {
+    display: inline-block;
+    font-size: 1.1em;
+    padding-left: 50px;
+    color: #4e555b;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-80%);
+    -ms-transform: translateY(-80%);
+    transform: translateY(-80%);
+  }
+
+  .field-text-pass {
+    display: inline-block;
+    font-size: 1.1em;
+    padding-left: 50px;
+    color: #4e555b;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-0%);
+    transform: translateY(-50%);
+  }
+
+  .setting-icon {
+    align-items: center;
+    justify-content: center;
+    color: #4e555b;
+    font-size: 50px;
+    margin-right: 26px;
+  }
+
+  .accordion .card-header:after {
+    font-family: 'FontAwesome';
+    content: "\f068";
+    float: right;
+  }
+  .accordion .card-header.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\f067";
+  }
+
+  .changePassText {
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    font-size: 1.5rem;
+  }
+
+  .hr-inner{
+    width: 500px;
+    border-width: 10px;
+  }
+
+  .title {
+    font-weight: normal;
+    font-size: 2rem;
+    color: #2f4550;
+    vertical-align: sub;
+    margin-left: 0.75rem;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+  .buttons {
+    margin-top: 1rem;
+
+    .save {
+      background-color: #2f4550;
+      color: #fff;
+      width: 10rem;
+      height: 3rem;
+    }
+    .reset {
+      background-color: #2f4550;
+      color: #fff;
+      width: 10rem;
+      height: 3rem;
+    }
+  }
+}
+
+::ng-deep {
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #2f4550!important;
+  }
+
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #2f4550!important;
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: #2f4550!important;
+  }
+
+  .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: red !important;
+  }
+
+  .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick{
+    color: red!important;
+    opacity: 0.8!important;
+  }
+
+  .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+    caret-color: red!important;
+  }
+}
+
+::ng-deep {
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: #2f4550;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-inner-circle{
+    color: #2f4550;
+    background-color: #2f4550;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: #2f4550;
+  }
+}

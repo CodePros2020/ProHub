@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row justify-content-center">
+
+    <div class="col-12 justify-content-center">
+      <div class="title">
+        <p class="titleText" mat-dialog-title>Verify Email
+          <mat-icon style="float: right; cursor: pointer" (click)="close()" matSuffix id="close-icon">close</mat-icon>
+        </p>
+        <div class="blue-underline"></div>
+      </div>
+      <h3 class="text-center"><strong>Thank You for Registering</strong></h3>
+      <div class="formGroup" *ngIf="this.user">
+        <p class="text-center">We have sent a confirmation email to <strong>{{this.user.email}}</strong>.</p>
+        <p class="text-center">Please check your email and click on the link to verify your email address.</p>
+      </div>
+
+
+      <div style="display: flex;justify-content: center" >
+        <button mat-button  (click)="close()" class="btn-ok">
+        OK
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

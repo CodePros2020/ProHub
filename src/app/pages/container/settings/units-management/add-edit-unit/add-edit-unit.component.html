@@ -1,0 +1,47 @@
+
+<div class="dialog-wrapper">
+  <div class="dialog-content">
+    <mat-toolbar class="d-flex justify-content-between">
+      <app-prohub-logo size="small"></app-prohub-logo>
+      <ng-container *ngIf="!isUpdateMode">
+        <span class="title-message text-center">ADD UNIT</span>
+      </ng-container>
+      <ng-container *ngIf="isUpdateMode">
+        <span class="title-message text-center">EDIT UNIT</span>
+      </ng-container>
+      <a id="close-btn" (click)="close()">
+        <mat-icon matSuffix>close</mat-icon>
+      </a>
+    </mat-toolbar>
+    <form [formGroup]="unitForm" class="justify-content-center form-style">
+      <div class="row justify-content-center">
+        <div class="col-8">
+          <mat-form-field class="col-md-12" appearance="outline">
+            <mat-label>Unit Number <span class="star">*</span></mat-label>
+            <input matInput class="quantity" placeholder="e.g Suite" formControlName="unitNumber" type="number" (change)="checkUnitDuplicity()">
+            <mat-error *ngIf="this.formControls.unitNumber.invalid">Please enter correct unit number</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-8">
+          <mat-form-field class="col-md-12" appearance="outline">
+            <mat-label>Tenant Phone <span class="star">*</span></mat-label>
+            <input matInput placeholder="e.g. (416) 111-1111" formControlName="tenantId" mask="(000) 000-0000" (change)="checkTenantInfo()">
+            <mat-error *ngIf="this.formControls.tenantId.invalid">Please enter tenant phone</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-8">
+          <mat-form-field class="col-md-12" appearance="outline">
+            <mat-label>Tenant Name</mat-label>
+            <input matInput placeholder="e.g. 2020" formControlName="tenantName">
+            <mat-error *ngIf="this.formControls.tenantName.invalid">Please enter tenant name</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+    <div class="btn-div">
+      <button mat-button class="btn-cancel" (click)="close()">CANCEL </button>
+      <button mat-button class="btn-save" (click)="saveUnit()" >SAVE</button>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,66 @@
+<div class="container">
+
+  <!-- Search -->
+  <div class="row" style="margin-top: 25px">
+    <div class="col-xl-1"></div>
+    <div class="col-xl-9">
+      <mat-form-field appearance="outline" style="width:100%;">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Search News" type="text" (keyup)="searchNews($event)">
+      </mat-form-field>
+    </div>
+    <!-- Button -->
+    <ng-container *ngIf="userType === 'business'">
+      <div class="col-xl-2 icon" style="margin-top:0 !important;">
+        <button mat-fab class="hide-btn" aria-label="add-icon-button" (click)="openAddNewsDialog()">
+          <mat-icon inline="true" style="font-size: 24px;">post_add</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- news container -->
+  <mat-accordion multi>
+    <div class="news-panel mt-2 mb-2" *ngFor="let news of newsList">
+      <mat-expansion-panel  #pannel >
+        <mat-expansion-panel-header >
+          <mat-panel-title style="display: flex;flex-direction: column; ">
+            <h3 style="margin-top: 10px">{{news.newsTitle}}</h3>
+            <h4 class="mb-2 text-muted">{{news.createTime}}</h4>
+          </mat-panel-title>
+          <mat-panel-description style="margin-top: 10px">
+            <p *ngIf="pannel._getExpandedState() === 'collapsed'">{{news.content.substr(0, 60)}}...</p>
+          </mat-panel-description>
+
+        </mat-expansion-panel-header>
+        <ng-container *ngIf="userType === 'business'">
+          <div style="float: right">
+            <button mat-flat-button class="mr-2 edit-btn" inline="true"> <mat-icon (click)="exportNewsForm(news)">assignment_returned</mat-icon></button>
+            <button class="mr-2 edit-btn" inline="true" mat-flat-button color="primary" (click)="openEditDialog(news)">Edit</button>
+            <button inline="true " class="hide-btn" mat-flat-button color="warn" (click)="openHideDialog(news)">Hide</button>
+          </div>
+        </ng-container>
+        <div class="justify-content-between" style="display: flex;">
+          <div>
+            <div class="justify-content-between" style="display: flex;flex-direction: column">
+              <div *ngIf="news.imageUrl !== undefined">
+                <img src="{{news.imageUrl}}" height="120px" width="auto">
+              </div>
+              <div *ngIf="news.fileUrl !== undefined">
+
+                <div class="container">
+                  <pdf-viewer [src]="news.fileUrl" [original-size]="false"></pdf-viewer>
+                </div>
+              </div>
+            </div>
+            <br>
+            <p>{{news.content}}</p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion>
+
+  <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
+    All rights reserved.</h5></div>
+</div>

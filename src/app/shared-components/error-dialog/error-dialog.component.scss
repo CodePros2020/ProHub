@@ -1,0 +1,29 @@
+.btn-div{
+  display: flex;
+  justify-content: center;
+}
+
+.blue-underline {
+  border-bottom: 0.5rem solid #b8dbd9;
+  width: 6rem;
+  margin: auto;
+}
+
+.titleText {
+  text-align: center;
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.p-mrg{
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-ok{
+  width: 7rem;
+  background-color:  #586F7C;
+  color: #fff;
+  border-radius: 5px;
+}

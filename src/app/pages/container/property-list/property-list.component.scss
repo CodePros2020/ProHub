@@ -1,0 +1,78 @@
+.property-list-container {
+  width: 1024px;
+  margin: auto;
+  height: 100%;
+  background-color: #fff;
+  padding: 1rem 1rem;
+
+  .title {
+    font-weight: bolder;
+    font-size: xx-large;
+    margin: 2.5rem 0;
+  }
+
+  .add-prop-btn {
+    background-color: #2f4550;
+    color: #fff;
+    width: 7rem;
+    height: 3rem;
+    margin-top: 5px;
+  }
+
+  .mat-column-name {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 30% !important;
+    width: 30% !important;
+    overflow-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .mat-column-action {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .edit{
+    color:#0cbd65;
+    font-size:24px !important;
+    cursor: pointer;
+  }
+
+  .delete{
+    color:red;
+    font-size:24px !important;
+    cursor: pointer;
+  }
+
+  .mat-cell {
+    cursor: pointer;
+  }
+}
+.header-clr{
+  background-color: #2f4550;
+  color: #ffffff;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  font-size: 1rem;
+}
+.cell-txt{
+  color:#ffffff;
+  font-size: 1rem;
+}

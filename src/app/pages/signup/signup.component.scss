@@ -1,0 +1,60 @@
+.close-icon {
+  transform: scale(2);
+}
+#close-icon {
+  cursor: pointer;
+}
+.blue-underline {
+  margin-top: 5px;
+  border-bottom: 0.5rem solid #b8dbd9;
+  width: 6rem;
+  margin-left: 40%;
+}
+.titleText {
+  text-align: center;
+  font-weight: 500;
+  font-size: 24px;
+
+}
+
+.title {
+  margin-bottom: 38px;
+}
+.center-div{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.btn-send {
+  background-color: #2F4550;
+  color: #fff;
+  width: 7rem;
+  margin-bottom: 5%;
+  margin-top: 5%;
+}
+
+.btn-verify {
+  width: 7rem;
+  background-color:  #586F7C;
+  color: #fff;
+  margin-top: 5%;
+  margin-bottom: 5%;
+
+}
+
+::ng-deep {
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: #2f4550;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-inner-circle{
+    color: #2f4550;
+    background-color: #2f4550;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: #2f4550;
+  }
+}

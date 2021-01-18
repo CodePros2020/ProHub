@@ -1,0 +1,76 @@
+<div class="container">
+  <!-- Page Title -->
+  <div class="row">
+    <div class="col title">
+      <span>Forms</span>
+    </div>
+  </div>
+  <!-- Search -->
+  <div class="row">
+    <div class="col-xl-9">
+      <mat-form-field appearance="outline" style="width:100%;">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Search" type="text" (keyup)="searchForm($event)">
+      </mat-form-field>
+    </div>
+    <!-- Button -->
+    <div class="col-xl-3">
+      <button class="btn-upload" mat-raised-button (click)="openUploadFormDialog()">
+        <mat-icon inline="true">arrow_upward</mat-icon>UPLOAD
+      </button>
+    </div>
+  </div>
+  <!-- Table -->
+  <div class="row mt-5">
+    <div class="col">
+      <div class="mat-elevation-z8">
+        <form [formGroup]="">
+          <mat-table [dataSource]="dataSource" matSort>
+            <!-- File Name Column -->
+            <ng-container matColumnDef="filename">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> File name </mat-header-cell>
+              <mat-cell *matCellDef="let form">
+                <!-- file icon -->
+                <mat-icon fontSet="material-icons-outlined">description</mat-icon>
+                <a href={{form.contentUrl}} class=".accent-color" target="_blank">{{form.formTitle}}</a>
+
+              </mat-cell>
+            </ng-container>
+
+            <!-- Creation Date Column -->
+            <ng-container matColumnDef="upload_date">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Upload date </mat-header-cell>
+              <mat-cell *matCellDef="let form"> {{formatDate(form.dateCreated)}}  </mat-cell>
+            </ng-container>
+
+<!--            &lt;!&ndash; Size Column &ndash;&gt;-->
+<!--            <ng-container matColumnDef="size">-->
+<!--              <mat-header-cell *matHeaderCellDef> Size </mat-header-cell>-->
+<!--              <mat-cell *matCellDef="let form"> {{form.size}} </mat-cell>-->
+<!--            </ng-container>-->
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef class="cell-txt"> Actions </mat-header-cell>
+              <mat-cell *matCellDef="let form" >
+                <mat-icon class="edit" (click)="updateForm(form)">edit</mat-icon>
+                <mat-icon class="delete" (click)="deleteForm(form)">delete</mat-icon>
+
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="header-clr"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </form>
+        <!-- Pagenator -->
+        <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display: flex; justify-content: center; margin-top: 20px;"><h5>&copy; Copyright CodePros 2020.
+    All rights reserved.</h5></div>
+
+</div>

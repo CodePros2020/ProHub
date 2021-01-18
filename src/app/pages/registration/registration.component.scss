@@ -1,0 +1,116 @@
+.registration-container {
+
+  overflow-y: hidden;
+
+  .container {
+    background-color: white;
+    padding-top: 4rem;
+    padding-bottom: 0.5rem;
+    width: 1024px;
+    height: 700px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    margin: auto;
+  }
+
+  .logo {
+    width: 4.5rem;
+    height: 3.5rem;
+    margin-top: 10px;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 3rem;
+    color: #2f4550;
+    vertical-align: sub;
+    margin-left: 0.75rem;
+  }
+
+  .logo-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .blue-underline {
+    margin-top: 1rem;
+    border-bottom: 0.5rem solid #b8dbd9;
+    width: 6rem;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .form-body {
+    margin-top: 3rem;
+
+    .form-user-type {
+      margin-bottom: 3rem;
+    }
+  }
+
+  .buttons {
+    margin-top: 3rem;
+
+    .back {
+      background-color: #2f4550;
+      color: #fff;
+      width: 7rem;
+    }
+
+    .create {
+      width: 7rem;
+      background-color: #b8dbd9;
+      color: #2f4550;
+    }
+
+  }
+}
+
+::ng-deep {
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #2f4550!important;
+  }
+
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #2f4550!important;
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: #2f4550!important;
+  }
+
+  .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: red !important;
+  }
+
+  .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick{
+    color: red!important;
+    opacity: 0.8!important;
+  }
+
+  .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+    caret-color: red!important;
+  }
+}
+
+::ng-deep {
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: #2f4550;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-inner-circle{
+    color: #2f4550;
+    background-color: #2f4550;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: #2f4550;
+  }
+}
