@@ -64,3 +64,5 @@ Stakeholders of this project will deem this project a success upon completion of
 - Kei Mizubuchi
 - Sadia Rashid
 - Wen Yi Xu
+
+Note: Remote pair programming technique is used to boost efficiency.
