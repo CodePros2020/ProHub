@@ -95,7 +95,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit {
           this.properties.push(this.property);
         });
         // this.properties = data;
-        console.log('what are properties: ', this.properties);
+        // console.log('what are properties: ', this.properties);
         this.dataSource = new MatTableDataSource(this.properties);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -177,7 +177,7 @@ export class PropertyListComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res === 'updated') {
-        console.log('Property updated successfully');
+        // console.log('Property updated successfully');
         this.retrieveProperties();
       }
     });

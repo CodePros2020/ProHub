@@ -49,11 +49,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.getLoginForm();
     this.cookieVal = this.authService.GetCookies();
-    console.log('Cookie Val', this.cookieVal);
+    // console.log('Cookie Val', this.cookieVal);
     if (this.cookieVal ){
       this.formControls.userName.setValue(this.cookieVal);
       this.formControls.rememberMe.setValue(true);
-      console.log('checking val');
+      // console.log('checking val');
 
     }
   }

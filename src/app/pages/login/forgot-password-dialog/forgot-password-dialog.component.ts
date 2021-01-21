@@ -32,7 +32,7 @@ export class ForgotPasswordDialogComponent implements OnInit {
   sendEmail() {
     if (this.forgotPasswordForm.valid){
       const email = this.formControls.email.value.toString().trim();
-      console.log('I m in send Emai');
+      // console.log('I m in send Emai');
       this.authService.ForgotPassword(email).then( () => {
         this.isSent = true;
       });

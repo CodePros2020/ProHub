@@ -51,7 +51,7 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         if (rememberMe === true) {
-          console.log('Remember me Val ', rememberMe, 'Email' , result.user.email );
+          // console.log('Remember me Val ', rememberMe, 'Email' , result.user.email );
           this.SaveCookies(rememberMe, result.user.email);
         }
         // console.log('User Received =>', result.user);
@@ -127,7 +127,7 @@ export class AuthService {
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
-        console.log('User received ', result.user);
+        // console.log('User received ', result.user);
         this.SendVerificationMail();
         this.SetUserData(result.user);
       })

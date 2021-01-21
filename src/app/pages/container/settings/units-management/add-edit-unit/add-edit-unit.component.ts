@@ -71,7 +71,7 @@ export class AddEditUnitComponent implements OnInit {
       tenantName: [{value: this.unit.tenantName, disabled: true}]
     });
     if (this.data.update){
-      console.log('In edit mode');
+      // console.log('In edit mode');
       this.formControls.tenantId.disable();
     }
 
@@ -85,7 +85,7 @@ export class AddEditUnitComponent implements OnInit {
   checkTenantInfo() {
     this.showOverlay();
     const tenantId = this.formControls.tenantId.value;
-    console.log('what is tenantId', tenantId);
+    // console.log('what is tenantId', tenantId);
     this.usersTableService.getTenant().snapshotChanges().pipe(
       map(tenants =>
         tenants.map(c =>
@@ -94,12 +94,12 @@ export class AddEditUnitComponent implements OnInit {
     ).subscribe(data => {
 
       this.tenant = data.find(r => r.phoneNumber === tenantId);
-      console.log('who is tenant? ', this.tenant);
+      // console.log('who is tenant? ', this.tenant);
 
       if (this.tenant !== undefined) {
 
         const isTenantNumExist = this.unitsArr.some(num => num.tenantId === tenantId);
-        console.log('does tenant num exist', isTenantNumExist);
+        // console.log('does tenant num exist', isTenantNumExist);
         if (!isTenantNumExist) {
           this.hideOverLay();
           this.formControls.tenantName.setValue(this.tenant.firstName + ' ' + this.tenant.lastName);
@@ -129,7 +129,7 @@ export class AddEditUnitComponent implements OnInit {
   }
 
   saveUnit() {
-    console.log('is this unit form valid', this.unitForm.valid);
+    // console.log('is this unit form valid', this.unitForm.valid);
     if (this.unitForm.valid) {
 
       this.unit.unitName = this.formControls.unitNumber.value;
@@ -139,13 +139,13 @@ export class AddEditUnitComponent implements OnInit {
 
       if (this.data.update === true) {
         this.unitsService.updateUnit(this.unit.unitId, this.unit).then(() => {
-          console.log('unit updated successfully');
+          // console.log('unit updated successfully');
         }, ((err) => {
           console.log('error updating unit', err);
         }));
       } else {
         this.unitsService.addUnit(this.unit).then(() => {
-          console.log('unit added successfully');
+          // console.log('unit added successfully');
         }, ((err) => {
           console.log('error updating unit', err);
         }));

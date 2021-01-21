@@ -27,7 +27,7 @@ export class ChatListCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('chat message model in chat list card: ', this.chatMessageModel);
+    // console.log('chat message model in chat list card: ', this.chatMessageModel);
     this.retrieveLastChatMessage();
   }
 
@@ -43,7 +43,7 @@ export class ChatListCardComponent implements OnInit {
         data.forEach(res => {
           this.chat = res;
           this.checkIfChatSeen();
-          console.log('what is last message? ', this.chat);
+          // console.log('what is last message? ', this.chat);
         });
       });
     }
