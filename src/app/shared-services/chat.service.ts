@@ -39,7 +39,7 @@ export class ChatService {
   create(value: any): any {
     return this.chatRef.push(value)
       .catch(err => {
-        console.log('error in sending chat: ', err);
+        console.log('error => sending chat: ', err);
       });
   }
 }

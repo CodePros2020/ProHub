@@ -27,10 +27,10 @@ export class ChatMessagesService {
   }
 
   create(value: any): any {
-    console.log('what is value in create chat message? ', value);
+    // console.log('what is value in create chat message? ', value);
     return this.chatMessageRefCreate.push(value)
       .catch(err => {
-        console.log('error in creating chat message list: ', err);
+        console.log('error => chat message list: ', err);
       });
   }
 
