@@ -40,12 +40,12 @@ export class ChatComponent implements OnInit {
 
   getChatMessageID(event) {
     this.chatMessageId = event;
-    console.log('chat message id in chat component: ', this.chatMessageId);
+    // console.log('chat message id in chat component: ', this.chatMessageId);
   }
 
   getChatMessageName(event) {
     this.chatMessageName = event;
-    console.log('chat message message in chat component: ', this.chatMessageName);
+    // console.log('chat message message in chat component: ', this.chatMessageName);
   }
 
   retrieveChatList() {
@@ -67,7 +67,7 @@ export class ChatComponent implements OnInit {
         this.chatList.push(this.chatMessageModel);
       });
       this.filteredOptions = this.chatList;
-      console.log('list of chatMessages from chat component', this.chatList);
+      // console.log('list of chatMessages from chat component', this.chatList);
     });
   }
 

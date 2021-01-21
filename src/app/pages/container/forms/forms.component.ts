@@ -76,7 +76,7 @@ export class FormsComponent implements AfterViewInit  {
           this.forms.push(this.form);
         });
       this.allForms = this.forms;
-      console.log('Forms retrieved: ', this.forms);
+      // console.log('Forms retrieved: ', this.forms);
       this.dataSource = new MatTableDataSource(this.forms);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;

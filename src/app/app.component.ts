@@ -7,6 +7,6 @@ import {CookieService} from 'ngx-cookie-service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ProHub-Web-Frontend';
+  title = 'ProHub Web';
 
 }

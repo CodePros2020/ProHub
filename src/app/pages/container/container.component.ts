@@ -13,7 +13,7 @@ export class ContainerComponent implements OnInit {
 
   constructor(public authService: AuthService,
               private router: Router) {
-    console.log('what is router url? ', this.router.url);
+    // console.log('what is router url? ', this.router.url);
     this.router.events.subscribe(val => {
       if (this.router.url === '/container/property-list') {
         this.isInPropertyListComponent = true;

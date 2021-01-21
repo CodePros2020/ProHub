@@ -61,14 +61,14 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
     } else {
       this.isEditMode = true;
       this.propertyModel = this.data.property;
-      console.log('property model lat', this.propertyModel.lat);
+      // console.log('property model lat', this.propertyModel.lat);
       if (this.propertyModel.lat === undefined || this.propertyModel.lat === null) {
         this.lat = 43.662762;
       } else {
         this.lat = this.propertyModel.lat;
       }
 
-      console.log('property model long', this.propertyModel.long);
+      // console.log('property model long', this.propertyModel.long);
       if (this.propertyModel.long === undefined || this.propertyModel.long === null) {
         this.long = -79.397308;
       } else {
@@ -103,22 +103,22 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
       filter(data => (data !== null) ? data.trim().length > 0 : data),
       debounceTime(50),
       switchMap((name: string) => {
-        console.log('trim', name);
+        // console.log('trim', name);
         this.isAddressSearchApiRunning = true;
         return name ? this.addySearch(name) : of([]);
       })
     ).subscribe(data => {
       this.searchAddyResult = data;
-      console.log('search addy result: ', this.searchAddyResult);
+      // console.log('search addy result: ', this.searchAddyResult);
     });
   }
 
   addySearch(value) {
     // this.searchAddyResult = [];
     this.nominatimService.addressLookup(value).subscribe(res => {
-      console.log('this is res', res);
+      // console.log('this is res', res);
       this.searchResults = res;
-      console.log('search addy result2', this.searchResults);
+      // console.log('search addy result2', this.searchResults);
       if (res && this.searchResults.length > 0) {
         this.isAddressSearchApiRunning = false;
       }
@@ -144,12 +144,12 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
 
   addressLookup(event: any) {
     this.address = event.target.value;
-    console.log('what is address', this.address);
+    // console.log('what is address', this.address);
     if (this.address.length > 3) {
       this.nominatimService.addressLookup(this.address).subscribe(results => {
-        console.log('checking api results: ', results);
+        // console.log('checking api results: ', results);
         this.searchResults = results;
-        console.log('search results: ', this.searchResults);
+        // console.log('search results: ', this.searchResults);
       });
     } else {
       this.searchResults = [];
@@ -174,19 +174,19 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
     const city = this.formControls.city.value || '';
     const province = this.formControls.province.value || '';
 
-    console.log('Street: ' + street + ' City: ' + city + ' Province: ' + province);
+    // console.log('Street: ' + street + ' City: ' + city + ' Province: ' + province);
 
     if (street === '' && city === '' && province === '') {
-      console.log('Dont do anything!');
+      // console.log('Dont do anything!');
     } else {
       this.nominatimService.addressLookup(street, city, province).subscribe(results => {
-        console.log('checking api results: ', results);
+        // console.log('checking api results: ', results);
         this.searchResults = results;
-        console.log('search results: ', this.searchResults);
-        console.log('what is results length', results.length);
+        // console.log('search results: ', this.searchResults);
+        // console.log('what is results length', results.length);
 
         if (this.searchResults.length > 0) {
-          console.log('length is more than 1');
+          // console.log('length is more than 1');
           this.getAddress(this.searchResults[0]);
         }
       });
@@ -199,7 +199,7 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
   }
 
   getAddress(result: NominatimResponse) {
-    console.log('coming to get Address');
+    // console.log('coming to get Address');
     this.updateMapPoint(result.latitude, result.longitude, result.displayName, result.osm);
     this.createMarker();
     this.lat = result.latitude;
@@ -246,7 +246,7 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
       osm: osmNum
     };
 
-    console.log('checking what are coords: ' + lat + '---' + long);
+    // console.log('checking what are coords: ' + lat + '---' + long);
   }
 
   createMarker() {
@@ -286,7 +286,7 @@ export class CreateUpdatePropertyComponent implements OnInit, AfterViewInit {
       this.propertyModel.lat = this.lat;
 
       if (this.isEditMode) {
-        console.log('in update save');
+        // console.log('in update save');
         this.propertyService.update(this.propertyModel.propId, this.propertyModel)
           .then(() => this.dialogRef.close('updated'));
       } else {

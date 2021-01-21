@@ -60,12 +60,12 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.retrieveChats();
-    console.log('what is the chat message id in chat room: ', this.chatMessageId);
+    // console.log('what is the chat message id in chat room: ', this.chatMessageId);
   }
 
   ngOnChanges() {
     this.retrieveChats();
-    console.log('chat message in on changes', this.chatMessageId);
+    // console.log('chat message in on changes', this.chatMessageId);
   }
 
   retrieveChats() {
@@ -104,9 +104,9 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           }
         });
 
-        console.log('list of chats', this.chats);
-        console.log('chats to be updated: ', this.chatsToBeUpdatedToChatSeen);
-        console.log('chats with images to be updated: ', this.chatsWithImagesToBeUpdatedToChatSeen);
+        // console.log('list of chats', this.chats);
+        // console.log('chats to be updated: ', this.chatsToBeUpdatedToChatSeen);
+        // console.log('chats with images to be updated: ', this.chatsWithImagesToBeUpdatedToChatSeen);
         setTimeout(() => this.scrollTop = this.chatContent.nativeElement.scrollHeight, 500);
         this.updateChatSeen();
       });
@@ -162,8 +162,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   updateChatSeen() {
 
     this.chatsToBeUpdatedToChatSeen.forEach(res => {
-      console.log('chat message id', this.chatMessageId);
-      console.log('res chat msg id', res.chatMessageId);
+      // console.log('chat message id', this.chatMessageId);
+      // console.log('res chat msg id', res.chatMessageId);
       if (this.chatMessageId === res.chatMessageId) {
         this.chatModel = new ChatModel();
         this.chatModel.chatMessageId = res.chatMessageId;

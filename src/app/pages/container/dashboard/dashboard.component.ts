@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log('property in session in dashboard', this.property);
+    // console.log('property in session in dashboard', this.property);
     this.loggedInUser = this.authService.GetUserInSession();
     this.loggedInUserName = this.loggedInUser !== undefined ? this.loggedInUser.firstName + ' ' + this.loggedInUser.lastName : '';
     this.checkPropertyForPersonalUser();
