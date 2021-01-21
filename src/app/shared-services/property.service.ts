@@ -48,7 +48,7 @@ export class PropertyService {
   }
 
   setProperty(property) {
-    console.log('Setting prop', property);
+    // console.log('Setting prop', property);
     localStorage.setItem('property', JSON.stringify(property));
   }
 

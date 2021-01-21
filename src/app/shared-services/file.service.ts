@@ -116,7 +116,7 @@ export class FileService {
     }
 
     this.imgToUpload = event.target.files[0];
-    console.log('what is image to upload: ', this.imgToUpload);
+    // console.log('what is image to upload: ', this.imgToUpload);
     if (this.imgToUpload !== undefined) {
       const id = Math.random().toString(36).substring(2);
       this.fireRef = this.afStorage.ref(ref + id);
@@ -127,7 +127,7 @@ export class FileService {
           this.task.snapshotChanges().pipe(
             finalize(() => {
               this.fireRef.getDownloadURL().subscribe(url => {
-                console.log('what is url: ', url);
+                // console.log('what is url: ', url);
                 this.downloadURL = url !== undefined ? url : '';
                 this.hideOverLay();
               });
