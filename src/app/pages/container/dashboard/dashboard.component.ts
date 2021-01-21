@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
   }
 
   checkPropertyForPersonalUser() {
-    console.log('check property user', this.loggedInUser);
+    // console.log('check property user', this.loggedInUser);
     if (this.loggedInUser.userType.toUpperCase() === 'PERSONAL') {
       this.unitService.getPropertyIdByUnit(this.loggedInUser.phoneNumber).snapshotChanges().pipe(
         map(unit =>

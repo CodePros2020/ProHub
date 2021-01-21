@@ -49,7 +49,7 @@ export class MapsNominatimService {
   // this url has a structured search
   addressLookup(street?: any, city?: any, province?: any): Observable<NominatimResponse[]> {
     const url = `https://${this.BASE_NOMINATIM_URL}/search.php?street=${street}&city=${city}&state=${province}&country=Canada&polygon_geojson=1&format=jsonv2`;
-    console.log('check what url looks like: ', url);
+    // console.log('check what url looks like: ', url);
     return this.http
       .get(url).pipe(
         map((data: any[]) => data.map((item: any) => new NominatimResponse(
