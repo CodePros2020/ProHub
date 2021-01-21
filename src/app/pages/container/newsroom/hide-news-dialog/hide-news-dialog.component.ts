@@ -22,7 +22,7 @@ export class HideNewsDialogComponent implements OnInit {
 
   public HideNews() {
     this.newsService.hide(this.news.key, this.news).then( () => {
-      console.log('news hidden!');
+      // console.log('news hidden!');
     });
   }
 }

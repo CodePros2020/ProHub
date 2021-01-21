@@ -130,7 +130,7 @@ export class UnitsManagementComponent implements OnInit {
           }
         });
 
-        console.log('Units List: ', this.units);
+        // console.log('Units List: ', this.units);
         this.dataSource = new MatTableDataSource(this.units);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -185,7 +185,7 @@ export class UnitsManagementComponent implements OnInit {
   }
 
   createChatMessageInstances(tenantNumber, tenantName, tenantPhotoUrl) {
-    console.log('this is chat message instance create');
+    // console.log('this is chat message instance create');
     this.chatMessage = new ChatMessagesModel();
     this.chatMessage.chatMessageId = this.landlordPhoneNumber + '_' + tenantNumber;
     this.chatMessage.receiverNumber = this.landlordPhoneNumber;
